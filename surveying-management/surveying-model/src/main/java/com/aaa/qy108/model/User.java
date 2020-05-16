@@ -14,9 +14,8 @@ import javax.persistence.*;
 @Data
 @Table(name = "t_user")
 public class User extends BaseModel {
-
     /**
-     * 用户名
+     * 用 户 名
      */
     private String username;
 
