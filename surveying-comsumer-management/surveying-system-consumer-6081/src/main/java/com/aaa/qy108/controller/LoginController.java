@@ -46,5 +46,3 @@ public class LoginController extends BaseController {
 
 }
 
-
-

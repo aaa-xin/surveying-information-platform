@@ -56,6 +56,7 @@ public class LoginService extends BaseService<User> {
                     if ("OK".equals(setResult.toUpperCase()) || "1".equals(setResult)){
                         //判断客户端ip和位置，然后添加登录日志
                         String ip = IpUtils.getInternetIp();
+                        System.out.println(ip);
                         String address = IpUtils.getAddressByIP(ip);
                         int logResult = loginLogMapper.insert(new LoginLog(usr.getUsername(), DateUtil.now(), ip, address));
                         if (logResult < 0){

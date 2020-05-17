@@ -6,17 +6,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.lionsoul.ip2region.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @Author guohang
@@ -40,6 +36,7 @@ public class IpUtils {
     * @Param: []
     * @return: java.lang.String
     */
+/*
     public static String getInternetIp(){
         try {
             // 打开连接
@@ -51,6 +48,51 @@ public class IpUtils {
             e.printStackTrace();
         }
         return null;
+    }
+*/
+
+    /** 
+    * @Description: 获取客户端公网IP
+    * @Author: guohang
+    * @Date: 2020/5/17 19:49
+    * @Param: [] 
+    * @return: java.lang.String 
+    */ 
+    public static String getInternetIp() {
+        String ip = "";
+        String chinaz = "http://ip.chinaz.com/";
+        StringBuilder inputLine = new StringBuilder();
+        String read = "";
+        URL url = null;
+        HttpURLConnection urlConnection = null;
+        BufferedReader in = null;
+        try {
+            url = new URL(chinaz);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+            while ((read = in.readLine()) != null) {
+                inputLine.append(read + "\r\n");
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        Pattern p = Pattern.compile("<dd class=\"fz24\">(.*?)</dd>");
+        Matcher m = p.matcher(inputLine.toString());
+        if (m.find()) {
+            String ipstr = m.group(1);
+            ip = ipstr;
+        }
+        return ip;
     }
 
 
