@@ -252,8 +252,8 @@ public class BaseController {
     */ 
     protected ResultData deleteDataError(){
         ResultData resultData = new ResultData();
-        resultData.setCode(DELETE_DATA_ERROE.getCode());
-        resultData.setMsg(DELETE_DATA_ERROE.getMsg());
+        resultData.setCode(DELETE_DATA_ERROR.getCode());
+        resultData.setMsg(DELETE_DATA_ERROR.getMsg());
         return resultData;
     }
 
