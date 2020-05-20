@@ -12,6 +12,9 @@ public class Redis {
    public static final String EX = "ex";
    public static final String PX = "px";
    public static final String NO = "no";
+   public static final String OK = "OK";
+   public static final String ONE = "1";
+
 
 }
 
