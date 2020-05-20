@@ -21,22 +21,22 @@ public class DeptService {
     @Autowired
     private DeptMapper deptMapper;
 
-    public ResultData selectAllDept(RedisService redisService, String tokenId ){
-            String token= redisService.get(tokenId);
-            Map<String, Object> resultMap = new HashMap<String, Object>();
-            if(null == token){
-                //证明用户信息失效
-                resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-                resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
-            }else {
-                //证明用户信息没有失效
-                List<Dept> depts = deptMapper.selectAll();
-                if(depts.size()>0 &&depts !=null){
-                    resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
-                    resultMap.put("msg",SELECT_DATA_SUCCESS.getCode());
-                    resultMap.put("data",depts);
-                }
+    public Map<String,Object> selectAllDept(RedisService redisService, String tokenId ){
+        String token= redisService.get(tokenId);
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        if(null == token){
+            //证明用户信息失效
+            resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
+            resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
+        }else {
+            //证明用户信息没有失效
+            List<Dept> depts = deptMapper.selectAll();
+            if(depts.size()>0 &&depts !=null){
+                resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
+                resultMap.put("msg",SELECT_DATA_SUCCESS.getCode());
+                resultMap.put("data",depts);
             }
-            return resultMap;
+        }
+        return resultMap;
     }
 }

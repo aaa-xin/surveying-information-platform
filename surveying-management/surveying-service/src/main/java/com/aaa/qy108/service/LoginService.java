@@ -52,7 +52,7 @@ public class LoginService extends BaseService<User> {
                 //判断token是否更新成功
                 if (updateResult > 0){
                     String setResult = redisService.set(String.valueOf(usr.getId()), token, XX, EX, 1800);
-                    if ("OK".equals(setResult.toUpperCase()) || "1".equals(setResult)){
+                    if (OK.equals(setResult.toUpperCase()) || ONE.equals(setResult)){
                         //判断客户端ip和位置，然后添加登录日志
                         String ip = IpUtils.getInternetIp();
                         System.out.println(ip);

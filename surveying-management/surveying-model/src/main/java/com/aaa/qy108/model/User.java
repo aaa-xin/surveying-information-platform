@@ -8,6 +8,11 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
+/**
+ * @Author guohang
+ * @Description User实体
+ * @Date 2020/5/20 21:36
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)

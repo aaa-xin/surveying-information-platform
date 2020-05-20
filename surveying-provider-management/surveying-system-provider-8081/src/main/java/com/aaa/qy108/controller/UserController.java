@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
+import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
+
 /**
  * @Author guohang
  * @Description 用户管理的controller
@@ -38,10 +41,9 @@ public class UserController extends CommonController<User> {
     @PostMapping("/addUser")
     ResultData addUser(@RequestBody User user, @RequestParam("tokenId") String tokenId){
         Map<String, Object> addResult = userService.addUser(user, redisService, tokenId);
-        ResultData resultData = new ResultData();
-        if ("21001".equals(addResult.get("code"))){
+        if (ADD_DATA_SUCCESS.getCode().equals(addResult.get("code"))){
             return super.addSuccess();
-        }else if ("10006".equals(addResult.get("code"))){
+        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(addResult.get("code"))){
             return super.loginTimeoutExit();
         }else{
             return super.addFailed();
