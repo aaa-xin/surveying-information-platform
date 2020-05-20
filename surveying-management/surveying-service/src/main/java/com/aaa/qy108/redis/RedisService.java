@@ -49,11 +49,16 @@ public class RedisService<T> {
         return NO;
     }
 
-
-
-
-
-
+    /** 
+    * @Description: 获取指定key的值
+    * @Author: guohang
+    * @Date: 2020/5/20 15:36
+    * @Param: [key] 
+    * @return: java.lang.String 
+    */ 
+    public String get(String key) {
+        return jedisCluster.get(key);
+    }
 }
 
 

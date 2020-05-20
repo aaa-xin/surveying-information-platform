@@ -5,7 +5,9 @@ import com.aaa.qy108.model.User;
 import com.aaa.qy108.vo.TokenVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @Author guohang
@@ -26,7 +28,15 @@ public interface SurveingApiService {
     @PostMapping("/doLogin")
     TokenVo doLogin(@RequestBody User user);
 
-
+    /** 
+    * @Description: 添加订单接口
+    * @Author: guohang
+    * @Date: 2020/5/20 14:42
+    * @Param: [user, tokenId]
+    * @return: com.aaa.qy108.base.ResultData 
+    */ 
+    @PostMapping("/user/addUser")
+    ResultData addUser(@RequestBody User user, @RequestParam("tokenId") String tokenId);
 
 
 
