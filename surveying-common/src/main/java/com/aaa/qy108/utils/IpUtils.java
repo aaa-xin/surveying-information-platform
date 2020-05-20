@@ -103,7 +103,7 @@ public class IpUtils {
     * @Param: [IP] 
     * @return: java.lang.String 
     */ 
-    public static String getAddressByIP(String IP) {
+    public static String getAddressByIp(String Ip) {
         //根据ip进行位置信息搜索
         DbConfig config = null;
         try {
@@ -112,7 +112,7 @@ public class IpUtils {
             String dbfile = IpUtils.class.getResource("/ip2region.db").getPath();
             DbSearcher searcher = new DbSearcher(config, dbfile);
             //采用Btree搜索
-            DataBlock block = searcher.btreeSearch(IP);
+            DataBlock block = searcher.btreeSearch(Ip);
             String address = block.getRegion();
             //打印位置信息（格式：国家|大区|省份|城市|运营商）
             System.out.println(address);

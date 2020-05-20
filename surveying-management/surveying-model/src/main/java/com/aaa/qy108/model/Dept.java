@@ -8,6 +8,11 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * @Author guohang
+ * @Description 部门实体
+ * @Date 2020/5/20 21:36
+ */
 @Table(name = "t_dept")
 @AllArgsConstructor
 @NoArgsConstructor

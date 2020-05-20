@@ -31,7 +31,7 @@ public class FtpUtils {
     * @Param: [host, port, username, password] 
     * @return: org.apache.commons.net.ftp.FTPClient 
     */ 
-    public static FTPClient getFTPClient(String host, int port, String username, String password){
+    public static FTPClient getFtpClient(String host, int port, String username, String password){
         //创建FTPClient对象,这是ftp给java提供的api
         FTPClient ftpClient = new FTPClient();
         try {
@@ -76,7 +76,7 @@ public class FtpUtils {
         FTPClient ftpClient = null;
         try {
             //获取ftp连接，然后判断是否为null，不为空则连接成功，为null则返回false
-            ftpClient = getFTPClient(host, port, username, password);
+            ftpClient = getFtpClient(host, port, username, password);
             if (null == ftpClient){
                 return false;
             }
@@ -146,7 +146,7 @@ public class FtpUtils {
         FTPClient ftpClient = null;
         try {
             //获取连接
-            ftpClient = getFTPClient(host, port, username, password);
+            ftpClient = getFtpClient(host, port, username, password);
             //设置中文支持
             ftpClient.setControlEncoding("UTF-8");
             ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
