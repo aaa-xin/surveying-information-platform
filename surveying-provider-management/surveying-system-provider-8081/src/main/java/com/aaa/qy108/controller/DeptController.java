@@ -4,10 +4,12 @@ import com.aaa.qy108.base.BaseService;
 import com.aaa.qy108.base.CommonController;
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.Dept;
+import com.aaa.qy108.model.User;
 import com.aaa.qy108.redis.RedisService;
 import com.aaa.qy108.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,10 +30,16 @@ public class DeptController extends CommonController {
     private DeptService deptService;
     @Autowired
     private RedisService redisService;
-
+    /**
+     * 获取所有的部门信息
+     * @Param: [tokenId]
+     * @Return: com.aaa.qy108.base.ResultData
+     * @Author: Liuyibo
+     * @Date: 2020/5/20 20:33
+     */
     @PostMapping("selectAllDept")
     public ResultData selectAllDept(@RequestParam("tokenId") String tokenId){
-        Map<String,Object> resultMap = deptService.selectAllDept(redisService, tokenId);
+        Map<String,Object> resultMap = deptService.selectAllDept(redisService,tokenId);
         if(SELECT_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.selectSuccess(resultMap.get("data"));
         }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){
@@ -42,7 +50,7 @@ public class DeptController extends CommonController {
     }
 
     @Override
-    public BaseService getBaseService() {
+    public BaseService<Dept> getBaseService() {
         return null;
     }
 }

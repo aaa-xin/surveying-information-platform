@@ -3,9 +3,11 @@ package com.aaa.qy108.controller;
 import com.aaa.qy108.base.BaseController;
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.Dept;
+import com.aaa.qy108.model.User;
 import com.aaa.qy108.service.SurveingApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 

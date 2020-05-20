@@ -20,7 +20,14 @@ import static com.aaa.qy108.status.SelectStatus.*;
 public class DeptService {
     @Autowired
     private DeptMapper deptMapper;
-
+    /**
+     *
+     * @Param: [redisService, tokenId]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     *     获取所有的用户信息
+     * @Author: Liuyibo
+     * @Date: 2020/5/20 20:33
+     */
     public Map<String,Object> selectAllDept(RedisService redisService, String tokenId ){
         String token= redisService.get(tokenId);
         Map<String, Object> resultMap = new HashMap<String, Object>();
