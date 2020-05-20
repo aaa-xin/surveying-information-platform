@@ -4,6 +4,7 @@ import com.aaa.qy108.base.BaseController;
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.User;
 import com.aaa.qy108.service.SurveingApiService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/user")
+@Api(value = "用户管理",tags = "用户管理接口")
 public class UserController extends BaseController {
 
     @Autowired
