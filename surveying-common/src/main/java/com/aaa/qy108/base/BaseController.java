@@ -2,8 +2,7 @@ package com.aaa.qy108.base;
 
 import static com.aaa.qy108.status.AddStatus.*;
 import static com.aaa.qy108.status.DeleteStatus.*;
-import static com.aaa.qy108.status.LoginStatus.LOGIN_FAILED;
-import static com.aaa.qy108.status.LoginStatus.LOGIN_SUCCESS;
+import static com.aaa.qy108.status.LoginStatus.*;
 import static com.aaa.qy108.status.SelectStatus.*;
 import static com.aaa.qy108.status.UpdateStatus.*;
 
@@ -72,6 +71,35 @@ public class BaseController {
         return resultData;
     }
 
+
+    /**
+    * @Description: 超时退出
+    * @Author: guohang
+    * @Date: 2020/5/20 16:00
+    * @Param: []
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    protected ResultData loginTimeoutExit() {
+        ResultData resultData = new ResultData();
+        resultData.setCode(LOGIN_TIMEOUT_EXIT.getCode());
+        resultData.setMsg(LOGIN_TIMEOUT_EXIT.getMsg());
+        return resultData;
+    }
+
+
+    /**
+    * @Description: 超时退出，自定义消息
+    * @Author: guohang
+    * @Date: 2020/5/20 15:59
+    * @Param: [msg]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    protected ResultData loginTimeoutExit(String msg) {
+        ResultData resultData = new ResultData();
+        resultData.setCode(LOGIN_TIMEOUT_EXIT.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
 
     /** 
     * @Description: 登录失败，使用系统消息

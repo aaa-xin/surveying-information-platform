@@ -14,6 +14,7 @@ public enum  LoginStatus {
     PASSWORD_WRONG("10003", "密码错误"),
     USER_LOCKED("10004", "账号被锁定"),
     LOGOUT_WRONG("10005", "用户退出异常"),
+    LOGIN_TIMEOUT_EXIT("10006","超时自动退出，请重新登录"),
 
     TEST("11111", "测试一下");
 
