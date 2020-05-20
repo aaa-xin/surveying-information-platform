@@ -29,7 +29,7 @@ public interface SurveingApiService {
     TokenVo doLogin(@RequestBody User user);
 
     /** 
-    * @Description: 添加订单接口
+    * @Description: 添加用户接口
     * @Author: guohang
     * @Date: 2020/5/20 14:42
     * @Param: [user, tokenId]
