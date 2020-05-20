@@ -5,6 +5,7 @@ import com.aaa.qy108.mapper.DeptMapper;
 import com.aaa.qy108.model.Dept;
 import com.aaa.qy108.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import static com.aaa.qy108.status.SelectStatus.*;
  * @author Liuyibo
  * @date 2020-05-20 17:16
  */
+@Service
 public class DeptService {
     @Autowired
     private DeptMapper deptMapper;
