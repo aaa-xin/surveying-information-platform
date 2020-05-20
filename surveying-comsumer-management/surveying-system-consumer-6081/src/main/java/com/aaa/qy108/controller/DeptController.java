@@ -23,10 +23,6 @@ public class DeptController extends BaseController {
 
     @PostMapping("selectAllDept")
     public ResultData selectAllDept(@RequestParam("tokenId") String tokenId){
-        List<Dept> depts = surveingApiService.selectAllDept(tokenId);
-        if(depts.size()>0){
-            return super.selectSuccess(depts);
-        }
-        return super.selectFailed("部门信息查询失败！");
+        return surveingApiService.selectAllDept(tokenId);
     }
 }

@@ -42,7 +42,7 @@ public interface SurveingApiService {
     ResultData addUser(@RequestBody User user, @RequestParam("tokenId") String tokenId);
 
     @PostMapping("selectAllDept")
-    List<Dept> selectAllDept(@RequestParam("tokenId") String tokenId);
+    ResultData selectAllDept(@RequestParam("tokenId") String tokenId);
 
 
 

@@ -24,10 +24,10 @@ public class DeptController {
     private RedisService redisService;
 
     @PostMapping("selectAllDept")
-    public List<Dept> selectAllDept(@RequestParam("tokenId") String tokenId){
-        List<Dept> depts = deptService.selectAllDept(redisService,tokenId);
-        if(depts.size()>0){
-            return depts;
+    public ResultData selectAllDept(@RequestParam("tokenId") String tokenId){
+        ResultData resultData = deptService.selectAllDept(redisService, tokenId);
+        if(resultData !=null){
+            return resultData;
         }
         return null;
     }
