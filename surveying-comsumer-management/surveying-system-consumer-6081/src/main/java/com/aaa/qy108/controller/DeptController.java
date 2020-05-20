@@ -32,7 +32,7 @@ public class DeptController extends BaseController {
      * @Date: 2020/5/20 21:47
      */
     @PostMapping("selectAllDept")
-    public ResultData selectAllDept(@RequestParam HashMap map){
+    public ResultData selectAllDept(@RequestBody HashMap map){
         return surveingApiService.selectAllDept(map);
     }
 }
