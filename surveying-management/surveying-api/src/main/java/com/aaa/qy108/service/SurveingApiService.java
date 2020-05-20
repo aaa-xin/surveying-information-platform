@@ -38,6 +38,14 @@ public interface SurveingApiService {
     @PostMapping("/user/addUser")
     ResultData addUser(@RequestBody User user, @RequestParam("tokenId") String tokenId);
 
+    /**
+     *
+     * @Param: [dept, tokenId]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 获取部门信息
+     * @Author: Liuyibo
+     * @Date: 2020/5/20 19:41
+     */
     @PostMapping("selectAllDept")
     ResultData selectAllDept(@RequestParam("tokenId") String tokenId);
 
