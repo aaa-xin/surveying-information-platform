@@ -7,6 +7,7 @@ import com.aaa.qy108.vo.TokenVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -42,12 +43,12 @@ public interface SurveingApiService {
      *
      * @Param: [dept, tokenId]
      * @Return: com.aaa.qy108.base.ResultData
-     * 获取部门信息
+     * 通过条件查询部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/20 19:41
      */
     @PostMapping("selectAllDept")
-    ResultData selectAllDept(@RequestParam("tokenId") String tokenId);
+    ResultData selectAllDept(@RequestBody HashMap map);
 
 
     /** 
