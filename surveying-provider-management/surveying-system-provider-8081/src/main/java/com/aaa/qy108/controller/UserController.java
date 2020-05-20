@@ -9,9 +9,11 @@ import com.aaa.qy108.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
+import static com.aaa.qy108.status.DeleteStatus.DELETE_DATA_SUCCESS;
 import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
 
 /**
@@ -51,10 +53,40 @@ public class UserController extends CommonController<User> {
     }
 
 
+    /**
+    * @Description: 批量删除用户
+    * @Author: guohang
+    * @Date: 2020/5/20 20:51
+    * @Param: [ids, tokenId]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @DeleteMapping("/delUser")
+    ResultData delUser(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId){
+        Map<String, Object> resultMap = userService.delUser(ids, redisService, tokenId);
+        if (DELETE_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
+            return super.deleteSuccess();
+        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){
+            return super.loginTimeoutExit();
+        }else{
+            return super.deleteFailed();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     @Override
     public BaseService<User> getBaseService() {
         return null;
     }
+
+
 }
 
 

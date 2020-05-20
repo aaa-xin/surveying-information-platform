@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @Author guohang
  * @Description consumer的usercontroller
@@ -37,6 +39,11 @@ public class UserController extends BaseController {
     }
 
 
+    @DeleteMapping("/delUser")
+    @ApiOperation(value = "删除用户",notes = "用户管理的删除用户")
+    public ResultData delUser(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId){
+        return surveingApiService.delUser(ids, tokenId);
+    }
 
 
 

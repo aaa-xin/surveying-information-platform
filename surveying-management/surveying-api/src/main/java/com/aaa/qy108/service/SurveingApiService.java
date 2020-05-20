@@ -5,10 +5,7 @@ import com.aaa.qy108.model.Dept;
 import com.aaa.qy108.model.User;
 import com.aaa.qy108.vo.TokenVo;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +51,15 @@ public interface SurveingApiService {
     ResultData selectAllDept(@RequestBody HashMap map);
 
 
-
+    /** 
+    * @Description: 批量删除用户
+    * @Author: guohang
+    * @Date: 2020/5/20 20:33
+    * @Param: [ids, tokenId] 
+    * @return: com.aaa.qy108.base.ResultData 
+    */
+    @DeleteMapping("/user/delUser")
+    ResultData delUser(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId);
 }
 
 
