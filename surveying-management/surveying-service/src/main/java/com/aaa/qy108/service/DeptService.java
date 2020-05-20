@@ -16,6 +16,6 @@ public class DeptService {
     private DeptMapper deptMapper;
 
     public List<Dept> selectAllDept(RedisService redisService, String tokenId ){
-            redisService.get(tokenId);
+            return null;
     }
 }

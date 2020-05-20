@@ -1,6 +1,7 @@
 package com.aaa.qy108.service;
 
 import com.aaa.qy108.base.ResultData;
+import com.aaa.qy108.model.Dept;
 import com.aaa.qy108.model.User;
 import com.aaa.qy108.vo.TokenVo;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
  * @Author guohang
@@ -37,6 +40,9 @@ public interface SurveingApiService {
     */ 
     @PostMapping("/user/addUser")
     ResultData addUser(@RequestBody User user, @RequestParam("tokenId") String tokenId);
+
+    @PostMapping("selectAllDept")
+    List<Dept> selectAllDept(@RequestParam("tokenId") String tokenId);
 
 
 
