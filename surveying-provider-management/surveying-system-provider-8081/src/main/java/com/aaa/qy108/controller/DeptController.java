@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,15 +32,16 @@ public class DeptController extends CommonController {
     @Autowired
     private RedisService redisService;
     /**
-     * 获取所有的部门信息
+     * 通过条件查询部门信息
      * @Param: [tokenId]
      * @Return: com.aaa.qy108.base.ResultData
      * @Author: Liuyibo
      * @Date: 2020/5/20 20:33
      */
     @PostMapping("selectAllDept")
-    public ResultData selectAllDept(@RequestParam("tokenId") String tokenId){
-        Map<String,Object> resultMap = deptService.selectAllDept(redisService,tokenId);
+    ResultData selectAllDept(@RequestBody HashMap map){
+        System.out.println(map);
+        Map<String,Object> resultMap = deptService.selectAllDept(redisService,map);
         if(SELECT_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.selectSuccess(resultMap.get("data"));
         }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){

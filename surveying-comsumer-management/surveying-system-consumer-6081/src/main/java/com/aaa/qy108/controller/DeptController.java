@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,9 +23,16 @@ import java.util.List;
 public class DeptController extends BaseController {
     @Autowired
     private SurveingApiService surveingApiService;
-
+    /**
+     *
+     * @Param: [map]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 通过条件查询部门信息
+     * @Author: Liuyibo
+     * @Date: 2020/5/20 21:47
+     */
     @PostMapping("selectAllDept")
-    public ResultData selectAllDept(@RequestParam("tokenId") String tokenId){
-        return surveingApiService.selectAllDept(tokenId);
+    public ResultData selectAllDept(@RequestParam HashMap map){
+        return surveingApiService.selectAllDept(map);
     }
 }

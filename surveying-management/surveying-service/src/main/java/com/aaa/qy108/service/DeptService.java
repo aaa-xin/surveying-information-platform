@@ -5,6 +5,7 @@ import com.aaa.qy108.mapper.DeptMapper;
 import com.aaa.qy108.model.Dept;
 import com.aaa.qy108.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import static com.aaa.qy108.status.SelectStatus.*;
  * @author Liuyibo
  * @date 2020-05-20 17:16
  */
+@Service
 public class DeptService {
     @Autowired
     private DeptMapper deptMapper;
@@ -24,12 +26,12 @@ public class DeptService {
      *
      * @Param: [redisService, tokenId]
      * @Return: java.util.Map<java.lang.String,java.lang.Object>
-     *     获取所有的用户信息
+     *     通过条件查询部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/20 20:33
      */
-    public Map<String,Object> selectAllDept(RedisService redisService, String tokenId ){
-        String token= redisService.get(tokenId);
+    public Map<String,Object> selectAllDept(RedisService redisService, HashMap hashMap ){
+        String token= redisService.get(hashMap.get("tokenId").toString());
         Map<String, Object> resultMap = new HashMap<String, Object>();
         if(null == token){
             //证明用户信息失效
@@ -37,7 +39,7 @@ public class DeptService {
             resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
         }else {
             //证明用户信息没有失效
-            List<Dept> depts = deptMapper.selectAll();
+            List<Dept> depts = deptMapper.selectDeptByNameOrTime(hashMap);
             if(depts.size()>0 &&depts !=null){
                 resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
                 resultMap.put("msg",SELECT_DATA_SUCCESS.getCode());
@@ -46,4 +48,5 @@ public class DeptService {
         }
         return resultMap;
     }
+
 }
