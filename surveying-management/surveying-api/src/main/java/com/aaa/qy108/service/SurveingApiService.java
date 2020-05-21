@@ -22,6 +22,17 @@ import java.util.List;
 public interface SurveingApiService {
 
     /**
+     * @Author Cy
+     * @Description 条件分页查询所有用户
+     * @Param [map]
+     * @Data 2020/5/21
+     * @return com.aaa.qy108.base.ResultData
+     * @throws
+     */
+    @PostMapping("selectUser")
+    ResultData selectUserAll(@RequestParam HashMap map);
+
+    /**
     * @Description: 登录接口
     * @Author: guohang
     * @Date: 2020/5/15 22:43

@@ -31,7 +31,6 @@
         <if test="deptId != null">
             and d.dept_id like '%${deptId}%'
         </if>
-
     </where>
   </select>
 </mapper>
