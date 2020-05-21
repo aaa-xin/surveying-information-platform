@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
+import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
+import static com.aaa.qy108.status.UpdateStatus.UPDATE_DATA_SUCCESS;
 
 /**
  * @author Liuyibo
@@ -38,5 +43,31 @@ public class DeptController extends BaseController {
         System.out.println("我是消费者");
         System.out.println(map);
         return surveingApiService.selectAllDept(map);
+    }
+    /**
+     *
+     * @Param: [dept, tokenId]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 添加部门
+     * @Author: Liuyibo
+     * @Date: 2020/5/21 21:56
+     */
+    @PostMapping("/addDept")
+    @ApiOperation(value = "根据条件添加部门",notes = "部门管理的添加")
+    public ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
+        return surveingApiService.addDept(dept,tokenId);
+    }
+    /**
+     *
+     * @Param: [dept, tokenId]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 修改部门
+     * @Author: Liuyibo
+     * @Date: 2020/5/21 21:56
+     */
+    @PostMapping("/updateDept")
+    @ApiOperation(value = "根据条件修改部门",notes = "部门管理的修改")
+    public ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
+      return surveingApiService.updateDept(dept,tokenId);
     }
 }
