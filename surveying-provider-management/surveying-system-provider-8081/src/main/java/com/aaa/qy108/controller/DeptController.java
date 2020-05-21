@@ -8,17 +8,16 @@ import com.aaa.qy108.model.User;
 import com.aaa.qy108.redis.RedisService;
 import com.aaa.qy108.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
 import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
 import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
+import static com.aaa.qy108.status.UpdateStatus.*;
 
 /**
  * @author Liuyibo
@@ -26,11 +25,16 @@ import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
  * @date 2020-05-20 17:14
  */
 @RestController
-public class DeptController extends CommonController {
+@RequestMapping("/dept")
+public class DeptController extends CommonController<Dept> {
+
     @Autowired
     private DeptService deptService;
+
     @Autowired
     private RedisService redisService;
+
+
     /**
      * 通过条件查询部门信息
      * @Param: [tokenId]
@@ -40,7 +44,6 @@ public class DeptController extends CommonController {
      */
     @PostMapping("selectAllDept")
     ResultData selectAllDept(@RequestBody HashMap map){
-        System.out.println(map);
         Map<String,Object> resultMap = deptService.selectAllDept(redisService,map);
         if(SELECT_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.selectSuccess(resultMap.get("data"));
@@ -51,8 +54,52 @@ public class DeptController extends CommonController {
         }
     }
 
+
+    /**
+     *
+     * @Param: [dept, tokenId]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 添加部门信息
+     * @Author: Liuyibo
+     * @Date: 2020/5/21 19:50
+     */
+    @PostMapping("addDept")
+    ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
+        Map<String, Object> addResult = deptService.addDept(dept, redisService, tokenId);
+        if (ADD_DATA_SUCCESS.getCode().equals(addResult.get("code"))){
+            return super.addSuccess();
+        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(addResult.get("code"))){
+            return super.loginTimeoutExit();
+        }else{
+            return super.addFailed();
+        }
+    }
+
+
+    /**
+     *
+     * @Param: [dept, tokenId]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 修改部门信息
+     * @Author: Liuyibo
+     * @Date: 2020/5/21 20:11
+     */
+    @PostMapping("updateDept")
+    ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
+        Map<String, Object> updateResult = deptService.updateDept(dept, redisService, tokenId);
+        if (UPDATE_DATA_SUCCESS.getCode().equals(updateResult.get("code"))){
+            return super.updateSuccess();
+        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(updateResult.get("code"))){
+            return super.loginTimeoutExit();
+        }else{
+            return super.updateFailed();
+        }
+    }
+
+
     @Override
     public BaseService<Dept> getBaseService() {
         return null;
     }
+
 }

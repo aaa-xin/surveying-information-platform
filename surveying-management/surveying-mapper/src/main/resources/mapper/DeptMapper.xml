@@ -13,15 +13,12 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
   </resultMap>
   <select id="selectDeptByNameOrTime" resultType="com.aaa.qy108.model.Dept" parameterType="HashMap">
-        select * from t_dept
-        <where>
-          1=1
+        select * from t_dept where  1 = 1
           <if test="deptName != null">
-            and DEPT_NAME = '#{deptName}'
+            and DEPT_NAME like '%${deptName}%'
           </if>
           <if test="startTime != null and stopTime != null">
-            and CREATE_TIME  BETWEEN '#{startTime}' AND '#{stopTime}'
+             and CREATE_TIME  BETWEEN #{startTime} AND #{stopTime}
           </if>
-        </where>
   </select>
 </mapper>
