@@ -5,11 +5,10 @@ import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.Dept;
 import com.aaa.qy108.model.User;
 import com.aaa.qy108.service.SurveingApiService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +19,8 @@ import java.util.List;
  * @date 2020-05-20 16:38
  */
 @RestController
+@RequestMapping("/dept")
+@Api(value = "部门管理",tags = "部门管理接口")
 public class DeptController extends BaseController {
     @Autowired
     private SurveingApiService surveingApiService;
@@ -31,8 +32,11 @@ public class DeptController extends BaseController {
      * @Author: Liuyibo
      * @Date: 2020/5/20 21:47
      */
-    @PostMapping("selectAllDept")
-    public ResultData selectAllDept(@RequestParam HashMap map){
+    @PostMapping("/selectAllDept")
+    @ApiOperation(value = "根据条件查询部门",notes = "部门管理的查询")
+    public ResultData selectAllDept(@RequestBody HashMap map){
+        System.out.println("我是消费者");
+        System.out.println(map);
         return surveingApiService.selectAllDept(map);
     }
 }

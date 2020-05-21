@@ -50,6 +50,27 @@ public interface SurveingApiService {
     @PostMapping("selectAllDept")
     ResultData selectAllDept(@RequestBody HashMap map);
 
+    /**
+     *
+     * @Param: [dept, tokenId]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 添加部门信息
+     * @Author: Liuyibo
+     * @Date: 2020/5/21 19:50
+     */
+    @PostMapping("addDept")
+    ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId);
+
+    /**
+     *
+     * @Param: [dept, tokenId]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 修改部门信息
+     * @Author: Liuyibo
+     * @Date: 2020/5/21 20:11
+     */
+    @PostMapping("updateDept")
+    ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId);
 
     /** 
     * @Description: 批量删除用户

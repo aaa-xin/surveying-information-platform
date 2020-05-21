@@ -17,8 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
 import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
 import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
+import static com.aaa.qy108.status.UpdateStatus.*;
 
 /**
  * @author Liuyibo
@@ -26,7 +28,7 @@ import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
  * @date 2020-05-20 17:14
  */
 @RestController
-public class DeptController extends CommonController {
+public class DeptController extends CommonController<Dept> {
     @Autowired
     private DeptService deptService;
     @Autowired
@@ -42,6 +44,7 @@ public class DeptController extends CommonController {
     ResultData selectAllDept(@RequestBody HashMap map){
         System.out.println(map);
         Map<String,Object> resultMap = deptService.selectAllDept(redisService,map);
+        System.out.println(resultMap);
         if(SELECT_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.selectSuccess(resultMap.get("data"));
         }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){
@@ -50,9 +53,50 @@ public class DeptController extends CommonController {
             return super.selectFailed();
         }
     }
-
+    /**
+     *
+     * @Param: [dept, tokenId]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 添加部门信息
+     * @Author: Liuyibo
+     * @Date: 2020/5/21 19:50
+     */
+    @PostMapping("addDept")
+    ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
+        System.out.println(dept);
+        System.out.println(tokenId+"token值");
+        Map<String, Object> addResult = deptService.addDept(dept, redisService, tokenId);
+        if (ADD_DATA_SUCCESS.getCode().equals(addResult.get("code"))){
+            return super.addSuccess();
+        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(addResult.get("code"))){
+            return super.loginTimeoutExit();
+        }else{
+            return super.addFailed();
+        }
+    }
+    /**
+     *
+     * @Param: [dept, tokenId]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 修改部门信息
+     * @Author: Liuyibo
+     * @Date: 2020/5/21 20:11
+     */
+    @PostMapping("updateDept")
+    ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
+        System.out.println(dept);
+        Map<String, Object> updateResult = deptService.updateDept(dept, redisService, tokenId);
+        if (UPDATE_DATA_SUCCESS.getCode().equals(updateResult.get("code"))){
+            return super.updateSuccess();
+        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(updateResult.get("code"))){
+            return super.loginTimeoutExit();
+        }else{
+            return super.updateFailed();
+        }
+    }
     @Override
     public BaseService<Dept> getBaseService() {
         return null;
     }
+
 }
