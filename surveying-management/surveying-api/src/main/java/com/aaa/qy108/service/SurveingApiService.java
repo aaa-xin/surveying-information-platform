@@ -4,9 +4,11 @@ import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.Dept;
 import com.aaa.qy108.model.User;
 import com.aaa.qy108.vo.TokenVo;
+import feign.Response;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public interface SurveingApiService {
     TokenVo doLogin(@RequestBody User user);
 
     /** 
-    * @Description: 添加订单接口
+    * @Description: 添加用户接口
     * @Author: guohang
     * @Date: 2020/5/20 14:42
     * @Param: [user, tokenId]
@@ -81,6 +83,33 @@ public interface SurveingApiService {
     */
     @DeleteMapping("/user/delUser")
     ResultData delUser(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId);
+
+    /**
+    * @Description: 用户管理中修改用户信息
+    * @Author: guohang
+    * @Date: 2020/5/21 15:48
+    * @Param: [user, tokenId]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @PostMapping("/user/updateUser")
+    ResultData updateUser(@RequestBody User user, @RequestParam("tokenId") String tokenId);
+
+    /**
+    * @Description: 用户信息导出excle
+    * @Author: guohang
+    * @Date: 2020/5/21 16:25
+    * @Param: [tokenId]
+    */
+    @GetMapping("/user/exportExcle")
+    Response exportExcle(@RequestParam("tokenId") String tokenId);
+
+
+
+
+
+
+
+
 }
 
 

@@ -6,15 +6,22 @@ import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.User;
 import com.aaa.qy108.redis.RedisService;
 import com.aaa.qy108.service.UserService;
+import com.aaa.qy108.utils.ExcelUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
 import static com.aaa.qy108.status.DeleteStatus.DELETE_DATA_SUCCESS;
 import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
+import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
+import static com.aaa.qy108.status.UpdateStatus.UPDATE_DATA_SUCCESS;
 
 /**
  * @Author guohang
@@ -22,6 +29,7 @@ import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
  * @Date 2020/5/20 13:49
  */
 @RestController
+@Slf4j
 @RequestMapping("/user")
 public class UserController extends CommonController<User> {
 
@@ -73,10 +81,108 @@ public class UserController extends CommonController<User> {
     }
 
 
+    /** 
+    * @Description: 修改员工信息
+    * @Author: guohang
+    * @Date: 2020/5/21 15:56
+    * @Param: [user, tokenId] 
+    * @return: com.aaa.qy108.base.ResultData 
+    */ 
+    @PostMapping("/updateUser")
+    ResultData updateUser(@RequestBody User user, @RequestParam("tokenId") String tokenId){
+        Map<String, Object> resultMap = userService.updateUser(user, redisService, tokenId);
+        if (UPDATE_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
+            return super.updateSuccess();
+        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){
+            return super.loginTimeoutExit();
+        }else{
+            return super.updateFailed();
+        }
+    }
 
 
+    /** 
+    * @Description: 导出用户信息 
+    * @Author: guohang
+    * @Date: 2020/5/21 16:26
+    * @Param: [tokenId] 
+    * @return: com.aaa.qy108.base.ResultData 
+    */ 
+    @GetMapping("/exportExcle")
+    public void exportExcle(@RequestParam("tokenId") String tokenId, HttpServletResponse response){
+        Map<String, Object> map = userService.selectAll(redisService,tokenId);
+        if (SELECT_DATA_SUCCESS.getCode().equals(map.get("code"))){
+            List<User> users = (List<User>) map.get("data");
+            //不为空，开始进行导出
+            if (null != users && !users.isEmpty()){
+                //list存放表格数据
+                List<List<String>> excelData = new ArrayList<List<String>>();
+                if(null != users){
+                    //表格头
+                    List<String> headList = new ArrayList<String>();
+                    headList.add("用户ID");
+                    headList.add("用户名");
+                    headList.add("部门ID");
+                    headList.add("邮箱");
+                    headList.add("联系电话");
+                    headList.add("状态");
+                    headList.add("创建时间");
+                    headList.add("修改时间");
+                    headList.add("最近访问时间");
+                    headList.add("性别");
+                    headList.add("描述");
+                    headList.add("用户类型");
+                    //把表头放入表格数据中
+                    excelData.add(headList);
+                    //遍历表格数据并放入excelData
+                    for (User user : users) {
+                        List<String> list = new ArrayList<String>();
+                        list.add(String.valueOf(user.getId()));
+                        list.add(String.valueOf(user.getUsername()));
+                        list.add(String.valueOf(user.getDeptId()));
+                        list.add(String.valueOf(user.getEmail()));
+                        list.add(String.valueOf(user.getMobile()));
+                        if ("0".equals(user.getStatus())){
+                            list.add("锁定");
+                        }else if ("1".equals(user.getStatus())){
+                            list.add("有效");
+                        }
+                        list.add(String.valueOf(user.getCreateTime()));
+                        list.add(String.valueOf(user.getModifyTime()));
+                        list.add(String.valueOf(user.getLastLoginTime()));
+                        if ("0".equals(user.getSsex())){
+                            list.add("男");
+                        }else if ("1".equals(user.getSsex())){
+                            list.add("女");
+                        }else if ("2".equals(user.getSsex())){
+                            list.add("保密");
+                        }
+                        list.add(String.valueOf(user.getDescription()));
+                        if ("0".equals(user.getType())){
+                            list.add("单位用户");
+                        }else if ("1".equals(user.getType())){
+                            list.add("审核用户");
+                        }else if ("2".equals(user.getType())){
+                            list.add("管理员");
+                        }
+                        //把数据放入excelData
+                        excelData.add(list);
+                    }
+                }
+                String sheetName = "用户信息";
+                String fileName = "用户信息表";
+                try {
+                    ExcelUtil.exportExcel(response, excelData, sheetName, fileName, 12);
+                } catch (IOException e) {
+                    log.error("用户信息数据导出失败！");
+                }
 
-
+            }
+        }else{
+            log.error("用户管理中的导出数据出错！");
+        }
+    }
+    
 
 
 
