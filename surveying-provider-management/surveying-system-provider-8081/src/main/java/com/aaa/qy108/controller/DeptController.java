@@ -8,10 +8,7 @@ import com.aaa.qy108.model.User;
 import com.aaa.qy108.redis.RedisService;
 import com.aaa.qy108.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,11 +25,16 @@ import static com.aaa.qy108.status.UpdateStatus.*;
  * @date 2020-05-20 17:14
  */
 @RestController
+@RequestMapping("/dept")
 public class DeptController extends CommonController<Dept> {
+
     @Autowired
     private DeptService deptService;
+
     @Autowired
     private RedisService redisService;
+
+
     /**
      * 通过条件查询部门信息
      * @Param: [tokenId]
@@ -42,9 +44,7 @@ public class DeptController extends CommonController<Dept> {
      */
     @PostMapping("selectAllDept")
     ResultData selectAllDept(@RequestBody HashMap map){
-        System.out.println(map);
         Map<String,Object> resultMap = deptService.selectAllDept(redisService,map);
-        System.out.println(resultMap);
         if(SELECT_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.selectSuccess(resultMap.get("data"));
         }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){
@@ -53,6 +53,8 @@ public class DeptController extends CommonController<Dept> {
             return super.selectFailed();
         }
     }
+
+
     /**
      *
      * @Param: [dept, tokenId]
@@ -63,8 +65,6 @@ public class DeptController extends CommonController<Dept> {
      */
     @PostMapping("addDept")
     ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
-        System.out.println(dept);
-        System.out.println(tokenId+"token值");
         Map<String, Object> addResult = deptService.addDept(dept, redisService, tokenId);
         if (ADD_DATA_SUCCESS.getCode().equals(addResult.get("code"))){
             return super.addSuccess();
@@ -74,6 +74,8 @@ public class DeptController extends CommonController<Dept> {
             return super.addFailed();
         }
     }
+
+
     /**
      *
      * @Param: [dept, tokenId]
@@ -84,7 +86,6 @@ public class DeptController extends CommonController<Dept> {
      */
     @PostMapping("updateDept")
     ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
-        System.out.println(dept);
         Map<String, Object> updateResult = deptService.updateDept(dept, redisService, tokenId);
         if (UPDATE_DATA_SUCCESS.getCode().equals(updateResult.get("code"))){
             return super.updateSuccess();
@@ -94,6 +95,8 @@ public class DeptController extends CommonController<Dept> {
             return super.updateFailed();
         }
     }
+
+
     @Override
     public BaseService<Dept> getBaseService() {
         return null;

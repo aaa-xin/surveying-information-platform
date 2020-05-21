@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -115,6 +116,18 @@ public class UserController extends BaseController {
         return result;
     }
 
+
+    /**
+    * @Description: 查询用户，带条件
+    * @Author: guohang
+    * @Date: 2020/5/21 22:54
+    * @Param: [map]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @PostMapping("selectUser")
+    ResultData selectUserAll(@RequestBody HashMap map){
+        return surveingApiService.selectUserAll(map);
+    }
 
 
 

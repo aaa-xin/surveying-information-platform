@@ -49,7 +49,7 @@ public interface SurveingApiService {
      * @Author: Liuyibo
      * @Date: 2020/5/20 19:41
      */
-    @PostMapping("selectAllDept")
+    @PostMapping("/dept/selectAllDept")
     ResultData selectAllDept(@RequestBody HashMap map);
 
     /**
@@ -60,7 +60,7 @@ public interface SurveingApiService {
      * @Author: Liuyibo
      * @Date: 2020/5/21 19:50
      */
-    @PostMapping("addDept")
+    @PostMapping("/dept/addDept")
     ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId);
 
     /**
@@ -71,7 +71,7 @@ public interface SurveingApiService {
      * @Author: Liuyibo
      * @Date: 2020/5/21 20:11
      */
-    @PostMapping("updateDept")
+    @PostMapping("/dept/updateDept")
     ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId);
 
     /** 
@@ -104,7 +104,16 @@ public interface SurveingApiService {
     Response exportExcle(@RequestParam("tokenId") String tokenId);
 
 
-
+    /**
+     * @Author Cy
+     * @Description 条件分页查询所有用户
+     * @Param [map]
+     * @Data 2020/5/21
+     * @return com.aaa.qy108.base.ResultData
+     * @throws
+     */
+    @PostMapping("/user/selectUser")
+    ResultData selectUserAll(@RequestBody HashMap map);
 
 
 

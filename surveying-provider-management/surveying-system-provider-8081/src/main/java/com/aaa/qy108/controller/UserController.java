@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
-import static com.aaa.qy108.status.DeleteStatus.DELETE_DATA_SUCCESS;
-import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
-import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
-import static com.aaa.qy108.status.UpdateStatus.UPDATE_DATA_SUCCESS;
+import static com.aaa.qy108.status.AddStatus.*;
+import static com.aaa.qy108.status.DeleteStatus.*;
+import static com.aaa.qy108.status.LoginStatus.*;
+import static com.aaa.qy108.status.SelectStatus.*;
+import static com.aaa.qy108.status.UpdateStatus.*;
 
 /**
  * @Author guohang
@@ -182,8 +183,25 @@ public class UserController extends CommonController<User> {
             log.error("用户管理中的导出数据出错！");
         }
     }
-    
 
+    /**
+    * @Description: 带条件查询用户信息
+    * @Author: guohang
+    * @Date: 2020/5/21 22:31
+    * @Param: [map]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @PostMapping("/selectUser")
+    ResultData selectUserAll(@RequestBody HashMap map){
+        Map<String, Object> userAll = userService.selectUserAll(map,redisService);
+        if (SELECT_DATA_SUCCESS.getCode().equals(userAll.get("code"))){
+            return super.selectSuccess(userAll);
+        }else if (SELECT_DATA_FAILED.getCode().equals(userAll.get("code"))){
+            return super.selectFailed();
+        }else{
+            return super.selectFailed(SELECT_DATA_NOT_EXIST.getMsg());
+        }
+    }
 
 
 

@@ -7,6 +7,8 @@ import com.aaa.qy108.base.BaseService;
 import com.aaa.qy108.mapper.UserMapper;
 import com.aaa.qy108.model.User;
 import com.aaa.qy108.redis.RedisService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -130,7 +132,7 @@ public class UserService extends BaseService<User> {
 
 
     /**
-    * @Description: 查询全部用户信息
+    * @Description: 查询全部用户信息，导出excle用
     * @Author: guohang
     * @Date: 2020/5/21 19:29
     * @Param: [redisService,tokenId]
@@ -153,6 +155,55 @@ public class UserService extends BaseService<User> {
             }else{
                 resultMap.put("code",SELECT_DATA_FAILED.getCode());
                 resultMap.put("msg",SELECT_DATA_FAILED.getMsg());
+            }
+        }
+        return resultMap;
+    }
+
+
+    /**
+     * @Author Cy
+     * @Description 分页查询全部用户
+     * @Param [t, pageNo, pageSize]
+     * @Data 2020/5/20
+     * @return com.github.pagehelper.PageInfo<T>
+     * @throws
+     */
+    public Map<String,Object> selectUserAll(HashMap map, RedisService redisService){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        String tokenVal = redisService.get(map.get("tokenId").toString());
+        //检测token
+        if (null == tokenVal){
+            resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
+            resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
+            return resultMap;
+        }
+        if(map.size()>0){
+            //添加查询条件
+            HashMap<String, Object> sqlMap = new HashMap<String, Object>();
+            if(map.get("username") != null){
+                sqlMap.put("username", map.get("username"));
+            }else{
+                sqlMap.put("username", null);
+            }
+            if(map.get("deptId") != null){
+                sqlMap.put("deptId", map.get("deptId"));
+            }else{
+                sqlMap.put("deptId", null);
+            }
+            List<HashMap> userAll = userMapper.selectUserAll(sqlMap);
+            System.out.println(userAll);
+            if (null != userAll && userAll.size() > 0 ){
+                //设置分页条件
+                PageHelper.startPage(Integer.parseInt(map.get("pageNo").toString())
+                        ,Integer.parseInt(map.get("pageSize").toString()));
+                PageInfo<HashMap> pageInfo = new PageInfo<HashMap>(userAll,5);
+                resultMap.put("code", SELECT_DATA_SUCCESS.getCode());
+                resultMap.put("msg", pageInfo);
+                return resultMap;
+            }else{
+                resultMap.put("code", SELECT_DATA_FAILED.getCode());
+                resultMap.put("msg", SELECT_DATA_FAILED.getMsg());
             }
         }
         return resultMap;
