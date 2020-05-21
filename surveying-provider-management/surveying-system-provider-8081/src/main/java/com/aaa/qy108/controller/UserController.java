@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
 import static com.aaa.qy108.status.DeleteStatus.DELETE_DATA_SUCCESS;
 import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
-import static com.aaa.qy108.status.SelectStatus.*;
+import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
 import static com.aaa.qy108.status.UpdateStatus.UPDATE_DATA_SUCCESS;
 
 /**
@@ -41,25 +40,6 @@ public class UserController extends CommonController<User> {
     @Autowired
     private RedisService redisService;
 
-    /**
-     * @Author Cy
-     * @Description 条件分页查询所有用户
-     * @Param [map]
-     * @Data 2020/5/21
-     * @return com.aaa.qy108.base.ResultData
-     * @throws
-     */
-    @PostMapping("selectUser")
-    ResultData selectUserAll(@RequestParam HashMap map){
-        Map<String, Object> userAll = userService.selectUserAll(map,redisService);
-        if (SELECT_DATA_SUCCESS.getCode().equals(userAll.get("code"))){
-            return super.selectSuccess(userAll);
-        }else if (SELECT_DATA_FAILED.getCode().equals(userAll.get("code"))){
-            return super.selectFailed();
-        }else{
-            return super.selectFailed(SELECT_DATA_NOT_EXIST.getMsg());
-        }
-    }
     /**
     * @Description: 用户管理中的新增用户
     * @Author: guohang
