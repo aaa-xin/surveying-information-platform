@@ -21,4 +21,17 @@
     <result column="type" property="type" jdbcType="CHAR" />
     <result column="token" property="token" jdbcType="VARCHAR" />
   </resultMap>
+  <select id="selectUserAll" resultType="HashMap" parameterType="HashMap">
+    select u.username,u.ssex,u.email,d.DEPT_NAME,u.mobile,u.`status`,u.create_time from t_user u LEFT JOIN t_dept d on u.dept_id = d.DEPT_ID
+    <where>
+        1 = 1
+        <if test="username != null">
+            and u.username like '%${username}%'
+        </if>
+        <if test="deptId != null">
+            and d.dept_id like '%${deptId}%'
+        </if>
+
+    </where>
+  </select>
 </mapper>
