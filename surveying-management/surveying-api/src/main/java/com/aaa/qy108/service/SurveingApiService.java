@@ -73,7 +73,16 @@ public interface SurveingApiService {
      */
     @PostMapping("updateDept")
     ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId);
-
+    /**
+     *
+     * @Param: [ids, tokenId]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 批量删除部门信息
+     * @Author: Liuyibo
+     * @Date: 2020/5/22 15:12
+     */
+    @DeleteMapping("delDept")
+    ResultData delDept(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId);
     /** 
     * @Description: 批量删除用户
     * @Author: guohang
