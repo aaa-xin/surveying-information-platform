@@ -37,9 +37,15 @@ public class RedisService<T> {
     * @return: java.lang.String 
     */ 
     public String set(String key,T value,String nxxx,String expx,Integer seconds){
+        String set =null;
         if (null != seconds && seconds > 0 && (NX.equals(nxxx)||XX.equals(nxxx)) && (EX.equals(expx) || PX.equals(expx))){
             //说明需要设置失效时间，使用糊涂工具包的JSONObject对象转换String
-            return jedisCluster.set(key, JSONUtil.toJsonStr(value),nxxx,expx,seconds);
+            set = jedisCluster.set(key, JSONUtil.toJsonStr(value), nxxx, expx, seconds);
+            //返回一个set结果，如果当第一次储存一个key值的时候，会返回null，可以进行判断，如果为null，在通过nx存储
+            if (null==set){
+                set = jedisCluster.set(key, JSONUtil.toJsonStr(value), NX, expx, seconds);
+            }
+            return set;
         }else{
             //不需要设置失效时间
             if (NX.equals(nxxx)){
