@@ -19,7 +19,7 @@ import java.util.List;
  * @Date 2020/5/15 22:15
  */
 @FeignClient(value ="SYSTEM-PROVIDER")
-public interface SurveingApiService {
+public interface SystemApiService {
 
     /**
     * @Description: 登录接口

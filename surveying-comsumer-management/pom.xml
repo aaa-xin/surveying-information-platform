@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>surveying-system-consumer-6081</module>
+        <module>surveying-mapping-consumer-6082</module>
     </modules>
 
     <artifactId>surveying-comsumer-management</artifactId>

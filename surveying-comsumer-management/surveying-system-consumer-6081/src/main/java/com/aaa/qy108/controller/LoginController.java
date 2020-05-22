@@ -3,7 +3,7 @@ package com.aaa.qy108.controller;
 import com.aaa.qy108.base.BaseController;
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.User;
-import com.aaa.qy108.service.SurveingApiService;
+import com.aaa.qy108.service.SystemApiService;
 import com.aaa.qy108.vo.TokenVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController extends BaseController {
 
     @Autowired
-    private SurveingApiService surveingApiService;
+    private SystemApiService systemApiService;
 
 
     /**
@@ -35,7 +35,7 @@ public class LoginController extends BaseController {
     @PostMapping("/doLogin")
     @ApiOperation(value = "登录功能",notes = "用户执行登录功能")
     public ResultData doLogin(@RequestBody User user){
-        TokenVo tokenVo = surveingApiService.doLogin(user);
+        TokenVo tokenVo = systemApiService.doLogin(user);
         if (tokenVo.getIfSuccess()){
             return super.loginSuccess("登录成功，token值为：" + tokenVo.getToken());
         }
