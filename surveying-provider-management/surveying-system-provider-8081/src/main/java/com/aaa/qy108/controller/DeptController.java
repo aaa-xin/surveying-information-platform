@@ -7,6 +7,7 @@ import com.aaa.qy108.model.Dept;
 import com.aaa.qy108.model.User;
 import com.aaa.qy108.redis.RedisService;
 import com.aaa.qy108.service.DeptService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,8 @@ import static com.aaa.qy108.status.UpdateStatus.*;
  * @date 2020-05-20 17:14
  */
 @RestController
+@Slf4j
+@RequestMapping("/dept")
 public class DeptController extends CommonController<Dept> {
     @Autowired
     private DeptService deptService;
@@ -38,7 +41,7 @@ public class DeptController extends CommonController<Dept> {
      * @Author: Liuyibo
      * @Date: 2020/5/20 20:33
      */
-    @PostMapping("selectAllDept")
+    @PostMapping("/selectAllDept")
     ResultData selectAllDept(@RequestBody HashMap map){
         System.out.println(map);
         Map<String,Object> resultMap = deptService.selectAllDept(redisService,map);
@@ -59,7 +62,7 @@ public class DeptController extends CommonController<Dept> {
      * @Author: Liuyibo
      * @Date: 2020/5/21 19:50
      */
-    @PostMapping("addDept")
+    @PostMapping("/addDept")
     ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
         System.out.println(dept);
         System.out.println(tokenId+"token值");
@@ -80,7 +83,7 @@ public class DeptController extends CommonController<Dept> {
      * @Author: Liuyibo
      * @Date: 2020/5/21 20:11
      */
-    @PostMapping("updateDept")
+    @PostMapping("/updateDept")
     ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
         System.out.println(dept);
         Map<String, Object> updateResult = deptService.updateDept(dept, redisService, tokenId);
@@ -100,8 +103,10 @@ public class DeptController extends CommonController<Dept> {
      * @Author: Liuyibo
      * @Date: 2020/5/22 15:09
      */
-    @DeleteMapping("delDept")
+    @DeleteMapping("/delDept")
     ResultData delDept(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId){
+        System.out.println("我是批量删除");
+        System.out.println(ids);
         Map<String, Object> resultMap = deptService.delDept(ids, redisService, tokenId);
         if (DELETE_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.deleteSuccess();

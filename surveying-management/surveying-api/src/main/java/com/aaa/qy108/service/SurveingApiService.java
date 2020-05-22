@@ -81,7 +81,7 @@ public interface SurveingApiService {
      * @Author: Liuyibo
      * @Date: 2020/5/22 15:12
      */
-    @DeleteMapping("delDept")
+    @DeleteMapping("/dept/delDept")
     ResultData delDept(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId);
     /** 
     * @Description: 批量删除用户

@@ -70,6 +70,11 @@ public class DeptController extends BaseController {
       return surveingApiService.updateDept(dept,tokenId);
     }
 
+    @DeleteMapping("/delDept")
+    @ApiOperation(value = "删除部门",notes = "部门管理的批量删除")
+    public ResultData delDept(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId){
+        return surveingApiService.delDept(ids, tokenId);
+    }
 
 
 

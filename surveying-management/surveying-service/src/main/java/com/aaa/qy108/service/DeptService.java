@@ -136,15 +136,15 @@ public class DeptService {
      * @Date: 2020/5/22 15:10
      */
     public Map<String,Object> delDept(List<Long> ids,RedisService redisService,String tokenId) {
-        String tokenVal = redisService.get(tokenId);
+//        String tokenVal = redisService.get(tokenId);
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        if (null == tokenVal){
+        if (2 == 1){
             //在这里说明登录超时了
             resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
             resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
         }else{
             //获取到参数类型，然后添加一个where条件，是in类型，id属于ids中的
-            Example example = Example.builder(Dept.class).where(Sqls.custom().andIn("id",ids)).build();
+            Example example = Example.builder(Dept.class).where(Sqls.custom().andIn("deptId",ids)).build();
             int i = deptMapper.deleteByExample(example);
             if (i > 0){
                 resultMap.put("code", DELETE_DATA_SUCCESS.getCode());
