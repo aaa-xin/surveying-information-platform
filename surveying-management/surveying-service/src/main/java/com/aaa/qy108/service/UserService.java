@@ -178,24 +178,9 @@ public class UserService extends BaseService<User> {
             return resultMap;
         }
         if(map.size()>0){
-            //添加查询条件
-            HashMap<String, Object> sqlMap = new HashMap<String, Object>();
-            if(map.get("username") != null){
-                sqlMap.put("username", map.get("username"));
-            }else{
-                sqlMap.put("username", null);
-            }
-            if(map.get("deptId") != null){
-                sqlMap.put("deptId", map.get("deptId"));
-            }else{
-                sqlMap.put("deptId", null);
-            }
-            List<HashMap> userAll = userMapper.selectUserAll(sqlMap);
-            if (null != userAll && userAll.size() > 0 ){
-                //设置分页条件
-                PageHelper.startPage(Integer.parseInt(map.get("pageNo").toString())
-                        ,Integer.parseInt(map.get("pageSize").toString()));
-                PageInfo<HashMap> pageInfo = new PageInfo<HashMap>(userAll,5);
+            //调用BaseService分页条件查询
+            PageInfo<HashMap> pageInfo = super.selectUserPageInfo(map);
+            if (null != pageInfo && pageInfo.getSize() > 0 ){
                 resultMap.put("code", SELECT_DATA_SUCCESS.getCode());
                 resultMap.put("msg", pageInfo);
                 return resultMap;
