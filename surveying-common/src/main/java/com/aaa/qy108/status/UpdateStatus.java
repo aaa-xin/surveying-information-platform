@@ -8,7 +8,7 @@ package com.aaa.qy108.status;
 public enum UpdateStatus {
 
     UPDATE_DATA_SUCCESS("23001", "修改数据成功"),
-    UPDATE_DATA_FAILED("13001", "添加数据失败"),
+    UPDATE_DATA_FAILED("13001", "修改数据失败"),
     UPDATE_DATA_EXIST("13002","该数据已存在，请修改后重试！"),
 
 

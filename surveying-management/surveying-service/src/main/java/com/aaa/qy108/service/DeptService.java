@@ -41,7 +41,7 @@ public class DeptService {
      * @Date: 2020/5/20 20:33
      */
     public Map<String,Object> selectAllDept(RedisService redisService, HashMap hashMap ){
-        String token= redisService.get(hashMap.get("tokenId").toString());
+        String token = redisService.get(hashMap.get("tokenId").toString());
         Map<String, Object> resultMap = new HashMap<String, Object>();
         if(null == token){
             //证明用户信息失效
@@ -54,6 +54,9 @@ public class DeptService {
                 resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
                 resultMap.put("msg",SELECT_DATA_SUCCESS.getCode());
                 resultMap.put("data",depts);
+            }else{
+                resultMap.put("code", SELECT_DATA_FAILED.getCode());
+                resultMap.put("msg", SELECT_DATA_FAILED.getMsg());
             }
         }
         return resultMap;
