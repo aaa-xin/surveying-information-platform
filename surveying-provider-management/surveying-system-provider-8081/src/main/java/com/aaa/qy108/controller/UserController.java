@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
-import static com.aaa.qy108.status.DeleteStatus.DELETE_DATA_SUCCESS;
-import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
-import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
-import static com.aaa.qy108.status.UpdateStatus.UPDATE_DATA_SUCCESS;
+import static com.aaa.qy108.status.AddStatus.*;
+import static com.aaa.qy108.status.DeleteStatus.*;
+import static com.aaa.qy108.status.LoginStatus.*;
+import static com.aaa.qy108.status.SelectStatus.*;
+import static com.aaa.qy108.status.UpdateStatus.*;
 
 /**
  * @Author guohang
@@ -42,12 +43,12 @@ public class UserController extends CommonController<User> {
 
 
     /**
-    * @Description: 用户管理中的新增用户
-    * @Author: guohang
-    * @Date: 2020/5/20 14:46
-    * @Param: [user, token]
-    * @return: com.aaa.qy108.base.ResultData
-    */
+     * @Description: 用户管理中的新增用户
+     * @Author: guohang
+     * @Date: 2020/5/20 14:46
+     * @Param: [user, token]
+     * @return: com.aaa.qy108.base.ResultData
+     */
     @PostMapping("/addUser")
     ResultData addUser(@RequestBody User user, @RequestParam("tokenId") String tokenId){
         Map<String, Object> addResult = userService.addUser(user, redisService, tokenId);
@@ -62,12 +63,12 @@ public class UserController extends CommonController<User> {
 
 
     /**
-    * @Description: 批量删除用户
-    * @Author: guohang
-    * @Date: 2020/5/20 20:51
-    * @Param: [ids, tokenId]
-    * @return: com.aaa.qy108.base.ResultData
-    */
+     * @Description: 批量删除用户
+     * @Author: guohang
+     * @Date: 2020/5/20 20:51
+     * @Param: [ids, tokenId]
+     * @return: com.aaa.qy108.base.ResultData
+     */
     @DeleteMapping("/delUser")
     ResultData delUser(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId){
         Map<String, Object> resultMap = userService.delUser(ids, redisService, tokenId);
@@ -81,13 +82,13 @@ public class UserController extends CommonController<User> {
     }
 
 
-    /** 
-    * @Description: 修改员工信息
-    * @Author: guohang
-    * @Date: 2020/5/21 15:56
-    * @Param: [user, tokenId] 
-    * @return: com.aaa.qy108.base.ResultData 
-    */ 
+    /**
+     * @Description: 修改员工信息
+     * @Author: guohang
+     * @Date: 2020/5/21 15:56
+     * @Param: [user, tokenId]
+     * @return: com.aaa.qy108.base.ResultData
+     */
     @PostMapping("/updateUser")
     ResultData updateUser(@RequestBody User user, @RequestParam("tokenId") String tokenId){
         Map<String, Object> resultMap = userService.updateUser(user, redisService, tokenId);
@@ -101,13 +102,13 @@ public class UserController extends CommonController<User> {
     }
 
 
-    /** 
-    * @Description: 导出用户信息 
-    * @Author: guohang
-    * @Date: 2020/5/21 16:26
-    * @Param: [tokenId] 
-    * @return: com.aaa.qy108.base.ResultData 
-    */ 
+    /**
+     * @Description: 导出用户信息
+     * @Author: guohang
+     * @Date: 2020/5/21 16:26
+     * @Param: [tokenId]
+     * @return: com.aaa.qy108.base.ResultData
+     */
     @GetMapping("/exportExcle")
     public void exportExcle(@RequestParam("tokenId") String tokenId, HttpServletResponse response){
         Map<String, Object> map = userService.selectAll(redisService,tokenId);
@@ -182,8 +183,25 @@ public class UserController extends CommonController<User> {
             log.error("用户管理中的导出数据出错！");
         }
     }
-    
 
+    /**
+     * @Description: 带条件查询用户信息
+     * @Author: guohang
+     * @Date: 2020/5/21 22:31
+     * @Param: [map]
+     * @return: com.aaa.qy108.base.ResultData
+     */
+    @PostMapping("/selectUser")
+    ResultData selectUserAll(@RequestBody HashMap map){
+        Map<String, Object> userAll = userService.selectUserAll(map,redisService);
+        if (SELECT_DATA_SUCCESS.getCode().equals(userAll.get("code"))){
+            return super.selectSuccess(userAll);
+        }else if (SELECT_DATA_FAILED.getCode().equals(userAll.get("code"))){
+            return super.selectFailed();
+        }else{
+            return super.selectFailed(SELECT_DATA_NOT_EXIST.getMsg());
+        }
+    }
 
 
 
@@ -194,6 +212,3 @@ public class UserController extends CommonController<User> {
 
 
 }
-
-
-

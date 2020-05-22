@@ -27,10 +27,11 @@ import static com.aaa.qy108.status.UpdateStatus.UPDATE_DATA_SUCCESS;
 @RequestMapping("/dept")
 @Api(value = "部门管理",tags = "部门管理接口")
 public class DeptController extends BaseController {
+
     @Autowired
     private SurveingApiService surveingApiService;
+
     /**
-     *
      * @Param: [map]
      * @Return: com.aaa.qy108.base.ResultData
      * 通过条件查询部门信息
@@ -40,12 +41,10 @@ public class DeptController extends BaseController {
     @PostMapping("/selectAllDept")
     @ApiOperation(value = "根据条件查询部门",notes = "部门管理的查询")
     public ResultData selectAllDept(@RequestBody HashMap map){
-        System.out.println("我是消费者");
-        System.out.println(map);
         return surveingApiService.selectAllDept(map);
     }
+
     /**
-     *
      * @Param: [dept, tokenId]
      * @Return: com.aaa.qy108.base.ResultData
      * 添加部门
@@ -57,8 +56,8 @@ public class DeptController extends BaseController {
     public ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
         return surveingApiService.addDept(dept,tokenId);
     }
+
     /**
-     *
      * @Param: [dept, tokenId]
      * @Return: com.aaa.qy108.base.ResultData
      * 修改部门
@@ -70,4 +69,11 @@ public class DeptController extends BaseController {
     public ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
       return surveingApiService.updateDept(dept,tokenId);
     }
+
+
+
+
+
+
+
 }

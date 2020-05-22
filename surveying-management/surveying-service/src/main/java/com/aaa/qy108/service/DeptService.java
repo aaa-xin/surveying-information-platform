@@ -42,7 +42,6 @@ public class DeptService {
      */
     public Map<String,Object> selectAllDept(RedisService redisService, HashMap hashMap ){
         String token= redisService.get(hashMap.get("tokenId").toString());
-        System.out.println(token+"redis中的token值");
         Map<String, Object> resultMap = new HashMap<String, Object>();
         if(null == token){
             //证明用户信息失效
@@ -51,9 +50,7 @@ public class DeptService {
         }else {
             //证明用户信息没有失效
             List<Dept> depts = deptMapper.selectDeptByNameOrTime(hashMap);
-            System.out.println(hashMap);
-            System.out.println(depts);
-            if(depts.size()>0 &&depts !=null){
+            if(depts.size()>0 && depts !=null){
                 resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
                 resultMap.put("msg",SELECT_DATA_SUCCESS.getCode());
                 resultMap.put("data",depts);
@@ -61,6 +58,8 @@ public class DeptService {
         }
         return resultMap;
     }
+
+
     /**
      *
      * @Param: [dept, redisService, tokenId]
@@ -157,5 +156,9 @@ public class DeptService {
         }
         return resultMap;
     }
+
+
+
+
 
 }

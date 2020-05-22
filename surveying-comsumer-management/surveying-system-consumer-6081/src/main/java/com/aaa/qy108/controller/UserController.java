@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -75,11 +76,11 @@ public class UserController extends BaseController {
     }
 
 
-    /** 
+    /**
     * @Description: 用户管理中的导出Excle
     * @Author: guohang
     * @Date: 2020/5/21 16:25
-    * @Param: [tokenId] 
+    * @Param: [tokenId]
     */
     @GetMapping("/exportExcle")
     @ApiOperation(value = "导出Excle",notes = "用户管理的导出用户信息")
@@ -115,6 +116,18 @@ public class UserController extends BaseController {
         return result;
     }
 
+
+    /**
+    * @Description: 查询用户，带条件
+    * @Author: guohang
+    * @Date: 2020/5/21 22:54
+    * @Param: [map]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @PostMapping("selectUser")
+    ResultData selectUserAll(@RequestBody HashMap map){
+        return surveingApiService.selectUserAll(map);
+    }
 
 
 

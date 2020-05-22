@@ -7,6 +7,8 @@ import com.aaa.qy108.base.BaseService;
 import com.aaa.qy108.mapper.UserMapper;
 import com.aaa.qy108.model.User;
 import com.aaa.qy108.redis.RedisService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -158,7 +160,37 @@ public class UserService extends BaseService<User> {
         return resultMap;
     }
 
-
+    /**
+     * @Author Cy
+     * @Description 分页查询全部用户
+     * @Param [t, pageNo, pageSize]
+     * @Data 2020/5/20
+     * @return com.github.pagehelper.PageInfo<T>
+     * @throws
+     */
+    public Map<String,Object> selectUserAll(HashMap map, RedisService redisService){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        String tokenVal = redisService.get(map.get("tokenId").toString());
+        //检测token
+        if (null == tokenVal){
+            resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
+            resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
+            return resultMap;
+        }
+        if(map.size()>0){
+            //调用BaseService分页条件查询
+            PageInfo<HashMap> pageInfo = super.selectUserPageInfo(map);
+            if (null != pageInfo && pageInfo.getSize() > 0 ){
+                resultMap.put("code", SELECT_DATA_SUCCESS.getCode());
+                resultMap.put("msg", pageInfo);
+                return resultMap;
+            }else{
+                resultMap.put("code", SELECT_DATA_FAILED.getCode());
+                resultMap.put("msg", SELECT_DATA_FAILED.getMsg());
+            }
+        }
+        return resultMap;
+    }
 
 }
 

@@ -1,5 +1,7 @@
 package com.aaa.qy108.base;
 
+import com.aaa.qy108.mapper.UserMapper;
+import com.aaa.qy108.utils.BaseUtil;
 import com.aaa.qy108.utils.Map2BeanUtils;
 import com.aaa.qy108.utils.SpringContextUtils;
 import com.github.pagehelper.PageHelper;
@@ -12,6 +14,7 @@ import tk.mybatis.mapper.util.Sqls;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +32,9 @@ public abstract class BaseService<T> {
 
     @Autowired
     private Mapper<T> mapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     /** 
     * @Description: 注入进来的mapper为了保证安全性，必须是private的，那么子类也获取不到。如果子类要使用，需要使用提供的这个get方法
@@ -251,8 +257,23 @@ public abstract class BaseService<T> {
         return SpringContextUtils.getApplicationContext();
     }
 
-
-
+    /**
+     * @Author Cy
+     * @Description 多表分页查询所有用户
+     * @Param [map]
+     * @Data 2020/5/22
+     * @return com.github.pagehelper.PageInfo<java.util.HashMap>
+     * @throws
+     */
+    public PageInfo<HashMap> selectUserPageInfo(HashMap map){
+        PageHelper.startPage(BaseUtil.transToInt(map.get("pageNo")),BaseUtil.transToInt(map.get("pageSize")));
+        List<HashMap> list = userMapper.selectUserAll(map);
+        PageInfo<HashMap> pageInfo = new PageInfo<HashMap>(list);
+        if (null != pageInfo && !"".equals(pageInfo)){
+            return pageInfo;
+        }
+        return null;
+    }
 
 
 
