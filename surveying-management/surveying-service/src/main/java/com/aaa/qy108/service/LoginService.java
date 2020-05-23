@@ -47,8 +47,10 @@ public class LoginService extends BaseService<User> {
             if (null != usr && !"".equals(usr)){
                 //登录成功，生成一个uuid当做token
                 String token = IdUtil.simpleUUID();
-                usr.setToken(token);
-                int updateResult = userMapper.updateByPrimaryKey(usr);
+                User updUsr = new User();
+                //设置id、登录时间、token，修改根据主键修改不为null的字段
+                updUsr.setToken(token).setLastLoginTime(DateUtil.now()).setId(usr.getId());
+                int updateResult = userMapper.updateByPrimaryKeySelective(updUsr);
                 //判断token是否更新成功
                 if (updateResult > 0){
                     String setResult = redisService.set(String.valueOf(usr.getId()), token, XX, EX, 1800);

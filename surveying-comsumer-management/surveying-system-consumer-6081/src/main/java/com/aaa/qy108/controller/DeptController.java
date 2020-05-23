@@ -4,7 +4,7 @@ import com.aaa.qy108.base.BaseController;
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.Dept;
 import com.aaa.qy108.model.User;
-import com.aaa.qy108.service.SurveingApiService;
+import com.aaa.qy108.service.SystemApiService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import static com.aaa.qy108.status.UpdateStatus.UPDATE_DATA_SUCCESS;
 public class DeptController extends BaseController {
 
     @Autowired
-    private SurveingApiService surveingApiService;
+    private SystemApiService systemApiService;
 
     /**
      * @Param: [map]
@@ -41,7 +41,7 @@ public class DeptController extends BaseController {
     @PostMapping("/selectAllDept")
     @ApiOperation(value = "根据条件查询部门",notes = "部门管理的查询")
     public ResultData selectAllDept(@RequestBody HashMap map){
-        return surveingApiService.selectAllDept(map);
+        return systemApiService.selectAllDept(map);
     }
 
     /**
@@ -54,7 +54,7 @@ public class DeptController extends BaseController {
     @PostMapping("/addDept")
     @ApiOperation(value = "根据条件添加部门",notes = "部门管理的添加")
     public ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
-        return surveingApiService.addDept(dept,tokenId);
+        return systemApiService.addDept(dept,tokenId);
     }
 
     /**
@@ -67,13 +67,13 @@ public class DeptController extends BaseController {
     @PostMapping("/updateDept")
     @ApiOperation(value = "根据条件修改部门",notes = "部门管理的修改")
     public ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
-      return surveingApiService.updateDept(dept,tokenId);
+      return systemApiService.updateDept(dept,tokenId);
     }
 
     @DeleteMapping("/delDept")
     @ApiOperation(value = "删除部门",notes = "部门管理的批量删除")
     public ResultData delDept(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId){
-        return surveingApiService.delDept(ids, tokenId);
+        return systemApiService.delDept(ids, tokenId);
     }
 
 
