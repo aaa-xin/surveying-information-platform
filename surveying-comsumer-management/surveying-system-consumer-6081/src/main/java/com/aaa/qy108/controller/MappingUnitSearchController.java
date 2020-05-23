@@ -1,7 +1,8 @@
 package com.aaa.qy108.controller;
 
 import com.aaa.qy108.model.MappingUnit;
-import com.aaa.qy108.service.SurveingApiService;
+
+import com.aaa.qy108.service.SystemApiService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ import java.util.List;
 public class MappingUnitSearchController {
 
     @Autowired
-    private SurveingApiService surveingApiService;
+    private SystemApiService systemApiService;
     /**
     * @Description: 测绘单位查询，单位名称模糊查询，单位地域和单位资质准确查询
     * @Param: [mappingUnit, tokenId]
@@ -29,7 +30,7 @@ public class MappingUnitSearchController {
     @ApiOperation(value = "根据条件查询测绘单位",notes = "首页的查询")
     @PostMapping("/utilSelect")
     public List<HashMap> utilSelect(@RequestBody MappingUnit mappingUnit, @RequestParam("tokenId") String tokenId){
-        return surveingApiService.utilSelect(mappingUnit,tokenId);
+        return systemApiService.utilSelect(mappingUnit,tokenId);
     }
 
     /**
@@ -42,6 +43,6 @@ public class MappingUnitSearchController {
     @PostMapping("/selectGroupByFeild")
     @ApiOperation(value = "通过字段查询所有的区域和资质",notes = "首页的查询")
     public List<HashMap> selectGroupByFeild(@RequestParam ("feild") String feild,@RequestParam("tokenId") String tokenId){
-        return surveingApiService.selectGroupByFeild(feild,tokenId);
+        return systemApiService.selectGroupByFeild(feild,tokenId);
     }
 }

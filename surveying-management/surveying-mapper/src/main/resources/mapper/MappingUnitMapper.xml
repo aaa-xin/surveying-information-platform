@@ -6,12 +6,12 @@
       WARNING - @mbg.generated
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="create_time" property="createTime" jdbcType="DATE" />
-    <result column="modify_time" property="modifyTime" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="VARCHAR" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
     <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
     <result column="register_address" property="registerAddress" jdbcType="VARCHAR" />
-    <result column="register_time" property="registerTime" jdbcType="DATE" />
+    <result column="register_time" property="registerTime" jdbcType="VARCHAR" />
     <result column="oa" property="oa" jdbcType="VARCHAR" />
     <result column="corporation" property="corporation" jdbcType="VARCHAR" />
     <result column="linkman" property="linkman" jdbcType="VARCHAR" />
@@ -27,7 +27,7 @@
     <result column="register_address_postcode" property="registerAddressPostcode" jdbcType="VARCHAR" />
     <result column="oa_postcode" property="oaPostcode" jdbcType="VARCHAR" />
     <result column="oa_area" property="oaArea" jdbcType="DOUBLE" />
-    <result column="establish_time" property="establishTime" jdbcType="DATE" />
+    <result column="establish_time" property="establishTime" jdbcType="VARCHAR" />
     <result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR" />
     <result column="fax_num" property="faxNum" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
@@ -36,7 +36,7 @@
     <result column="unit_nature" property="unitNature" jdbcType="VARCHAR" />
     <result column="belong_industry" property="belongIndustry" jdbcType="VARCHAR" />
     <result column="certificate_code" property="certificateCode" jdbcType="VARCHAR" />
-    <result column="certificate_send_date" property="certificateSendDate" jdbcType="DATE" />
+    <result column="certificate_send_date" property="certificateSendDate" jdbcType="VARCHAR" />
     <result column="company_type" property="companyType" jdbcType="VARCHAR" />
     <result column="stock_details" property="stockDetails" jdbcType="VARCHAR" />
     <result column="joint_venture" property="jointVenture" jdbcType="VARCHAR" />
@@ -44,7 +44,7 @@
     <result column="joint_ratify_code" property="jointRatifyCode" jdbcType="VARCHAR" />
     <result column="competent_depart" property="competentDepart" jdbcType="VARCHAR" />
     <result column="first_qualification_level" property="firstQualificationLevel" jdbcType="VARCHAR" />
-    <result column="first_qualification_date" property="firstQualificationDate" jdbcType="DATE" />
+    <result column="first_qualification_date" property="firstQualificationDate" jdbcType="VARCHAR" />
     <result column="qualification_process" property="qualificationProcess" jdbcType="VARCHAR" />
     <result column="organization_code" property="organizationCode" jdbcType="VARCHAR" />
     <result column="unit_type" property="unitType" jdbcType="VARCHAR" />
@@ -59,4 +59,28 @@
     <result column="unit_intro" property="unitIntro" jdbcType="LONGVARCHAR" />
     <result column="coordinate" property="coordinate" jdbcType="LONGVARCHAR" />
   </resultMap>
+
+  <select id="selcetUnit" resultType="HashMap" parameterType="com.aaa.qy108.model.MappingUnit">
+      select id, unit_name from t_mapping_unit
+      <where>
+        1=1
+        <if test="ownedDistrict !=null">
+           and owned_district = #{ownedDistrict}
+        </if>
+        <if test="qualificationLevel !=null">
+          and qualification_level = #{qualificationLevel}
+        </if>
+        <if test="unitName">
+         and unit_name like '%${unitName}%'
+        </if>
+      </where>
+  </select>
+
+  <select id="selectAllUnit" resultType="HashMap" >
+     select id,unit_name from t_mapping_unit
+  </select>
+
+   <select id="selectGroupByFeild" resultType="HashMap" parameterType="String">
+      select ${feild} from  t_mapping_unit group by ${feild}
+   </select>
 </mapper>
