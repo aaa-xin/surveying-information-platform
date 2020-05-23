@@ -49,4 +49,30 @@
     <result column="contract_time" property="contractTime" jdbcType="VARCHAR" />
     <result column="coordinate" property="coordinate" jdbcType="LONGVARCHAR" />
   </resultMap>
+
+  <select id="projectSelect" resultType="HashMap" parameterType="com.aaa.qy108.model.MappingProject">
+    select id, project_name from t_mapping_project
+    <where>
+      1=1
+      <if test="projectType !=null">
+        and project_type = #{projectType}
+      </if>
+      <if test="startDate !=null">
+        and start_date = #{startDate}
+      </if>
+      <if test="projectName">
+        and project_name like '%${projectName}%'
+      </if>
+    </where>
+  </select>
+
+  <select id="SelectAllProject" resultType="HashMap" >
+     select id,project_name from t_mapping_project
+  </select>
+
+  <select id="SelectGroupName" resultType="HashMap" parameterType="String">
+      select ${name} from  t_mapping_project group by ${name}
+   </select>
+
+
 </mapper>

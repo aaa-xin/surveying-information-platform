@@ -6,23 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Date;
-
-/**
- * @Author guohang
- * @Description 测绘项目信息实体
- * @Date 2020-5-22 16:49:57
- */
+import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 @Table(name = "t_mapping_project")
 public class MappingProject extends BaseModel {
-
     /**
      * 项目类型
      */
@@ -160,6 +150,18 @@ public class MappingProject extends BaseModel {
     private Integer schedule;
 
     /**
+     * 创建时间
+     */
+    @Column(name = "create_time")
+    private String createTime;
+
+    /**
+     * 更改时间
+     */
+    @Column(name = "modify_time")
+    private String modifyTime;
+
+    /**
      * 备注
      */
     private String memo;
@@ -258,5 +260,4 @@ public class MappingProject extends BaseModel {
      */
     private String coordinate;
 
-
-}
+   }
