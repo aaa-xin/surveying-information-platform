@@ -2,6 +2,7 @@ package com.aaa.qy108.service;
 
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.Dept;
+import com.aaa.qy108.model.MappingUnit;
 import com.aaa.qy108.model.User;
 import com.aaa.qy108.vo.TokenVo;
 import feign.Response;
@@ -124,10 +125,26 @@ public interface SurveingApiService {
     @PostMapping("/user/selectUser")
     ResultData selectUserAll(@RequestBody HashMap map);
 
+    /**
+    * @Description: 测绘单位查询，单位名称模糊查询，单位地域和单位资质准确查询
+    * @Param: [mappingUnit, tokenId]
+    * @return: java.util.List<java.util.HashMap>
+    * @Author: Qin
+    * @Date: 2020/5/23
+    */
+    @PostMapping("/utilSelect")
+    List<HashMap>  utilSelect(@RequestBody MappingUnit mappingUnit, @RequestParam("tokenId") String tokenId);
 
 
-
-
+    /**
+    * @Description: 通过字段查询所有的单位区域和单位资质，进行分组
+    * @Param: [feild, tokenId]
+    * @return: java.util.List<java.util.HashMap>
+    * @Author: Qin
+    * @Date: 2020/5/23
+    */
+    @PostMapping("/selectGroupByFeild")
+    List<HashMap> selectGroupByFeild(@RequestParam ("feild") String feild,@RequestParam("tokenId") String tokenId);
 }
 
 

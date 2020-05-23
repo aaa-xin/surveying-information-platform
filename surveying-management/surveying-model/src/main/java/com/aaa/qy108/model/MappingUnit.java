@@ -7,15 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 
 /**
- * @Author guohang
- * @Description 测绘单位实体
- * @Date 2020-5-22 16:49:57
- */
+* @Description:测绘单位实体类
+* @Author: Qin
+* @Date: 2020/5/22
+*/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,7 +42,7 @@ public class MappingUnit extends BaseModel {
      * 注册时间
      */
     @Column(name = "register_time")
-    private Date registerTime;
+    private String registerTime;
 
     /**
      * 办公地址
@@ -136,7 +134,7 @@ public class MappingUnit extends BaseModel {
      * 单位成立时间
      */
     @Column(name = "establish_time")
-    private Date establishTime;
+    private String establishTime;
 
     /**
      * 手机号码
@@ -189,7 +187,7 @@ public class MappingUnit extends BaseModel {
      * 发证日期
      */
     @Column(name = "certificate_send_date")
-    private Date certificateSendDate;
+    private String certificateSendDate;
 
     /**
      * 公司类型
@@ -237,7 +235,7 @@ public class MappingUnit extends BaseModel {
      * 首次取得资质发证日期
      */
     @Column(name = "first_qualification_date")
-    private Date firstQualificationDate;
+    private String firstQualificationDate;
 
     /**
      * 申请资质前单位进行过程
@@ -318,4 +316,4 @@ public class MappingUnit extends BaseModel {
      */
     private String coordinate;
 
-}
+    }
