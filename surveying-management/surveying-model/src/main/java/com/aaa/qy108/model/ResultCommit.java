@@ -21,6 +21,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @Table(name = "t_result_commit")
 public class ResultCommit {
+
     /**
      * 编号
      */
@@ -60,7 +61,7 @@ public class ResultCommit {
      * 成果日期
      */
     @Column(name = "result_date")
-    private Date resultDate;
+    private String resultDate;
 
     /**
      * 数据格式
@@ -77,7 +78,7 @@ public class ResultCommit {
      * 生产日期
      */
     @Column(name = "create_date")
-    private Date createDate;
+    private String createDate;
 
     /**
      * 高程基准

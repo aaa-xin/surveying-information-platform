@@ -11,10 +11,10 @@
     <result column="old_figure" property="oldFigure" jdbcType="VARCHAR" />
     <result column="figure" property="figure" jdbcType="VARCHAR" />
     <result column="medium_type" property="mediumType" jdbcType="VARCHAR" />
-    <result column="result_date" property="resultDate" jdbcType="DATE" />
+    <result column="result_date" property="resultDate" jdbcType="VARCHAR" />
     <result column="data_format" property="dataFormat" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="create_date" property="createDate" jdbcType="VARCHAR" />
     <result column="height_datum" property="heightDatum" jdbcType="INTEGER" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
     <result column="ref_id" property="refId" jdbcType="BIGINT" />

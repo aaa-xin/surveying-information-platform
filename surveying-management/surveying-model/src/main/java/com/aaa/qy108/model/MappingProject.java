@@ -51,13 +51,13 @@ public class MappingProject extends BaseModel {
      * 开工日期
      */
     @Column(name = "start_date")
-    private Date startDate;
+    private String startDate;
 
     /**
      * 完工日期
      */
     @Column(name = "end_date")
-    private Date endDate;
+    private String endDate;
 
     /**
      * 完成工期
@@ -122,13 +122,13 @@ public class MappingProject extends BaseModel {
      * 获奖时间
      */
     @Column(name = "winning_time")
-    private Date winningTime;
+    private String winningTime;
 
     /**
      * 验收时间
      */
     @Column(name = "acceptance_time")
-    private Date acceptanceTime;
+    private String acceptanceTime;
 
     /**
      * 基本内容
@@ -205,15 +205,15 @@ public class MappingProject extends BaseModel {
     private String fundingSource;
 
     /**
-     * 
-委托单位
+     *
+     委托单位
      */
     @Column(name = "entrust_unit")
     private String entrustUnit;
 
     /**
-     * 
-承建单位
+     *
+     承建单位
      */
     @Column(name = "accept_unit")
     private String acceptUnit;
@@ -226,7 +226,7 @@ public class MappingProject extends BaseModel {
 
     /**
      * 固定
-电话
+     电话
      */
     private String phone;
 
@@ -251,7 +251,7 @@ public class MappingProject extends BaseModel {
      * 合同上传时间
      */
     @Column(name = "contract_time")
-    private Date contractTime;
+    private String contractTime;
 
     /**
      * 坐标
