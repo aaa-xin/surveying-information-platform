@@ -1,10 +1,7 @@
 package com.aaa.qy108.service;
 
 import com.aaa.qy108.base.ResultData;
-import com.aaa.qy108.model.Dept;
-import com.aaa.qy108.model.MappingProject;
-import com.aaa.qy108.model.MappingUnit;
-import com.aaa.qy108.model.User;
+import com.aaa.qy108.model.*;
 import com.aaa.qy108.vo.TokenVo;
 import feign.Response;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -46,7 +43,7 @@ public interface SystemApiService {
      *
      * @Param: [dept, tokenId]
      * @Return: com.aaa.qy108.base.ResultData
-     * 通过条件查询部门信息
+     *      通过条件查询部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/20 19:41
      */
@@ -149,25 +146,64 @@ public interface SystemApiService {
 
 
     /**
-              * @Author Tzg
-              * @Description //测绘项目管理，项目名称模糊查询，类型 ，日期精确查
-              * @Date 15:58 2020/5/23
-              * @Param  * @param null
-              * @return 
+      * @Author Tzg
+      * @Description //测绘项目管理，项目名称模糊查询，类型 ，日期精确查
+      * @Date 15:58 2020/5/23
+      * @Param  * @param null
+      * @return
      **/
     @PostMapping("/projectSelect")
     List<HashMap>  projectSelect(@RequestBody MappingProject mappingProject, @RequestParam("tokenId") String tokenId);
-         /**
-              * @Author Tzg
-              * @Description //通过字段查询类型，日期 ，进行分组
-              * @Date 16:01 2020/5/23
-              * @Param  * @param null
-              * @return 
-              **/
+
+     /**
+      * @Author Tzg
+      * @Description //通过字段查询类型，日期 ，进行分组
+      * @Date 16:01 2020/5/23
+      * @Param  * @param null
+      * @return
+    **/
     @PostMapping("/SelectGroupName")
     List<HashMap> SelectGroupName(@RequestParam ("name") String name,@RequestParam("tokenId") String tokenId);
-    
 
+    /**
+     * @Description: 分页查询字典信息
+     * @Param: [hashMap]
+     * @Author: mi
+     * @Return: com.aaa.qy108.base.ResultData
+     * @Date: 2020/5/24 18:08
+     **/
+    @PostMapping("/dict/selectAllDictByPage")
+    ResultData selectAllDictByPage(@RequestBody HashMap hashMap);
+
+    /**
+     * @Description: 新增字典信息
+     * @Param: [dict, tokenId]
+     * @Author: mi
+     * @Return: com.aaa.qy108.base.ResultData
+     * @Date: 2020/5/24 18:12
+     **/
+    @PostMapping("/dict/addDict")
+    ResultData addDict(@RequestBody Dict dict, @RequestParam("tokenId") String tokenId);
+
+    /**
+     * @Description: 批量删除字典信息
+     * @Param: [ids, tokenId]
+     * @Author: mi
+     * @Return: com.aaa.qy108.base.ResultData
+     * @Date: 2020/5/24 18:12
+     **/
+    @DeleteMapping("/dict/delDictsById")
+    ResultData delDictsById(@RequestBody List<Long> ids,@RequestParam("tokenId") String tokenId);
+
+    /**
+     * @Description: 修改字典信息
+     * @Param: [dict, tokenId]
+     * @Author: mi
+     * @Return: com.aaa.qy108.base.ResultData
+     * @Date: 2020/5/24 18:12
+     **/
+    @PostMapping("/dict/updateDict")
+    ResultData updateDict(@RequestBody Dict dict,@RequestParam("tokenId") String tokenId);
 }
 
 

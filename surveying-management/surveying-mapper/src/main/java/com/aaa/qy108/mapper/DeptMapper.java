@@ -2,7 +2,6 @@ package com.aaa.qy108.mapper;
 
 import com.aaa.qy108.model.Dept;
 import tk.mybatis.mapper.common.Mapper;
-
 import java.util.HashMap;
 import java.util.List;
 

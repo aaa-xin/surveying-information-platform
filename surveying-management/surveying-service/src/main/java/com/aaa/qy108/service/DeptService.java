@@ -52,7 +52,7 @@ public class DeptService {
             List<Dept> depts = deptMapper.selectDeptByNameOrTime(hashMap);
             if(depts.size()>0 && depts !=null){
                 resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
-                resultMap.put("msg",SELECT_DATA_SUCCESS.getCode());
+                resultMap.put("msg",SELECT_DATA_SUCCESS.getMsg());
                 resultMap.put("data",depts);
             }else{
                 resultMap.put("code", SELECT_DATA_FAILED.getCode());

@@ -58,7 +58,7 @@ public class DeptController extends CommonController<Dept> {
      *
      * @Param: [dept, tokenId]
      * @Return: com.aaa.qy108.base.ResultData
-     * 添加部门信息
+     *      添加部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/21 19:50
      */
