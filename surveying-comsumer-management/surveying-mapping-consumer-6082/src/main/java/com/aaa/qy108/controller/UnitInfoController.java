@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author guohang
- * @Description
+ * @Description 单位基本信息下的全部模块
  * @Date 2020/5/22 19:02
  */
 @RestController
@@ -43,6 +43,31 @@ public class UnitInfoController {
         return mappingApiService.updateUnitInfo(mappingUnit,tokenId);
     }
 
+    
+    /** 
+    * @Description: 查询全部的单位负责人信息
+    * @Author: guohang
+    * @Date: 2020/5/28 15:49
+    * @Param: [] 
+    * @return: com.aaa.qy108.base.ResultData 
+    */ 
+    @GetMapping("/selectAllPrincipal")
+    public ResultData selectAllPrincipal(@RequestParam("tokenId") String tokenId){
+        return mappingApiService.selectAllPrincipal(tokenId);
+    }
+
+
+    /**
+    * @Description: 查询全部的单位技术员信息
+    * @Author: guohang
+    * @Date: 2020/5/28 17:22
+    * @Param: [tokenId]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @GetMapping("/selectAllTechnicist")
+    public ResultData selectAllTechnicist(@RequestParam("tokenId") String tokenId){
+        return mappingApiService.selectAllTechnicist(tokenId);
+    }
 
 
 }

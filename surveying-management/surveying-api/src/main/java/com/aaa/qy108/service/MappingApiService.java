@@ -37,4 +37,49 @@ public interface MappingApiService {
     ResultData updateUnitInfo(@RequestBody MappingUnit mappingUnit, @RequestParam("tokenId") String tokenId);
 
 
+    /**
+    * @Description: 查询全部的单位负责人信息
+    * @Author: guohang
+    * @Date: 2020/5/28 15:50
+    * @Param: []
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @GetMapping("/unit/selectAllPrincipal")
+    ResultData selectAllPrincipal(@RequestParam("tokenId") String tokenId);
+
+
+    /**
+    * @Description: c查询全部技术员信息
+    * @Author: guohang
+    * @Date: 2020/5/28 17:22
+    * @Param: [tokenId]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @GetMapping("/unit/selectAllTechnicist")
+    ResultData selectAllTechnicist(@RequestParam("tokenId") String tokenId);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
