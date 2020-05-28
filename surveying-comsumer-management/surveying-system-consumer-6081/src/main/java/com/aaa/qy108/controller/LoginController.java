@@ -1,5 +1,6 @@
 package com.aaa.qy108.controller;
 
+import com.aaa.qy108.annotation.LogAnnotation;
 import com.aaa.qy108.base.BaseController;
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.User;
@@ -34,6 +35,7 @@ public class LoginController extends BaseController {
     */
     @PostMapping("/doLogin")
     @ApiOperation(value = "登录功能",notes = "用户执行登录功能")
+    @LogAnnotation(operationType = "登录操作", operationName = "用户执行登录操作")
     public ResultData doLogin(@RequestBody User user){
         TokenVo tokenVo = systemApiService.doLogin(user);
         if (tokenVo.getIfSuccess()){

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author guohang
@@ -28,6 +29,17 @@ public interface SystemApiService {
     */
     @PostMapping("/doLogin")
     TokenVo doLogin(@RequestBody User user);
+
+    /**
+    * @Description: 新增登录日志
+    * @Author: guohang
+    * @Date: 2020/5/27 22:53
+    * @Param: [map]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @PostMapping("/log/addLoginLog")
+    ResultData addLoginLog(@RequestBody Map map);
+
 
     /** 
     * @Description: 添加用户接口

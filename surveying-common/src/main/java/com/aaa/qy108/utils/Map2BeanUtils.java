@@ -47,23 +47,23 @@ public class Map2BeanUtils {
         //获取map中的对象，先从CONCURRENT_HASH_MAP中获取会比较快，因为这是一个本地缓存池
         MethodAccess methodAccess = CONCURRENT_HASH_MAP.get(clazz);
         //判断对象是否为空
-        if (null == methodAccess){
+        if (null == methodAccess) {
             //如果本地缓存池中对象是空，直接从MethodAccess中获取对象
             methodAccess = MethodAccess.get(clazz);
             //然后将这个对象放入CONCURRENT_HASH_MAP中
             //如果不存在（新的entry），那么会向map中添加该键值对，并返回null。
             //如果已经存在，那么不会覆盖已有的值，直接返回已经存在的值。
-            CONCURRENT_HASH_MAP.putIfAbsent(clazz,methodAccess);
-            //循环map中的数据
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                //根据map中的属性名，调用setMethodName()可以获取方法名
-                String methodName = setMethodName(entry.getKey());
-                //拿到map中的各种数据，通过set方法给对象赋值
-                //获取set方法的索引下标（方法名，可变参的参数类型）
-                int index = methodAccess.getIndex(methodName, entry.getValue().getClass());
-                //找到对象、方法，然后往里边赋值
-                methodAccess.invoke(instance,index,entry.getValue());
-            }
+            CONCURRENT_HASH_MAP.putIfAbsent(clazz, methodAccess);
+        }
+        //循环map中的数据
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            //根据map中的属性名，调用setMethodName()可以获取方法名
+            String methodName = setMethodName(entry.getKey());
+            //拿到map中的各种数据，通过set方法给对象赋值
+            //获取set方法的索引下标（方法名，可变参的参数类型）
+            int index = methodAccess.getIndex(methodName, entry.getValue().getClass());
+            //找到对象、方法，然后往里边赋值
+            methodAccess.invoke(instance,index,entry.getValue());
         }
         return instance;
     }

@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.lionsoul.ip2region.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,27 +30,6 @@ public class IpUtils {
     }
 
 
-    /**
-    * @Description: 获取客户端公网IP
-    * @Author: guohang
-    * @Date: 2020/5/16 11:05
-    * @Param: []
-    * @return: java.lang.String
-    */
-/*
-    public static String getInternetIp(){
-        try {
-            // 打开连接
-            Document doc = Jsoup.connect("http://chaipip.com/").get();
-            Elements ipArea = doc.select("#ip");
-            String ip = ipArea.attr("value");
-            return ip;
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-*/
 
     /** 
     * @Description: 获取客户端公网IP
@@ -126,6 +106,50 @@ public class IpUtils {
         }
         return "国家|大区|省份|城市|运营商";
     }
+
+
+    /**
+    * @Description: 获取到用户的ip地址
+    * @Author: guohang
+    * @Date: 2020/5/27 22:12
+    * @Param: [request]
+    * @return: java.lang.String
+    */
+    public static String getIpAddr(HttpServletRequest request) {
+        // 其实用户的ip地址你们都可以获取到:x-forwarded-for就是ip地址
+        String ip = request.getHeader("x-forwarded-for");
+        // 需要进行严谨判断(如果用户使用的有代理服务器(本地代理服务器，网络代理服务器都需要判断))
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+            if ("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)) {
+                //根据网卡取本机配置的IP
+                InetAddress inet = null;
+                try {
+                    inet = InetAddress.getLocalHost();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                ip = inet.getHostAddress();
+            }
+        }
+        return ip;
+    }
+
+
+
+
 
 }
 
