@@ -22,43 +22,43 @@ public interface MappingApiService {
     * @Description: 查询单位基本信息
     * @Author: guohang
     * @Date: 2020/5/22 19:08
-    * @Param: []
+    * @Param: [userId]
     * @return: com.aaa.qy108.base.ResultData
     */
     @PostMapping("/unit/selectUnitInfo")
-    ResultData selectUnitInfo(@RequestParam("tokenId") String tokenId);
+    ResultData selectUnitInfo(@RequestParam("userId") String userId);
 
     /**
     * @Description: 修改单位信息
     * @Author: guohang
     * @Date: 2020/5/22 20:29
-    * @Param: [mappingUnit, tokenId]
+    * @Param: [mappingUnit]
     * @return: com.aaa.qy108.base.ResultData
     */
     @PostMapping("/unit/updateUnitInfo")
-    ResultData updateUnitInfo(@RequestBody MappingUnit mappingUnit, @RequestParam("tokenId") String tokenId);
+    ResultData updateUnitInfo(@RequestBody MappingUnit mappingUnit);
 
 
     /**
     * @Description: 查询全部的单位负责人信息
     * @Author: guohang
     * @Date: 2020/5/28 15:50
-    * @Param: []
+    * @Param: [userId]
     * @return: com.aaa.qy108.base.ResultData
     */
     @GetMapping("/unit/selectAllPrincipal")
-    ResultData selectAllPrincipal(@RequestParam("tokenId") String tokenId);
+    ResultData selectAllPrincipal(@RequestParam("userId") String userId);
 
 
     /**
     * @Description: c查询全部技术员信息
     * @Author: guohang
     * @Date: 2020/5/28 17:22
-    * @Param: [tokenId]
+    * @Param: [userId]
     * @return: com.aaa.qy108.base.ResultData
     */
     @GetMapping("/unit/selectAllTechnicist")
-    ResultData selectAllTechnicist(@RequestParam("tokenId") String tokenId);
+    ResultData selectAllTechnicist(@RequestParam("userId") String userId);
 
 
     /** 

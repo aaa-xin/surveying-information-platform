@@ -27,20 +27,20 @@ public class UnitInfoController {
     * @return: com.aaa.qy108.base.ResultData 
     */ 
     @PostMapping("/selectUnitInfo")
-    public ResultData selectUnitInfo(@RequestParam("tokenId") String tokenId){
-        return mappingApiService.selectUnitInfo(tokenId);
+    public ResultData selectUnitInfo(@RequestParam("userId") String userId){
+        return mappingApiService.selectUnitInfo(userId);
     }
 
     /**
     * @Description: 修改单位信息
     * @Author: guohang
     * @Date: 2020/5/22 20:28
-    * @Param: [mappingUnit, tokenId]
+    * @Param: [mappingUnit]
     * @return: com.aaa.qy108.base.ResultData
     */
     @PostMapping("/updateUnitInfo")
-    public ResultData updateUnitInfo(@RequestBody MappingUnit mappingUnit, @RequestParam("tokenId") String tokenId){
-        return mappingApiService.updateUnitInfo(mappingUnit,tokenId);
+    public ResultData updateUnitInfo(@RequestBody MappingUnit mappingUnit){
+        return mappingApiService.updateUnitInfo(mappingUnit);
     }
 
     
@@ -48,12 +48,12 @@ public class UnitInfoController {
     * @Description: 查询全部的单位负责人信息
     * @Author: guohang
     * @Date: 2020/5/28 15:49
-    * @Param: [] 
+    * @Param: [userId]
     * @return: com.aaa.qy108.base.ResultData 
     */ 
     @GetMapping("/selectAllPrincipal")
-    public ResultData selectAllPrincipal(@RequestParam("tokenId") String tokenId){
-        return mappingApiService.selectAllPrincipal(tokenId);
+    public ResultData selectAllPrincipal(@RequestParam("userId") String userId){
+        return mappingApiService.selectAllPrincipal(userId);
     }
 
 
@@ -61,12 +61,12 @@ public class UnitInfoController {
     * @Description: 查询全部的单位技术员信息
     * @Author: guohang
     * @Date: 2020/5/28 17:22
-    * @Param: [tokenId]
+    * @Param: [userId]
     * @return: com.aaa.qy108.base.ResultData
     */
     @GetMapping("/selectAllTechnicist")
-    public ResultData selectAllTechnicist(@RequestParam("tokenId") String tokenId){
-        return mappingApiService.selectAllTechnicist(tokenId);
+    public ResultData selectAllTechnicist(@RequestParam("userId") String userId){
+        return mappingApiService.selectAllTechnicist(userId);
     }
 
 

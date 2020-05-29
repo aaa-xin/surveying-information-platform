@@ -36,37 +36,24 @@ public class UnitInfoController extends CommonController<MappingUnit> {
     @Autowired
     private MappingUnitMapper mappingUnitMapper;
 
-    @Autowired
-    private RedisService redisService;
 
 
     /**
     * @Description: 查询单位基本信息
     * @Author: guohang
     * @Date: 2020/5/22 19:09
-    * @Param: []
+    * @Param: [userId]
     * @return: com.aaa.qy108.base.ResultData
     */
     @PostMapping("/selectUnitInfo")
-    public ResultData selectUnitInfo(@RequestParam("tokenId") String tokenId){
-        String token = null;
-        try {
-            token = redisService.get(tokenId);
-            if (null != token){
-                MappingUnit unit = new MappingUnit();
-                unit.setUserId(Long.valueOf(tokenId));
-                MappingUnit mappingUnit = mappingUnitMapper.selectOne(unit);
-                if(null != mappingUnit && !"".equals(mappingUnit)){
-                    return super.selectSuccess(mappingUnit);
-                }else{
-                    return super.selectFailed("没有查找到数据！");
-                }
-            }else{
-                return super.loginTimeoutExit();
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            return super.loginTimeoutExit();
+    public ResultData selectUnitInfo(@RequestParam("userId") String userId){
+        MappingUnit unit = new MappingUnit();
+        unit.setUserId(Long.valueOf(userId));
+        MappingUnit mappingUnit = mappingUnitMapper.selectOne(unit);
+        if(null != mappingUnit && !"".equals(mappingUnit)){
+            return super.selectSuccess(mappingUnit);
+        }else{
+            return super.selectFailed("没有查找到数据！");
         }
     }
 
@@ -75,29 +62,17 @@ public class UnitInfoController extends CommonController<MappingUnit> {
     * @Description: 修改单位信息
     * @Author: guohang
     * @Date: 2020/5/22 20:29
-    * @Param: [mappingUnit, tokenId]
+    * @Param: [mappingUnit]
     * @return: com.aaa.qy108.base.ResultData
     */
     @PostMapping("/updateUnitInfo")
-    ResultData updateUnitInfo(@RequestBody MappingUnit mappingUnit, @RequestParam("tokenId") String tokenId){
-        String token = null;
-        try {
-            token = redisService.get(tokenId);
-            if (null != token){
-                mappingUnit.setModifyTime(DateUtil.now());
-                System.out.println(mappingUnit);
-                int i = mappingUnitMapper.updateByPrimaryKeySelective(mappingUnit);
-                if(i > 0){
-                    return super.updateSuccess();
-                }else{
-                    return super.updateFailed();
-                }
-            }else{
-                return super.loginTimeoutExit();
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            return super.loginTimeoutExit();
+    ResultData updateUnitInfo(@RequestBody MappingUnit mappingUnit){
+        mappingUnit.setModifyTime(DateUtil.now());
+        int i = mappingUnitMapper.updateByPrimaryKeySelective(mappingUnit);
+        if(i > 0){
+            return super.updateSuccess();
+        }else{
+            return super.updateFailed();
         }
     }
 
@@ -106,32 +81,23 @@ public class UnitInfoController extends CommonController<MappingUnit> {
     * @Description: 查询单位中的全部负责人 
     * @Author: guohang
     * @Date: 2020/5/28 16:24
-    * @Param: [] 
+    * @Param: [userId]
     * @return: com.aaa.qy108.base.ResultData 
     */ 
     @GetMapping("/selectAllPrincipal")
-    ResultData selectAllPrincipal(@RequestParam("tokenId") String tokenId){
-        String token = null;
+    ResultData selectAllPrincipal(@RequestParam("userId") String userId){
+        Principal principal = new Principal().setUserId(Long.valueOf(userId));
+        List<Principal> principals = null;
         try {
-            token = redisService.get(tokenId);
-            if (null != token){
-                Principal principal = new Principal().setUserId(Long.valueOf(tokenId));
-                List<Principal> principals = principalService.queryList(principal);
-
-                if(null != principals && !principals.isEmpty()){
-                    return super.selectSuccess(principals);
-                }else{
-                    return super.selectFailed("没有查找到数据！");
-                }
-            }else{
-                return super.loginTimeoutExit();
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            return super.loginTimeoutExit();
+            principals = principalService.queryList(principal);
         } catch (Exception e) {
             e.printStackTrace();
-            return super.loginTimeoutExit();
+        }
+
+        if(null != principals && !principals.isEmpty()){
+            return super.selectSuccess(principals);
+        }else{
+            return super.selectFailed("没有查找到数据！");
         }
     }
 
@@ -140,33 +106,25 @@ public class UnitInfoController extends CommonController<MappingUnit> {
     * @Description: 查询全部技术员信息
     * @Author: guohang
     * @Date: 2020/5/28 17:23
-    * @Param: [tokenId] 
+    * @Param: [userId]
     * @return: com.aaa.qy108.base.ResultData 
     */ 
     @GetMapping("/selectAllTechnicist")
-    ResultData selectAllTechnicist(@RequestParam("tokenId") String tokenId){
-        String token = null;
+    ResultData selectAllTechnicist(@RequestParam("userId") String userId){
+        Technicist technicist = new Technicist().setUserId(Long.valueOf(userId));
+        List<Technicist> technicists = null;
         try {
-            token = redisService.get(tokenId);
-            if (null != token){
-                Technicist technicist = new Technicist().setUserId(Long.valueOf(tokenId));
-                List<Technicist> technicists = technicistService.queryList(technicist);
-
-                if(null != technicists && !technicists.isEmpty()){
-                    return super.selectSuccess(technicists);
-                }else{
-                    return super.selectFailed("没有查找到数据！");
-                }
-            }else{
-                return super.loginTimeoutExit();
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            return super.loginTimeoutExit();
+            technicists = technicistService.queryList(technicist);
         } catch (Exception e) {
             e.printStackTrace();
-            return super.loginTimeoutExit();
         }
+
+        if(null != technicists && !technicists.isEmpty()){
+            return super.selectSuccess(technicists);
+        }else{
+            return super.selectFailed("没有查找到数据！");
+        }
+
     }
     
     
