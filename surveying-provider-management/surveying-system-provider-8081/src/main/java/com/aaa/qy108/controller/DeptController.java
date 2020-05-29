@@ -36,16 +36,14 @@ public class DeptController extends CommonController<Dept> {
     private RedisService redisService;
     /**
      * 通过条件查询部门信息
-     * @Param: [tokenId]
+     * @Param: [map]
      * @Return: com.aaa.qy108.base.ResultData
      * @Author: Liuyibo
      * @Date: 2020/5/20 20:33
      */
     @PostMapping("/selectAllDept")
     ResultData selectAllDept(@RequestBody HashMap map){
-        System.out.println(map);
-        Map<String,Object> resultMap = deptService.selectAllDept(redisService,map);
-        System.out.println(resultMap);
+        Map<String,Object> resultMap = deptService.selectAllDept(map);
         if(SELECT_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.selectSuccess(resultMap.get("data"));
         }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){
@@ -75,16 +73,16 @@ public class DeptController extends CommonController<Dept> {
     }
     /**
      *
-     * @Param: [dept, tokenId]
+     * @Param: [dept]
      * @Return: com.aaa.qy108.base.ResultData
      * 修改部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/21 20:11
      */
     @PostMapping("/updateDept")
-    ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
+    ResultData updateDept(@RequestBody Dept dept){
         System.out.println(dept);
-        Map<String, Object> updateResult = deptService.updateDept(dept, redisService, tokenId);
+        Map<String, Object> updateResult = deptService.updateDept(dept);
         if (UPDATE_DATA_SUCCESS.getCode().equals(updateResult.get("code"))){
             return super.updateSuccess();
         }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(updateResult.get("code"))){
@@ -95,17 +93,15 @@ public class DeptController extends CommonController<Dept> {
     }
     /**
      *
-     * @Param: [ids, tokenId]
+     * @Param: [ids]
      * @Return: com.aaa.qy108.base.ResultData
      * 批量删除部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/22 15:09
      */
     @DeleteMapping("/delDept")
-    ResultData delDept(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId){
-        System.out.println("我是批量删除");
-        System.out.println(ids);
-        Map<String, Object> resultMap = deptService.delDept(ids, redisService, tokenId);
+    ResultData delDept(@RequestBody List<Long> ids){
+        Map<String, Object> resultMap = deptService.delDept(ids);
         if (DELETE_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.deleteSuccess();
         }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){

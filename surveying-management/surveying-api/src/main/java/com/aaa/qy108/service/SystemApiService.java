@@ -53,7 +53,7 @@ public interface SystemApiService {
 
     /**
      *
-     * @Param: [dept, tokenId]
+     * @Param: [dept]
      * @Return: com.aaa.qy108.base.ResultData
      *      通过条件查询部门信息
      * @Author: Liuyibo
@@ -75,24 +75,24 @@ public interface SystemApiService {
 
     /**
      *
-     * @Param: [dept, tokenId]
+     * @Param: [dept]
      * @Return: com.aaa.qy108.base.ResultData
      * 修改部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/21 20:11
      */
     @PostMapping("/dept/updateDept")
-    ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId);
+    ResultData updateDept(@RequestBody Dept dept);
     /**
      *
-     * @Param: [ids, tokenId]
+     * @Param: [ids]
      * @Return: com.aaa.qy108.base.ResultData
      * 批量删除部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/22 15:12
      */
     @DeleteMapping("/dept/delDept")
-    ResultData delDept(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId);
+    ResultData delDept(@RequestBody List<Long> ids);
     /** 
     * @Description: 批量删除用户
     * @Author: guohang

@@ -66,14 +66,14 @@ public class DeptController extends BaseController {
      */
     @PostMapping("/updateDept")
     @ApiOperation(value = "根据条件修改部门",notes = "部门管理的修改")
-    public ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
-      return systemApiService.updateDept(dept,tokenId);
+    public ResultData updateDept(@RequestBody Dept dept){
+      return systemApiService.updateDept(dept);
     }
 
     @DeleteMapping("/delDept")
     @ApiOperation(value = "删除部门",notes = "部门管理的批量删除")
-    public ResultData delDept(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId){
-        return systemApiService.delDept(ids, tokenId);
+    public ResultData delDept(@RequestBody List<Long> ids){
+        return systemApiService.delDept(ids);
     }
 
 
