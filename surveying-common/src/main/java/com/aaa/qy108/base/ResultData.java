@@ -1,6 +1,7 @@
 package com.aaa.qy108.base;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @Date 2020/5/12 21:58
  */
 @Data
+@Accessors(chain = true)
 public class ResultData<T> implements Serializable {
 
     private String code;

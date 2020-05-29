@@ -45,11 +45,11 @@ public interface SystemApiService {
     * @Description: 添加用户接口
     * @Author: guohang
     * @Date: 2020/5/20 14:42
-    * @Param: [user, tokenId]
+    * @Param: [user]
     * @return: com.aaa.qy108.base.ResultData 
     */ 
     @PostMapping("/user/addUser")
-    ResultData addUser(@RequestBody User user, @RequestParam("tokenId") String tokenId);
+    ResultData addUser(@RequestBody User user);
 
     /**
      *
@@ -216,6 +216,20 @@ public interface SystemApiService {
      **/
     @PostMapping("/dict/updateDict")
     ResultData updateDict(@RequestBody Dict dict,@RequestParam("tokenId") String tokenId);
+
+    /**
+    * @Description: 获取redis的token值
+    * @Author: guohang
+    * @Date: 2020/5/29 18:16
+    * @Param: [tokenId]
+    * @return: java.lang.String
+    */
+    @GetMapping("/getRedisToken")
+    String getRedisToken(@RequestParam("tokenId") String tokenId);
+
+
+
+
 }
 
 

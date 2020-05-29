@@ -5,9 +5,7 @@ import com.aaa.qy108.redis.RedisService;
 import com.aaa.qy108.service.LoginService;
 import com.aaa.qy108.vo.TokenVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author guohang
@@ -40,6 +38,19 @@ public class LoginController {
             }
         }
         return null;
+    }
+
+
+    /**
+     * @Description: 获取redis的token值
+     * @Author: guohang
+     * @Date: 2020/5/29 18:16
+     * @Param: [tokenId]
+     * @return: java.lang.String
+     */
+    @GetMapping("/getRedisToken")
+    String getRedisToken(@RequestParam("tokenId") String tokenId){
+        return redisService.get(tokenId);
     }
 
 

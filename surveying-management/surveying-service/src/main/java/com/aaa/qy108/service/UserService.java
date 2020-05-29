@@ -47,27 +47,20 @@ public class UserService extends BaseService<User> {
     * @Description: 新增用户
     * @Author: guohang
     * @Date: 2020/5/20 15:42
-    * @Param: [user, redisService, token]
+    * @Param: [user]
     * @return: java.util.Map<java.lang.String,java.lang.Object>
     */
-    public Map<String,Object> addUser(User user, RedisService redisService, String tokenId){
-        String tokenVal = redisService.get(tokenId);
+    public Map<String,Object> addUser(User user){
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        if (null == tokenVal){
-            //在这里说明登录超时了
-            resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-            resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
+        //可以查到redis里的token，然后可以进行新增用户
+        user.setCreateTime(DateUtil.now());
+        int addResult = userMapper.insert(user);
+        if (addResult > 0){
+            resultMap.put("code", ADD_DATA_SUCCESS.getCode());
+            resultMap.put("msg", ADD_DATA_SUCCESS.getMsg());
         }else{
-            //可以查到redis里的token，然后可以进行新增用户
-            user.setCreateTime(DateUtil.now());
-            int addResult = userMapper.insert(user);
-            if (addResult > 0){
-                resultMap.put("code", ADD_DATA_SUCCESS.getCode());
-                resultMap.put("msg", ADD_DATA_SUCCESS.getMsg());
-            }else{
-                resultMap.put("code", ADD_DATA_FAILED.getCode());
-                resultMap.put("msg", ADD_DATA_FAILED.getMsg());
-            }
+            resultMap.put("code", ADD_DATA_FAILED.getCode());
+            resultMap.put("msg", ADD_DATA_FAILED.getMsg());
         }
         return resultMap;
     }

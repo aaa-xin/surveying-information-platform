@@ -46,12 +46,12 @@ public class UserController extends CommonController<User> {
      * @Description: 用户管理中的新增用户
      * @Author: guohang
      * @Date: 2020/5/20 14:46
-     * @Param: [user, token]
+     * @Param: [user]
      * @return: com.aaa.qy108.base.ResultData
      */
     @PostMapping("/addUser")
-    ResultData addUser(@RequestBody User user, @RequestParam("tokenId") String tokenId){
-        Map<String, Object> addResult = userService.addUser(user, redisService, tokenId);
+    ResultData addUser(@RequestBody User user){
+        Map<String, Object> addResult = userService.addUser(user);
         if (ADD_DATA_SUCCESS.getCode().equals(addResult.get("code"))){
             return super.addSuccess();
         }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(addResult.get("code"))){
