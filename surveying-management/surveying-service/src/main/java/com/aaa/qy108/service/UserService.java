@@ -98,7 +98,8 @@ public class UserService extends BaseService<User> {
     */
     public Map<String,Object> updateUser(User user){
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        int i = userMapper.updateByPrimaryKey(user);
+        user.setModifyTime(DateUtil.now());
+        int i = userMapper.updateByPrimaryKeySelective(user);
         if (i > 0){
             resultMap.put("code", UPDATE_DATA_SUCCESS.getCode());
             resultMap.put("msg", UPDATE_DATA_SUCCESS.getMsg());
