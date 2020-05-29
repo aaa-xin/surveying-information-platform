@@ -69,7 +69,7 @@ public class FtpUtils {
     * @Param: [host, port, username, password, filePath, basePath, fileName, input] 
     * @return: java.lang.Boolean 
     */ 
-    private static Boolean uploadFile(String host, Integer port, String username, String password,
+    public static Boolean uploadFile(String host, Integer port, String username, String password,
                                       String filePath, String basePath, String fileName, InputStream input){
         //方便拼接路径
         String tmpPath = "";

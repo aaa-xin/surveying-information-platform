@@ -5,6 +5,7 @@ import static com.aaa.qy108.status.DeleteStatus.*;
 import static com.aaa.qy108.status.LoginStatus.*;
 import static com.aaa.qy108.status.SelectStatus.*;
 import static com.aaa.qy108.status.UpdateStatus.*;
+import static com.aaa.qy108.status.FileStatus.*;
 
 /**
  * @Author guohang
@@ -12,7 +13,64 @@ import static com.aaa.qy108.status.UpdateStatus.*;
  * @Date 2020/5/12 22:05
  */
 public class BaseController {
-    
+
+    /**
+    * @Description: 上传成功
+    * @Author: guohang
+    * @Date: 2020/5/29 16:45
+    * @Param: []
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    protected ResultData uploadSuccess(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPLOAD_SUCCESS.getCode());
+        resultData.setMsg(UPLOAD_SUCCESS.getMsg());
+        return resultData;
+    }
+
+    /**
+    * @Description: 上传成功，自定义返回值
+    * @Author: guohang
+    * @Date: 2020/5/29 16:49
+    * @Param: [msg]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    protected ResultData uploadSuccess(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPLOAD_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+
+    /**
+    * @Description: 上传失败
+    * @Author: guohang
+    * @Date: 2020/5/29 16:49
+    * @Param: []
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    protected ResultData uploadFailed(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPLOAD_FAILED.getCode());
+        resultData.setMsg(UPLOAD_FAILED.getMsg());
+        return resultData;
+    }
+
+    /**
+    * @Description: 上传失败，自定义返回值
+    * @Author: guohang
+    * @Date: 2020/5/29 16:49
+    * @Param: [msg]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    protected ResultData uploadFailed(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPLOAD_FAILED.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
     /** 
     * @Description: 登录成功，使用系统消息
     * @Author: guohang
