@@ -56,17 +56,15 @@ public class DeptController extends CommonController<Dept> {
     }
     /**
      *
-     * @Param: [dept, tokenId]
+     * @Param: [dept]
      * @Return: com.aaa.qy108.base.ResultData
      *      添加部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/21 19:50
      */
     @PostMapping("/addDept")
-    ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
-        System.out.println(dept);
-        System.out.println(tokenId+"token值");
-        Map<String, Object> addResult = deptService.addDept(dept, redisService, tokenId);
+    ResultData addDept(@RequestBody Dept dept){
+        Map<String, Object> addResult = deptService.addDept(dept);
         if (ADD_DATA_SUCCESS.getCode().equals(addResult.get("code"))){
             return super.addSuccess();
         }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(addResult.get("code"))){

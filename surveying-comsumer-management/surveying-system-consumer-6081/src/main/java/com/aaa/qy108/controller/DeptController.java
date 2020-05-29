@@ -53,8 +53,8 @@ public class DeptController extends BaseController {
      */
     @PostMapping("/addDept")
     @ApiOperation(value = "根据条件添加部门",notes = "部门管理的添加")
-    public ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId){
-        return systemApiService.addDept(dept,tokenId);
+    public ResultData addDept(@RequestBody Dept dept){
+        return systemApiService.addDept(dept);
     }
 
     /**

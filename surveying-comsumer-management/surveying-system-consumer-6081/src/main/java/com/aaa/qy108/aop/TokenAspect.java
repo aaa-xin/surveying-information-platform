@@ -45,14 +45,6 @@ public class TokenAspect {
     public void pointCut(){}
 
 
-    @Before("pointCut()")
-    public void before(JoinPoint joinPoint){
-        //这个RequestContextHolder是Springmvc提供来获得请求的东西
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-
-    }
-
     /** 
     * @Description: 环绕切
     * @Author: guohang

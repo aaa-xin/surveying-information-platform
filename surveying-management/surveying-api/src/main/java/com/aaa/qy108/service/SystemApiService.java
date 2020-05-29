@@ -64,14 +64,14 @@ public interface SystemApiService {
 
     /**
      *
-     * @Param: [dept, tokenId]
+     * @Param: [dept]
      * @Return: com.aaa.qy108.base.ResultData
      * 添加部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/21 19:50
      */
     @PostMapping("/dept/addDept")
-    ResultData addDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId);
+    ResultData addDept(@RequestBody Dept dept);
 
     /**
      *
