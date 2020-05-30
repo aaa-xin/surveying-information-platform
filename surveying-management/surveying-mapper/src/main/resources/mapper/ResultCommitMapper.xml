@@ -21,4 +21,54 @@
     <result column="meridian" property="meridian" jdbcType="VARCHAR" />
     <result column="coordinate" property="coordinate" jdbcType="LONGVARCHAR" />
   </resultMap>
+
+
+  <select id="selcetResultByFeild" resultType="HashMap" parameterType="HashMap">
+    select trc.id,trc.name from t_result_commit  trc
+    join t_mapping_project tmp on trc.ref_id =tmp.id
+    <where>
+      1=1
+      <if test="name != null">
+        and trc.name like '%${name}%'
+      </if>
+      <if test="projecType != null">
+        and tmp.project_type = #{projecType}
+      </if>
+      <if test="resultDate != null">
+        and trc.result_date = #{resultDate}
+      </if>
+    </where>
+  </select>
+
+
+  <select id="selectAllResult" resultType="HashMap" >
+       select trc.id,trc.name from t_result_commit trc
+       join t_mapping_project tmp on trc.ref_id =tmp.id
+  </select>
+
+
+  <!--查询数据中所有的测绘类型，可以让前台进行选择查询-->
+  <select id="SelectProjectType" resultType="HashMap" parameterType="String">
+      select project_type from  t_mapping_project group by project_type
+   </select>
+  
+  
+  <select id="resultDetail" resultType="HashMap" parameterType="String">
+      select * from t_result_commit trc
+      join t_mapping_project tmp on trc.ref_id =tmp.id where trc.id = #{id}
+  </select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

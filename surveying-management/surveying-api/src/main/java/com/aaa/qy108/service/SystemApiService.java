@@ -142,7 +142,7 @@ public interface SystemApiService {
     * @Date: 2020/5/23
     */
     @PostMapping("/utilSelect")
-    List<HashMap>  utilSelect(@RequestBody MappingUnit mappingUnit, @RequestParam("tokenId") String tokenId);
+    ResultData  utilSelect(@RequestBody MappingUnit mappingUnit/*, @RequestParam("tokenId") String tokenId*/);
 
 
     /**
@@ -153,7 +153,7 @@ public interface SystemApiService {
     * @Date: 2020/5/23
     */
     @PostMapping("/selectGroupByFeild")
-    List<HashMap> selectGroupByFeild(@RequestParam ("feild") String feild,@RequestParam("tokenId") String tokenId);
+    ResultData selectGroupByFeild(@RequestParam ("feild") String feild);
 
 
 
@@ -165,7 +165,7 @@ public interface SystemApiService {
       * @return
      **/
     @PostMapping("/projectSelect")
-    List<HashMap>  projectSelect(@RequestBody MappingProject mappingProject, @RequestParam("tokenId") String tokenId);
+    ResultData  projectSelect(@RequestBody MappingProject mappingProject);
 
      /**
       * @Author Tzg
@@ -175,7 +175,7 @@ public interface SystemApiService {
       * @return
     **/
     @PostMapping("/SelectGroupName")
-    List<HashMap> SelectGroupName(@RequestParam ("name") String name,@RequestParam("tokenId") String tokenId);
+    ResultData SelectGroupName(@RequestParam ("name") String name);
 
     /**
      * @Description: 分页查询字典信息
@@ -226,10 +226,60 @@ public interface SystemApiService {
     */
     @GetMapping("/getRedisToken")
     String getRedisToken(@RequestParam("tokenId") String tokenId);
+    
+    
+    /**
+    * @Description: 根据传过 来的条件去查询需要测绘成果
+    * @Param: [hashMap]
+    * @return: com.aaa.qy108.base.ResultData
+    * @Author: Qin
+    * @Date: 2020/5/30
+    */
+    @PostMapping("/selcetAllResult")
+    ResultData selcetAllResult(@RequestBody HashMap hashMap);
 
 
+    /**
+    * @Description: 查询数据中所有的测绘类型，可以让前台进行选择查询
+    * @Param: []
+    * @return: com.aaa.qy108.base.ResultData
+    * @Author: Qin
+    * @Date: 2020/5/30
+    */
+    @PostMapping("/SelectProjectType")
+    ResultData SelectProjectType();
 
 
+    /**
+    * @Description: 查询出成果的详细信息
+    * @Param: [mappingUnit]
+    * @return: com.aaa.qy108.base.ResultData
+    * @Author: Qin
+    * @Date: 2020/5/30
+    */
+    @PostMapping("/resultDetail")
+   ResultData resultDetail(@RequestParam("id") String id);
+
+    /**
+     * @Description: 通过id查询详细地单位信息
+     * @Param: [id]
+     * @return: com.aaa.qy108.base.ResultData
+     * @Author: Qin
+     * @Date: 2020/5/30
+     */
+    @PostMapping("/unitDetail")
+    ResultData unitDetail(@RequestParam("id") String id);
+
+
+    /**
+     * @Description: 通过id查询测绘工程的详细信息
+     * @Param: [id]
+     * @return: com.aaa.qy108.base.ResultData
+     * @Author: Qin
+     * @Date: 2020/5/30
+     */
+    @PostMapping("/projectDetail")
+    ResultData projectDetail(@RequestParam("id") String id);
 }
 
 

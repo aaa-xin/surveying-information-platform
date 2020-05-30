@@ -39,6 +39,13 @@ public interface MappingProjectMapper extends Mapper<MappingProject> {
      * @return
      **/
     public List<HashMap> SelectGroupName(String name);
-
-
+    
+    /**
+    * @Description: 通过id查询测绘工程的详细信息
+    * @Param: [id]
+    * @return: java.util.List<java.util.HashMap>
+    * @Author: Qin
+    * @Date: 2020/5/30
+    */
+    public List<HashMap> projectDetail(String id);
 }

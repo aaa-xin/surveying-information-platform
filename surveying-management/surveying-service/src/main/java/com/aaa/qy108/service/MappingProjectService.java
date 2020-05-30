@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.aaa.qy108.status.LoginStatus.*;
+import static com.aaa.qy108.status.SelectStatus.*;
+import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_BY_ID_FAILED;
 
 /**
           * @Author Tzg
@@ -31,29 +34,23 @@ public class MappingProjectService extends BaseService<MappingProject> {
               * @Param  * @param null
               * @return
               **/
-    public List<HashMap> projectSelect(MappingProject mappingProject, String tokenId, RedisService redisService){
-
-        List<HashMap> list =new ArrayList<>();
-        HashMap<Object ,Object> hashMap=new HashMap<>();
-
-       //判断token是否为空，判断是否登录
-        if (!"".equals(tokenId)  || null != tokenId){
-            //判断redsi中是否有token，如果没有证明登陆失效
-            if (null!=redisService.get(tokenId)){
-                //判断是否有查询条件，否则测绘项目的名称全部查询
-                if (null == mappingProject){
-                    return  mappingProjectMapper.SelectAllProject();
-                }
-                    return mappingProjectMapper.projectSelect(mappingProject);
-
-
-            }
+    public Map<String,Object> projectSelect(MappingProject mappingProject){
+        HashMap<String, Object> resultMap = new HashMap<>();
+        List<HashMap> restdata = new ArrayList<>();
+        if (null == mappingProject){
+            restdata = mappingProjectMapper.SelectAllProject();
+        }else {
+            restdata = mappingProjectMapper.projectSelect(mappingProject);
         }
-        hashMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-        hashMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
-        list.add(hashMap);
-        return list;
-
+        if (restdata.size()>0){
+            resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
+            resultMap.put("msg",SELECT_DATA_SUCCESS.getMsg());
+            resultMap.put("data",restdata);
+        }else {
+            resultMap.put("code",SELECT_DATA_FAILED.getCode());
+            resultMap.put("msg",SELECT_DATA_FAILED.getMsg());
+        }
+        return resultMap;
     }
          /**
               * @Author Tzg
@@ -62,22 +59,44 @@ public class MappingProjectService extends BaseService<MappingProject> {
               * @Param  * @param null
               * @return 
               **/
-    public List<HashMap> SelectGroupName(String name,RedisService redisService, String tokenId){
+    public Map<String,Object> SelectGroupName(String name){
 
-        List<HashMap> list = new ArrayList<>();
-        HashMap<Object, Object> hashMap = new HashMap<>();
-        //如果，tokenid为空，就说明是非法登录，直接返回
-        if (!"".equals(tokenId) || null != tokenId){
-            //判断redis中是否还存在这个token，如果不存在，就证明已经失效，需要让用户重新登录
-            if (null != redisService.get(tokenId)){
-                return   mappingProjectMapper.SelectGroupName(name);
+        HashMap<String, Object> resultMap = new HashMap<>();
+        List<HashMap> restdata = new ArrayList<>();
+
+        restdata= mappingProjectMapper.SelectGroupName(name);
+        if (restdata.size()>0){
+            resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
+            resultMap.put("msg",SELECT_DATA_SUCCESS.getMsg());
+            resultMap.put("data",restdata);
+        }else {
+            resultMap.put("code",SELECT_DATA_FAILED.getCode());
+            resultMap.put("msg",SELECT_DATA_FAILED.getMsg());
+        }
+        return resultMap;
+    }
+
+    /**
+     * @Description: 通过id查询测绘工程的详细信息
+     * @Param: [id]
+     * @return: java.util.HashMap<java.lang.String,java.lang.Object>
+     * @Author: Qin
+     * @Date: 2020/5/30
+     */
+    public HashMap<String,Object> projectDetail(String id) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        if (null != id && !("").equals(id)) {
+            List<HashMap> restdata = mappingProjectMapper.projectDetail(id);
+            if ( restdata.size() ==1) {
+                resultMap.put("code", SELECT_DATA_BY_ID_SUCCESS.getCode());
+                resultMap.put("msg", SELECT_DATA_BY_ID_SUCCESS.getMsg());
+                resultMap.put("data", restdata);
+                return resultMap;
             }
         }
-        hashMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-        hashMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
-        list.add(hashMap);
-        return list;
-
+        resultMap.put("code", SELECT_DATA_BY_ID_FAILED.getCode());
+        resultMap.put("msg", SELECT_DATA_BY_ID_FAILED.getMsg());
+        return resultMap;
     }
 
 }

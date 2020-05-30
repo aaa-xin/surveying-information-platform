@@ -35,4 +35,13 @@ public interface MappingUnitMapper extends Mapper<MappingUnit> {
     * @Date: 2020/5/23
     */
     public List<HashMap> selectGroupByFeild(String feild);
+    
+    /**
+    * @Description: 通过id查询详细地单位信息
+    * @Param: [id]
+    * @return: java.util.List<java.util.HashMap>
+    * @Author: Qin
+    * @Date: 2020/5/30
+    */
+    public List<HashMap> unitDetail(String id);
 }

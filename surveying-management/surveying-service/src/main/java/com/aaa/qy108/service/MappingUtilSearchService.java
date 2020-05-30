@@ -3,15 +3,16 @@ package com.aaa.qy108.service;
 import com.aaa.qy108.base.BaseService;
 import com.aaa.qy108.mapper.MappingUnitMapper;
 import com.aaa.qy108.model.MappingUnit;
-import com.aaa.qy108.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
+import static com.aaa.qy108.status.SelectStatus.*;
+import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_BY_ID_FAILED;
 
 /**
  * @Author Qin
@@ -30,25 +31,25 @@ public class MappingUtilSearchService extends BaseService<MappingUnit> {
     * @Author: Qin
     * @Date: 2020/5/22
     */
-    public List<HashMap> utilSelect(MappingUnit mappingUnit, String tokenId, RedisService redisService){
-
-        List<HashMap> list = new ArrayList<>();
-        HashMap<Object, Object> hm = new HashMap<>();
-       //如果，tokenid为空，就说明是非法登录，直接返回
-        if (!"".equals(tokenId) || null != tokenId){
-            //判断redis中是否还存在这个token，如果不存在，就证明已经失效，需要让用户重新登录
-            if (null != redisService.get(tokenId)){
-                  //如果传过来的没有查询条件，则把所有的测绘单位都查询出来
-                if (null==mappingUnit){
-                    return  mappingUnitMapper.selectAllUnit();
-                }
-                return  mappingUnitMapper.selcetUnit(mappingUnit);
-            }
+    public Map<String,Object> utilSelect(MappingUnit mappingUnit){
+        HashMap<String, Object> resultMap = new HashMap<>();
+        List<HashMap> restdata = new ArrayList<>();
+        if (null==mappingUnit){
+            restdata= mappingUnitMapper.selectAllUnit();
+        }else {
+            restdata = mappingUnitMapper.selcetUnit(mappingUnit);
         }
-        hm.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-        hm.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
-        list.add(hm);
-        return list;
+        if (restdata.size()>0){
+            resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
+            resultMap.put("msg",SELECT_DATA_SUCCESS.getMsg());
+            resultMap.put("data",restdata);
+        }else {
+            resultMap.put("code",SELECT_DATA_FAILED.getCode());
+            resultMap.put("msg",SELECT_DATA_FAILED.getMsg());
+        }
+        return resultMap;
+
+
     }
 
     /**
@@ -58,21 +59,40 @@ public class MappingUtilSearchService extends BaseService<MappingUnit> {
     * @Author: Qin
     * @Date: 2020/5/23
     */
-    public List<HashMap> selectGroupByFeild(String feild,RedisService redisService, String tokenId){
+    public Map<String,Object> selectGroupByFeild(String feild){
+        HashMap<String, Object> resultMap = new HashMap<>();
+        List<HashMap> restdata= mappingUnitMapper.selectGroupByFeild(feild);
+        if (restdata.size()>0){
+            resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
+            resultMap.put("msg",SELECT_DATA_SUCCESS.getMsg());
+            resultMap.put("data",restdata);
+        }else {
+            resultMap.put("code",SELECT_DATA_FAILED.getCode());
+            resultMap.put("msg",SELECT_DATA_FAILED.getMsg());
+        }
+        return resultMap;
+    }
 
-        List<HashMap> list = new ArrayList<>();
-        HashMap<Object, Object> hm = new HashMap<>();
-        //如果，tokenid为空，就说明是非法登录，直接返回
-        if (!"".equals(tokenId) || null != tokenId){
-            //判断redis中是否还存在这个token，如果不存在，就证明已经失效，需要让用户重新登录
-            if (null != redisService.get(tokenId)){
-                return   mappingUnitMapper.selectGroupByFeild(feild);
+    /**
+    * @Description: 通过id查询详细地单位信息
+    * @Param: [id]
+    * @return: java.util.HashMap<java.lang.String,java.lang.Object>
+    * @Author: Qin
+    * @Date: 2020/5/30
+    */
+    public HashMap<String,Object> unitDetail(String id) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        if (null != id && !("").equals(id)) {
+            List<HashMap> restdata = mappingUnitMapper.unitDetail(id);
+            if ( restdata.size() ==1) {
+                resultMap.put("code", SELECT_DATA_BY_ID_SUCCESS.getCode());
+                resultMap.put("msg", SELECT_DATA_BY_ID_SUCCESS.getMsg());
+                resultMap.put("data", restdata);
+                return resultMap;
             }
         }
-        hm.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-        hm.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
-        list.add(hm);
-        return list;
-       
+        resultMap.put("code", SELECT_DATA_BY_ID_FAILED.getCode());
+        resultMap.put("msg", SELECT_DATA_BY_ID_FAILED.getMsg());
+        return resultMap;
     }
 }

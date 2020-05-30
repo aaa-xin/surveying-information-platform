@@ -1,6 +1,10 @@
 package com.aaa.qy108.controller;
 
+import com.aaa.qy108.base.BaseService;
+import com.aaa.qy108.base.CommonController;
+import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.MappingProject;
+import com.aaa.qy108.model.MappingUnit;
 import com.aaa.qy108.redis.RedisService;
 import com.aaa.qy108.service.MappingProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
+import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_BY_ID_SUCCESS;
+import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
 
 /**
           * @Author Tzg
@@ -20,7 +29,7 @@ import java.util.List;
           * @return
           **/
 @RestController
-public class MappingProjectController {
+public class MappingProjectController extends CommonController<MappingUnit> {
     @Autowired
     private MappingProjectService mappingProjectService;
     @Autowired
@@ -35,8 +44,13 @@ public class MappingProjectController {
      * @return
      **/
     @PostMapping("/projectSelect")
-    public List<HashMap> projectSelect(@RequestBody MappingProject mappingProject,@RequestParam("tokenId") String tokenId){
-        return mappingProjectService.projectSelect(mappingProject,tokenId,redisService);
+    public ResultData projectSelect(@RequestBody MappingProject mappingProject){
+        Map<String, Object> resultMap = mappingProjectService.projectSelect(mappingProject);
+        if (SELECT_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
+            return super.selectSuccess(resultMap.get("data"));
+        }else{
+            return super.selectFailed();
+        }
     }
 
  /**
@@ -47,7 +61,39 @@ public class MappingProjectController {
   * @return
     **/
     @PostMapping("/SelectGroupName")
-    public List<HashMap> SelectGroupName(@RequestParam ("name") String name,@RequestParam("tokenId") String tokenId){
-        return mappingProjectService.SelectGroupName(name,redisService,tokenId);
+    public ResultData SelectGroupName(@RequestParam ("name") String name){
+        System.out.println(name);
+        Map<String, Object> resultMap = mappingProjectService.SelectGroupName(name);
+        if (SELECT_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
+            return super.selectSuccess(resultMap.get("data"));
+        }else{
+            return super.selectFailed();
+        }
+    }
+
+
+
+    /**
+    * @Description: 通过id查询测绘工程的详细信息
+    * @Param: [id]
+    * @return: com.aaa.qy108.base.ResultData
+    * @Author: Qin
+    * @Date: 2020/5/30
+    */
+    @PostMapping("/projectDetail")
+    public ResultData projectDetail(@RequestParam("id") String id){
+        Map<String, Object> resultMap = mappingProjectService.projectDetail(id);
+        if (SELECT_DATA_BY_ID_SUCCESS.getCode().equals(resultMap.get("code"))){
+            return super.selectSuccess(resultMap.get("data"));
+        }else{
+            return super.selectFailed();
+        }
+    }
+
+
+
+    @Override
+    public BaseService<MappingUnit> getBaseService() {
+        return null;
     }
 }

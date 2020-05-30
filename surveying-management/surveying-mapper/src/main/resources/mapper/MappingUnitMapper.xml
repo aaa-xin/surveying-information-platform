@@ -83,4 +83,9 @@
    <select id="selectGroupByFeild" resultType="HashMap" parameterType="String">
       select ${feild} from  t_mapping_unit group by ${feild}
    </select>
+
+  <select id="unitDetail" resultType="HashMap" parameterType="String">
+      select * from t_mapping_unit where id = #{id}
+  </select>
+
 </mapper>
