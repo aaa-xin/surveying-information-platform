@@ -53,7 +53,7 @@ public interface SystemApiService {
 
     /**
      *
-     * @Param: [dept, tokenId]
+     * @Param: [dept]
      * @Return: com.aaa.qy108.base.ResultData
      *      通过条件查询部门信息
      * @Author: Liuyibo
@@ -75,52 +75,52 @@ public interface SystemApiService {
 
     /**
      *
-     * @Param: [dept, tokenId]
+     * @Param: [dept]
      * @Return: com.aaa.qy108.base.ResultData
      * 修改部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/21 20:11
      */
     @PostMapping("/dept/updateDept")
-    ResultData updateDept(@RequestBody Dept dept, @RequestParam("tokenId") String tokenId);
+    ResultData updateDept(@RequestBody Dept dept);
     /**
      *
-     * @Param: [ids, tokenId]
+     * @Param: [ids]
      * @Return: com.aaa.qy108.base.ResultData
      * 批量删除部门信息
      * @Author: Liuyibo
      * @Date: 2020/5/22 15:12
      */
     @DeleteMapping("/dept/delDept")
-    ResultData delDept(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId);
+    ResultData delDept(@RequestBody List<Long> ids);
     /** 
     * @Description: 批量删除用户
     * @Author: guohang
     * @Date: 2020/5/20 20:33
-    * @Param: [ids, tokenId] 
+    * @Param: [ids]
     * @return: com.aaa.qy108.base.ResultData 
     */
     @DeleteMapping("/user/delUser")
-    ResultData delUser(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId);
+    ResultData delUser(@RequestBody List<Long> ids);
 
     /**
     * @Description: 用户管理中修改用户信息
     * @Author: guohang
     * @Date: 2020/5/21 15:48
-    * @Param: [user, tokenId]
+    * @Param: [user]
     * @return: com.aaa.qy108.base.ResultData
     */
     @PostMapping("/user/updateUser")
-    ResultData updateUser(@RequestBody User user, @RequestParam("tokenId") String tokenId);
+    ResultData updateUser(@RequestBody User user);
 
     /**
     * @Description: 用户信息导出excle
     * @Author: guohang
     * @Date: 2020/5/21 16:25
-    * @Param: [tokenId]
+    * @Param: []
     */
     @GetMapping("/user/exportExcle")
-    Response exportExcle(@RequestParam("tokenId") String tokenId);
+    Response exportExcle();
 
 
     /**
@@ -133,6 +133,7 @@ public interface SystemApiService {
      */
     @PostMapping("/user/selectUser")
     ResultData selectUserAll(@RequestBody HashMap map);
+
 
     /**
     * @Description: 测绘单位查询，单位名称模糊查询，单位地域和单位资质准确查询
@@ -154,7 +155,6 @@ public interface SystemApiService {
     */
     @PostMapping("/selectGroupByFeild")
     ResultData selectGroupByFeild(@RequestParam ("feild") String feild);
-
 
 
     /**

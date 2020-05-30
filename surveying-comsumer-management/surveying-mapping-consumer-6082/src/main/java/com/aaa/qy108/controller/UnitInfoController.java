@@ -2,9 +2,11 @@ package com.aaa.qy108.controller;
 
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.MappingUnit;
+import com.aaa.qy108.model.Principal;
 import com.aaa.qy108.service.MappingApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Author guohang
@@ -27,20 +29,20 @@ public class UnitInfoController {
     * @return: com.aaa.qy108.base.ResultData 
     */ 
     @PostMapping("/selectUnitInfo")
-    public ResultData selectUnitInfo(@RequestParam("tokenId") String tokenId){
-        return mappingApiService.selectUnitInfo(tokenId);
+    public ResultData selectUnitInfo(@RequestParam("userId") String userId){
+        return mappingApiService.selectUnitInfo(userId);
     }
 
     /**
     * @Description: 修改单位信息
     * @Author: guohang
     * @Date: 2020/5/22 20:28
-    * @Param: [mappingUnit, tokenId]
+    * @Param: [mappingUnit]
     * @return: com.aaa.qy108.base.ResultData
     */
     @PostMapping("/updateUnitInfo")
-    public ResultData updateUnitInfo(@RequestBody MappingUnit mappingUnit, @RequestParam("tokenId") String tokenId){
-        return mappingApiService.updateUnitInfo(mappingUnit,tokenId);
+    public ResultData updateUnitInfo(@RequestBody MappingUnit mappingUnit){
+        return mappingApiService.updateUnitInfo(mappingUnit);
     }
 
     
@@ -48,12 +50,12 @@ public class UnitInfoController {
     * @Description: 查询全部的单位负责人信息
     * @Author: guohang
     * @Date: 2020/5/28 15:49
-    * @Param: [] 
+    * @Param: [userId]
     * @return: com.aaa.qy108.base.ResultData 
     */ 
     @GetMapping("/selectAllPrincipal")
-    public ResultData selectAllPrincipal(@RequestParam("tokenId") String tokenId){
-        return mappingApiService.selectAllPrincipal(tokenId);
+    public ResultData selectAllPrincipal(@RequestParam("userId") String userId){
+        return mappingApiService.selectAllPrincipal(userId);
     }
 
 
@@ -61,13 +63,55 @@ public class UnitInfoController {
     * @Description: 查询全部的单位技术员信息
     * @Author: guohang
     * @Date: 2020/5/28 17:22
-    * @Param: [tokenId]
+    * @Param: [userId]
     * @return: com.aaa.qy108.base.ResultData
     */
     @GetMapping("/selectAllTechnicist")
-    public ResultData selectAllTechnicist(@RequestParam("tokenId") String tokenId){
-        return mappingApiService.selectAllTechnicist(tokenId);
+    public ResultData selectAllTechnicist(@RequestParam("userId") String userId){
+        return mappingApiService.selectAllTechnicist(userId);
     }
+
+
+    /**
+     * @Description: 添加单位负责人
+     * @Author: guohang
+     * @Date: 2020/5/30 11:02
+     * @Param: [file, type, name, idType, idNumber, age, sex, workYear, duty, title, major, mappingYear, userId]
+     * @return: com.aaa.qy108.base.ResultData
+     */
+    @PostMapping("/addPrincipal")
+    public ResultData addPrincipal(@RequestBody MultipartFile[] files,@RequestParam("type") String type,@RequestParam("name") String name,@RequestParam("idType") String idType,
+                                   @RequestParam("idNumber") String idNumber,@RequestParam("age") Integer age,@RequestParam("sex") Integer sex,
+                                   @RequestParam("workYear") Integer workYear,@RequestParam("duty") String duty,@RequestParam("title") String title,
+                                   @RequestParam("major") String major,@RequestParam("mappingYear") Integer mappingYear,@RequestParam("userId") Long userId){
+        return mappingApiService.addPrincipal(files,type,name,idType,idNumber,age,sex,workYear,duty,title,major,mappingYear,userId);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

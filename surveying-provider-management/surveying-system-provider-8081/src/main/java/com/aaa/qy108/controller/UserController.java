@@ -54,8 +54,6 @@ public class UserController extends CommonController<User> {
         Map<String, Object> addResult = userService.addUser(user);
         if (ADD_DATA_SUCCESS.getCode().equals(addResult.get("code"))){
             return super.addSuccess();
-        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(addResult.get("code"))){
-            return super.loginTimeoutExit();
         }else{
             return super.addFailed();
         }
@@ -70,12 +68,10 @@ public class UserController extends CommonController<User> {
      * @return: com.aaa.qy108.base.ResultData
      */
     @DeleteMapping("/delUser")
-    ResultData delUser(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId){
-        Map<String, Object> resultMap = userService.delUser(ids, redisService, tokenId);
+    ResultData delUser(@RequestBody List<Long> ids){
+        Map<String, Object> resultMap = userService.delUser(ids);
         if (DELETE_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.deleteSuccess();
-        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){
-            return super.loginTimeoutExit();
         }else{
             return super.deleteFailed();
         }
@@ -86,16 +82,14 @@ public class UserController extends CommonController<User> {
      * @Description: 修改员工信息
      * @Author: guohang
      * @Date: 2020/5/21 15:56
-     * @Param: [user, tokenId]
+     * @Param: [user]
      * @return: com.aaa.qy108.base.ResultData
      */
     @PostMapping("/updateUser")
-    ResultData updateUser(@RequestBody User user, @RequestParam("tokenId") String tokenId){
-        Map<String, Object> resultMap = userService.updateUser(user, redisService, tokenId);
+    ResultData updateUser(@RequestBody User user){
+        Map<String, Object> resultMap = userService.updateUser(user);
         if (UPDATE_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.updateSuccess();
-        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){
-            return super.loginTimeoutExit();
         }else{
             return super.updateFailed();
         }
@@ -106,12 +100,12 @@ public class UserController extends CommonController<User> {
      * @Description: 导出用户信息
      * @Author: guohang
      * @Date: 2020/5/21 16:26
-     * @Param: [tokenId]
+     * @Param: []
      * @return: com.aaa.qy108.base.ResultData
      */
     @GetMapping("/exportExcle")
-    public void exportExcle(@RequestParam("tokenId") String tokenId, HttpServletResponse response){
-        Map<String, Object> map = userService.selectAll(redisService,tokenId);
+    public void exportExcle(HttpServletResponse response){
+        Map<String, Object> map = userService.selectAll();
         if (SELECT_DATA_SUCCESS.getCode().equals(map.get("code"))){
             List<User> users = (List<User>) map.get("data");
             //不为空，开始进行导出

@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +31,7 @@ public class UploadController extends BaseController {
     * @return: com.aaa.qy108.base.ResultData
     */
     @PostMapping("/uploadFile")
-    public ResultData uploadFile(@RequestBody MultipartFile file){
+    public ResultData uploadFile(MultipartFile file){
         Boolean result = mappingApiService.uploadFile(file);
         if (result){
             return super.uploadSuccess();

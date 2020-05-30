@@ -52,13 +52,13 @@ public class UserController extends BaseController {
     * @Description: 用户管理中删除用户
     * @Author: guohang
     * @Date: 2020/5/21 15:44
-    * @Param: [ids, tokenId]
+    * @Param: [ids]
     * @return: com.aaa.qy108.base.ResultData
     */
     @DeleteMapping("/delUser")
     @ApiOperation(value = "删除用户",notes = "用户管理的删除用户")
-    public ResultData delUser(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId){
-        return systemApiService.delUser(ids, tokenId);
+    public ResultData delUser(@RequestBody List<Long> ids){
+        return systemApiService.delUser(ids);
     }
 
 
@@ -66,13 +66,13 @@ public class UserController extends BaseController {
     * @Description: 用户管理中修改用户信息
     * @Author: guohang
     * @Date: 2020/5/21 15:47
-    * @Param: [user, tokenId]
+    * @Param: [user]
     * @return: com.aaa.qy108.base.ResultData
     */
     @PostMapping("/updateUser")
     @ApiOperation(value = "修改用户信息",notes = "用户管理的修改用户信息")
-    public ResultData updateUser(@RequestBody User user, @RequestParam("tokenId") String tokenId){
-        return systemApiService.updateUser(user, tokenId);
+    public ResultData updateUser(@RequestBody User user){
+        return systemApiService.updateUser(user);
     }
 
 
@@ -80,14 +80,13 @@ public class UserController extends BaseController {
     * @Description: 用户管理中的导出Excle
     * @Author: guohang
     * @Date: 2020/5/21 16:25
-    * @Param: [tokenId]
+    * @Param: []
     */
     @GetMapping("/exportExcle")
     @ApiOperation(value = "导出Excle",notes = "用户管理的导出用户信息")
-    public ResponseEntity<byte[]> exportExcle(@RequestParam("tokenId") String tokenId){
-        systemApiService.exportExcle(tokenId);
+    public ResponseEntity<byte[]> exportExcle(){
         ResponseEntity<byte[]> result = null;
-        Response response = systemApiService.exportExcle(tokenId);
+        Response response = systemApiService.exportExcle();
         Response.Body body = response.body();
         try (InputStream inputStream = body.asInputStream()) {
             // feign文件下载

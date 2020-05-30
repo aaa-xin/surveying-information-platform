@@ -70,27 +70,20 @@ public class UserService extends BaseService<User> {
     * @Description: 批量删除用户
     * @Author: guohang
     * @Date: 2020/5/20 20:50
-    * @Param: [ids, redisService, tokenId]
+    * @Param: [ids]
     * @return: java.util.Map<java.lang.String,java.lang.Object>
     */
-    public Map<String,Object> delUser(List<Long> ids,RedisService redisService,String tokenId) {
-        String tokenVal = redisService.get(tokenId);
+    public Map<String,Object> delUser(List<Long> ids) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        if (null == tokenVal){
-            //在这里说明登录超时了
-            resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-            resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
+        //获取到参数类型，然后添加一个where条件，是in类型，id属于ids中的
+        Example example = Example.builder(User.class).where(Sqls.custom().andIn("id",ids)).build();
+        int i = userMapper.deleteByExample(example);
+        if (i > 0){
+            resultMap.put("code", DELETE_DATA_SUCCESS.getCode());
+            resultMap.put("msg", DELETE_DATA_SUCCESS.getMsg());
         }else{
-            //获取到参数类型，然后添加一个where条件，是in类型，id属于ids中的
-            Example example = Example.builder(User.class).where(Sqls.custom().andIn("id",ids)).build();
-            int i = userMapper.deleteByExample(example);
-            if (i > 0){
-                resultMap.put("code", DELETE_DATA_SUCCESS.getCode());
-                resultMap.put("msg", DELETE_DATA_SUCCESS.getMsg());
-            }else{
-                resultMap.put("code", DELETE_DATA_FAILED.getCode());
-                resultMap.put("msg", DELETE_DATA_FAILED.getMsg());
-            }
+            resultMap.put("code", DELETE_DATA_FAILED.getCode());
+            resultMap.put("msg", DELETE_DATA_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -100,25 +93,19 @@ public class UserService extends BaseService<User> {
     * @Description: 修改员工信息
     * @Author: guohang
     * @Date: 2020/5/21 16:00
-    * @Param: [user, redisService, tokenId]
+    * @Param: [user]
     * @return: java.util.Map<java.lang.String,java.lang.Object>
     */
-    public Map<String,Object> updateUser(User user,RedisService redisService,String tokenId){
-        String tokenVal = redisService.get(tokenId);
+    public Map<String,Object> updateUser(User user){
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        if (null == tokenVal){
-            //在这里说明登录超时了
-            resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-            resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
+        user.setModifyTime(DateUtil.now());
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        if (i > 0){
+            resultMap.put("code", UPDATE_DATA_SUCCESS.getCode());
+            resultMap.put("msg", UPDATE_DATA_SUCCESS.getMsg());
         }else{
-            int i = userMapper.updateByPrimaryKey(user);
-            if (i > 0){
-                resultMap.put("code", UPDATE_DATA_SUCCESS.getCode());
-                resultMap.put("msg", UPDATE_DATA_SUCCESS.getMsg());
-            }else{
-                resultMap.put("code", UPDATE_DATA_FAILED.getCode());
-                resultMap.put("msg", UPDATE_DATA_FAILED.getMsg());
-            }
+            resultMap.put("code", UPDATE_DATA_FAILED.getCode());
+            resultMap.put("msg", UPDATE_DATA_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -128,27 +115,20 @@ public class UserService extends BaseService<User> {
     * @Description: 查询全部用户信息
     * @Author: guohang
     * @Date: 2020/5/21 19:29
-    * @Param: [redisService,tokenId]
+    * @Param: []
     * @return: java.util.Map<java.lang.String,java.lang.Object>
     */
-    public Map<String,Object> selectAll(RedisService redisService,String tokenId) {
-        String tokenVal = redisService.get(tokenId);
+    public Map<String,Object> selectAll() {
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        if (null == tokenVal){
-            //在这里说明登录超时了
-            resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-            resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
-        }else {
-            List<User> users = userMapper.selectAll();
-            if (null != users && !users.isEmpty()){
-                resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
-                resultMap.put("msg",SELECT_DATA_SUCCESS.getMsg());
-                resultMap.put("data",users);
-                return resultMap;
-            }else{
-                resultMap.put("code",SELECT_DATA_FAILED.getCode());
-                resultMap.put("msg",SELECT_DATA_FAILED.getMsg());
-            }
+        List<User> users = userMapper.selectAll();
+        if (null != users && !users.isEmpty()){
+            resultMap.put("code",SELECT_DATA_SUCCESS.getCode());
+            resultMap.put("msg",SELECT_DATA_SUCCESS.getMsg());
+            resultMap.put("data",users);
+            return resultMap;
+        }else{
+            resultMap.put("code",SELECT_DATA_FAILED.getCode());
+            resultMap.put("msg",SELECT_DATA_FAILED.getMsg());
         }
         return resultMap;
     }
