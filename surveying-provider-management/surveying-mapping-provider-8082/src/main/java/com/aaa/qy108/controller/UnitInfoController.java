@@ -11,10 +11,16 @@ import com.aaa.qy108.model.Technicist;
 import com.aaa.qy108.redis.RedisService;
 import com.aaa.qy108.service.PrincipalService;
 import com.aaa.qy108.service.TechnicistService;
+import com.aaa.qy108.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
+
+import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
 
 
 /**
@@ -36,6 +42,8 @@ public class UnitInfoController extends CommonController<MappingUnit> {
     @Autowired
     private MappingUnitMapper mappingUnitMapper;
 
+    @Autowired
+    private UploadService uploadService;
 
 
     /**
@@ -126,10 +134,30 @@ public class UnitInfoController extends CommonController<MappingUnit> {
         }
 
     }
-    
-    
-    
-    
+
+
+    /** 
+    * @Description: 添加单位负责人 
+    * @Author: guohang
+    * @Date: 2020/5/30 11:13
+    * @Param: [file, type, name, idType, idNumber, age, sex, workYear, duty, title, major, mappingYear, userId] 
+    * @return: com.aaa.qy108.base.ResultData 
+    */ 
+    @PostMapping(value = "/addPrincipal",consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResultData addPrincipal(@RequestBody MultipartFile[] files,@RequestParam("type") String type,@RequestParam("name") String name,@RequestParam("idType") String idType,
+                            @RequestParam("idNumber") String idNumber,@RequestParam("age") Integer age,@RequestParam("sex") Integer sex,
+                            @RequestParam("workYear") Integer workYear,@RequestParam("duty") String duty,@RequestParam("title") String title,
+                            @RequestParam("major") String major,@RequestParam("mappingYear") Integer mappingYear,@RequestParam("userId") Long userId){
+        Principal principal = new Principal();
+        principal.setType(type).setName(name).setIdType(idType).setIdNumber(idNumber).setAge(age).
+                setSex(sex).setWorkYear(workYear).setDuty(duty).setTitle(title).setMajor(major).setMappingYear(mappingYear).setUserId(userId);
+        Map<String,Object> resultMap = principalService.addPrincipal(principal,files,uploadService);
+        if (ADD_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
+            return super.addSuccess();
+        }else {
+            return super.addFailed();
+        }
+    }
     
     
     

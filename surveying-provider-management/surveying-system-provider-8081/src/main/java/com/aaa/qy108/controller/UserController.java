@@ -54,8 +54,6 @@ public class UserController extends CommonController<User> {
         Map<String, Object> addResult = userService.addUser(user);
         if (ADD_DATA_SUCCESS.getCode().equals(addResult.get("code"))){
             return super.addSuccess();
-        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(addResult.get("code"))){
-            return super.loginTimeoutExit();
         }else{
             return super.addFailed();
         }
@@ -74,8 +72,6 @@ public class UserController extends CommonController<User> {
         Map<String, Object> resultMap = userService.delUser(ids);
         if (DELETE_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.deleteSuccess();
-        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){
-            return super.loginTimeoutExit();
         }else{
             return super.deleteFailed();
         }
@@ -94,8 +90,6 @@ public class UserController extends CommonController<User> {
         Map<String, Object> resultMap = userService.updateUser(user);
         if (UPDATE_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
             return super.updateSuccess();
-        }else if (LOGIN_TIMEOUT_EXIT.getCode().equals(resultMap.get("code"))){
-            return super.loginTimeoutExit();
         }else{
             return super.updateFailed();
         }

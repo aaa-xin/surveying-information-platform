@@ -24,9 +24,9 @@ public class FtpFileNameUtil {
         long timeMillis = System.currentTimeMillis();
         //随机生成一个999以内的数字
         Random random = new Random();
-        Integer randomNum = random.nextInt(999);
+        Integer randomNum = random.nextInt(999999);
         //拼接成一个新名称，%占位符，d代表数字，03代表3位数，如果不够三位则在前边补0
-        String fileName = timeMillis + String.format("%03d", randomNum);
+        String fileName = timeMillis + String.format("%06d", randomNum);
         return fileName;
     }
 

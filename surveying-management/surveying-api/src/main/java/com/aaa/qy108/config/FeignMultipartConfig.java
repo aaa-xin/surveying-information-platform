@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.support.SpringEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 
 /**
@@ -35,6 +37,9 @@ public class FeignMultipartConfig {
     public Encoder SpringFormEncoder(){
         return new SpringFormEncoder(new SpringEncoder(messageConverters));
     }
+
+
+
 
 }
 

@@ -2,9 +2,11 @@ package com.aaa.qy108.controller;
 
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.MappingUnit;
+import com.aaa.qy108.model.Principal;
 import com.aaa.qy108.service.MappingApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Author guohang
@@ -68,6 +70,48 @@ public class UnitInfoController {
     public ResultData selectAllTechnicist(@RequestParam("userId") String userId){
         return mappingApiService.selectAllTechnicist(userId);
     }
+
+
+    /**
+     * @Description: 添加单位负责人
+     * @Author: guohang
+     * @Date: 2020/5/30 11:02
+     * @Param: [file, type, name, idType, idNumber, age, sex, workYear, duty, title, major, mappingYear, userId]
+     * @return: com.aaa.qy108.base.ResultData
+     */
+    @PostMapping("/addPrincipal")
+    public ResultData addPrincipal(@RequestBody MultipartFile[] files,@RequestParam("type") String type,@RequestParam("name") String name,@RequestParam("idType") String idType,
+                                   @RequestParam("idNumber") String idNumber,@RequestParam("age") Integer age,@RequestParam("sex") Integer sex,
+                                   @RequestParam("workYear") Integer workYear,@RequestParam("duty") String duty,@RequestParam("title") String title,
+                                   @RequestParam("major") String major,@RequestParam("mappingYear") Integer mappingYear,@RequestParam("userId") Long userId){
+        return mappingApiService.addPrincipal(files,type,name,idType,idNumber,age,sex,workYear,duty,title,major,mappingYear,userId);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
