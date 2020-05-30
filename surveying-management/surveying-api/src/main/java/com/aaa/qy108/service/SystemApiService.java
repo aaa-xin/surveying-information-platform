@@ -157,7 +157,6 @@ public interface SystemApiService {
     List<HashMap> selectGroupByFeild(@RequestParam ("feild") String feild,@RequestParam("tokenId") String tokenId);
 
 
-
     /**
       * @Author Tzg
       * @Description //测绘项目管理，项目名称模糊查询，类型 ，日期精确查
