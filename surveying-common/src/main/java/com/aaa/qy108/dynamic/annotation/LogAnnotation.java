@@ -1,4 +1,4 @@
-package com.aaa.qy108.annotation;
+package com.aaa.qy108.dynamic.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

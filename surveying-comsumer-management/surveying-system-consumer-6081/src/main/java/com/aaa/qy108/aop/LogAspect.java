@@ -1,7 +1,7 @@
 package com.aaa.qy108.aop;
 
 import cn.hutool.core.date.DateUtil;
-import com.aaa.qy108.annotation.LogAnnotation;
+import com.aaa.qy108.dynamic.annotation.LogAnnotation;
 import com.aaa.qy108.model.User;
 import com.aaa.qy108.service.SystemApiService;
 import com.aaa.qy108.utils.IpUtils;
@@ -40,7 +40,7 @@ public class LogAspect {
     * @Param: []
     * @return: void
     */
-    @Pointcut("@annotation(com.aaa.qy108.annotation.LogAnnotation)")
+    @Pointcut("@annotation(com.aaa.qy108.dynamic.annotation.LogAnnotation)")
     public void pointcut(){
 
     }
