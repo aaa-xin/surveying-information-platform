@@ -21,4 +21,22 @@
     <result column="create_time" property="createTime" jdbcType="VARCHAR" />
     <result column="modify_time" property="modifyTime" jdbcType="VARCHAR" />
   </resultMap>
+
+  <resultMap id="principalResource" type="com.aaa.qy108.model.Principal" autoMapping="true">
+    <id property="id" column="id"/>
+    <!--ofType指向List中泛型的数据类型-->
+    <collection property="resources" ofType="com.aaa.qy108.model.Resource" autoMapping="true">
+      <id property="id" column="id"/>
+    </collection>
+  </resultMap>
+
+
+
+  <select id="selectPrincipalById" resultMap="principalResource" parameterType="java.lang.String">
+    select p.*,r.path from t_resource r join t_principal p on r.ref_biz_id = p.id where p.id = #{id}
+  </select>
+
+
+
+
 </mapper>

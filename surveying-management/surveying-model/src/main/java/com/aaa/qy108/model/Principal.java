@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 /**
  * 测绘单位负责人
@@ -84,6 +85,11 @@ public class Principal extends BaseModel {
      */
     @Column(name = "user_id")
     private Long userId;
+
+    /**
+     * 一对多，对应多个资源
+     */
+    private List<Resource> resources;
 
 
 }

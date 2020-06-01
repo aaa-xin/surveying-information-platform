@@ -3,6 +3,7 @@ package com.aaa.qy108.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
 import java.io.*;
@@ -181,6 +182,73 @@ public class FtpUtils {
         }
         return null;
     }
+
+
+    /**
+     * 检验指定路径的文件是否存在ftp服务器中
+     * @param filePath--指定绝对路径的文件
+     * @return
+     */
+    public static boolean isFTPFileExist(final String hostname, final int port, final String username,
+                                         final String password, final String filePath) {
+        log.info("判断文件在ftp上是否存在！");
+        boolean exists = false;
+        final FTPClient ftpClient = getFtpClient(hostname, port, username, password);
+        try {
+            final FTPFile[] files = ftpClient.listFiles(new String(filePath.getBytes("UTF-8"), "ISO-8859-1"));
+            if (files != null && files.length > 0) {
+                exists = true;
+            }
+        } catch (final IOException e) {
+            log.error("failed to judge whether the file (" + filePath + ") is existed");
+        }
+        log.info("文件" + filePath + "在ftp上是否存在?" + exists);
+        return exists;
+    }
+
+
+    /**
+    * @Description: 删除ftp的文件
+    * @Author: guohang
+    * @Date: 2020/6/1 16:37
+    * @Param: [hostname, port, username, password, ftpPath]
+    * @return: boolean
+    */
+    public static boolean deleteFile (final String hostname, final int port, final String username,
+                                      final String password, final String ftpPath) {
+        if (ftpPath != null && ftpPath != "") {
+            final FTPClient ftpClient = getFtpClient(hostname, port, username, password);
+            if (ftpPath.endsWith("/")) {
+                log.info("错误的文件路径");
+                return false;
+            }
+            try {
+                final boolean exists = isFTPFileExist(hostname, port, username, password, ftpPath);
+                if (exists) {
+                    ftpClient.deleteFile(new String(ftpPath.getBytes("GBK"), "iso-8859-1"));
+                } else {
+                    log.info("文件" + ftpPath + "已经不存在");
+                    return true;
+                }
+            } catch (IOException e) {
+                log.error("FTP上文件删除失败！", e);
+                return false;
+            }
+        } else {
+            log.info("没有需要删除的文件！");
+        }
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
 
 }
 

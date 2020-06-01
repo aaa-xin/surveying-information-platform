@@ -5,10 +5,7 @@ import com.aaa.qy108.model.MappingUnit;
 import com.aaa.qy108.model.Principal;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -85,6 +82,34 @@ public interface MappingApiService {
                             @RequestParam("idNumber") String idNumber,@RequestParam("age") Integer age,@RequestParam("sex") Integer sex,
                             @RequestParam("workYear") Integer workYear,@RequestParam("duty") String duty,@RequestParam("title") String title,
                             @RequestParam("major") String major,@RequestParam("mappingYear") Integer mappingYear,@RequestParam("userId") Long userId);
+
+
+    /**
+    * @Description: 查询单个负责人的信息
+    * @Author: guohang
+    * @Date: 2020/6/1 15:19
+    * @Param: [id]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @GetMapping("/unit/selectPrincipalById")
+    ResultData selectPrincipalById(@RequestParam("id") String id);
+
+    /**
+    * @Description: 删除单个负责人的信息
+    * @Author: guohang
+    * @Date: 2020/6/1 16:05
+    * @Param: [id]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @DeleteMapping("/unit/deletePrincipalById")
+    ResultData deletePrincipalById(@RequestParam("id") String id);
+
+
+
+
+
+
+
 
 
 }

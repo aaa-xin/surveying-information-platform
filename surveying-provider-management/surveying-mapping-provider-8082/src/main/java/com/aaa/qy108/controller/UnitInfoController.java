@@ -8,7 +8,7 @@ import com.aaa.qy108.mapper.MappingUnitMapper;
 import com.aaa.qy108.model.MappingUnit;
 import com.aaa.qy108.model.Principal;
 import com.aaa.qy108.model.Technicist;
-import com.aaa.qy108.redis.RedisService;
+import com.aaa.qy108.service.MappingunitSerive;
 import com.aaa.qy108.service.PrincipalService;
 import com.aaa.qy108.service.TechnicistService;
 import com.aaa.qy108.service.UploadService;
@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import static com.aaa.qy108.status.SelectStatus.*;
+
 
 import java.util.List;
 import java.util.Map;
@@ -40,7 +42,7 @@ public class UnitInfoController extends CommonController<MappingUnit> {
     private TechnicistService technicistService;
 
     @Autowired
-    private MappingUnitMapper mappingUnitMapper;
+    private MappingunitSerive mappingunitSerive;
 
     @Autowired
     private UploadService uploadService;
@@ -57,7 +59,7 @@ public class UnitInfoController extends CommonController<MappingUnit> {
     public ResultData selectUnitInfo(@RequestParam("userId") String userId){
         MappingUnit unit = new MappingUnit();
         unit.setUserId(Long.valueOf(userId));
-        MappingUnit mappingUnit = mappingUnitMapper.selectOne(unit);
+        MappingUnit mappingUnit = mappingunitSerive.selectUnitInfo(unit);
         if(null != mappingUnit && !"".equals(mappingUnit)){
             return super.selectSuccess(mappingUnit);
         }else{
@@ -76,7 +78,7 @@ public class UnitInfoController extends CommonController<MappingUnit> {
     @PostMapping("/updateUnitInfo")
     ResultData updateUnitInfo(@RequestBody MappingUnit mappingUnit){
         mappingUnit.setModifyTime(DateUtil.now());
-        int i = mappingUnitMapper.updateByPrimaryKeySelective(mappingUnit);
+        int i = mappingunitSerive.updateUnitInfo(mappingUnit);
         if(i > 0){
             return super.updateSuccess();
         }else{
@@ -126,7 +128,6 @@ public class UnitInfoController extends CommonController<MappingUnit> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         if(null != technicists && !technicists.isEmpty()){
             return super.selectSuccess(technicists);
         }else{
@@ -158,7 +159,51 @@ public class UnitInfoController extends CommonController<MappingUnit> {
             return super.addFailed();
         }
     }
-    
+
+
+    /**
+    * @Description: 查询单个负责人的信息
+    * @Author: guohang
+    * @Date: 2020/6/1 15:20
+    * @Param: [id]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @GetMapping("/selectPrincipalById")
+    public ResultData selectPrincipalById(@RequestParam("id") String id){
+        Map<String,Object> resultMap = principalService.selectPrincipalById(id);
+        if (SELECT_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
+            return super.selectSuccess(resultMap.get("data"));
+        }else{
+            return super.selectFailed();
+        }
+    }
+
+
+    /**
+    * @Description: 删除单个负责人的信息
+    * @Author: guohang
+    * @Date: 2020/6/1 16:07
+    * @Param: [id]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @DeleteMapping("/deletePrincipalById")
+    ResultData deletePrincipalById(@RequestParam("id") String id){
+        int i = principalService.deletePrincipalById(id);
+        if (i > 0){
+            return super.deleteSuccess();
+        }
+        return super.deleteFailed();
+    }
+
+
+
+
+
+
+
+
+
+
     
     
     

@@ -88,13 +88,30 @@ public class UnitInfoController {
     }
 
 
+    /**
+    * @Description: 查询单个负责人的信息
+    * @Author: guohang
+    * @Date: 2020/6/1 15:19
+    * @Param: [id]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @GetMapping("/selectPrincipalById")
+    public ResultData selectPrincipalById(@RequestParam("id") String id){
+        return mappingApiService.selectPrincipalById(id);
+    }
 
 
-
-
-
-
-
+    /**
+    * @Description: 删除单个负责人的信息
+    * @Author: guohang
+    * @Date: 16:05
+    * @Param: [id]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @DeleteMapping("/deletePrincipalById")
+    public ResultData deletePrincipalById(@RequestParam("id") String id){
+        return mappingApiService.deletePrincipalById(id);
+    }
 
 
 
