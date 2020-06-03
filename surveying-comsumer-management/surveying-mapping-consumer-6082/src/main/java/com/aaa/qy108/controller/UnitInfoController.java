@@ -84,10 +84,6 @@ public class UnitInfoController {
                                    @RequestParam("idNumber") String idNumber,@RequestParam("age") Integer age,@RequestParam("sex") Integer sex,
                                    @RequestParam("workYear") Integer workYear,@RequestParam("duty") String duty,@RequestParam("title") String title,
                                    @RequestParam("major") String major,@RequestParam("mappingYear") Integer mappingYear,@RequestParam("userId") Long userId){
-        System.out.println("-------》consumer的controller");
-        for (MultipartFile file : files) {
-            System.out.println("-------》"+file.getOriginalFilename());
-        }
         return mappingApiService.addPrincipal(files,type,name,idType,idNumber,age,sex,workYear,duty,title,major,mappingYear,userId);
     }
 
@@ -119,7 +115,18 @@ public class UnitInfoController {
 
 
 
-
+    /**
+    * @Description: 添加测绘成果及档案管理
+    * @Author: guohang
+    * @Date: 2020/6/3 11:32
+    * @Param: [file1, file2, file3, file4, userId]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @PostMapping("/addRecord")
+    public ResultData addRecord(@RequestParam("file1") MultipartFile file1,@RequestParam("file2") MultipartFile file2
+            ,@RequestParam("file3") MultipartFile file3,@RequestParam("file4") MultipartFile file4,@RequestParam("unitId") Long unitId){
+        return mappingApiService.addRecord(file1,file2,file3,file4,unitId);
+    }
 
 
 

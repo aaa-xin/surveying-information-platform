@@ -104,6 +104,18 @@ public interface MappingApiService {
     @DeleteMapping("/unit/deletePrincipalById")
     ResultData deletePrincipalById(@RequestParam("id") String id);
 
+    
+    /** 
+    * @Description: 添加测绘成果及档案管理 
+    * @Author: guohang
+    * @Date: 2020/6/3 13:02
+    * @Param: [file1, file2, file3, file4, unitId] 
+    * @return: com.aaa.qy108.base.ResultData 
+    */ 
+    @PostMapping(value = "/unit/addRecord",consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResultData addRecord(@RequestPart("file1") MultipartFile file1,@RequestPart("file2") MultipartFile file2
+            ,@RequestPart("file3") MultipartFile file3,@RequestPart("file4") MultipartFile file4,@RequestParam("unitId") Long unitId);
+
 
 
 

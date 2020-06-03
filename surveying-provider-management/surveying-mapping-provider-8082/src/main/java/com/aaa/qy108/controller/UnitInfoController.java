@@ -12,6 +12,7 @@ import com.aaa.qy108.service.MappingunitSerive;
 import com.aaa.qy108.service.PrincipalService;
 import com.aaa.qy108.service.TechnicistService;
 import com.aaa.qy108.service.UploadService;
+import io.lettuce.core.pubsub.PubSubOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -196,8 +197,23 @@ public class UnitInfoController extends CommonController<MappingUnit> {
     }
 
 
-
-
+    /**
+    * @Description: 添加测绘成果及档案管理
+    * @Author: guohang
+    * @Date: 2020/6/3 13:02
+    * @Param: [file1, file2, file3, file4, unitId]
+    * @return: com.aaa.qy108.base.ResultData
+    */
+    @PostMapping("/addRecord")
+    public ResultData addRecord(@RequestParam("file1") MultipartFile file1,@RequestParam("file2") MultipartFile file2
+            ,@RequestParam("file3") MultipartFile file3,@RequestParam("file4") MultipartFile file4,@RequestParam("unitId") Long unitId){
+        Map<String,Object> resultMap = mappingunitSerive.addRecord(file1,file2,file3,file4,unitId,uploadService);
+        if (ADD_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
+            return super.addSuccess();
+        }else {
+            return super.addFailed();
+        }
+    }
 
 
 
