@@ -1,7 +1,6 @@
 package com.aaa.qy108.service;
 
 import cn.hutool.core.date.DateUtil;
-import com.aaa.qy108.base.BaseModel;
 import com.aaa.qy108.base.BaseService;
 import com.aaa.qy108.mapper.PrincipalMapper;
 import com.aaa.qy108.mapper.ResourceMapper;
