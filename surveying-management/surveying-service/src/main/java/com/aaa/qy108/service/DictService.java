@@ -41,31 +41,22 @@ public class DictService extends BaseService<Dict> {
     /**
      * @Description:
      *      分页查询字典信息
-     * @Param: [redisService, hashMap]
+     * @Param: [hashMap]
      * @Author: mi
      * @Return: java.util.HashMap<java.lang.String,java.lang.Object>
      * @Date: 2020/5/24 13:35
      **/
-    public HashMap<String,Object> selectAllDictByPage(RedisService redisService,HashMap hashMap) throws Exception {
-        String tokenId = redisService.get(hashMap.get("tokenId").toString());
+    public HashMap<String,Object> selectAllDictByPage(HashMap hashMap) throws Exception {
         HashMap<String, Object> resultMap = new HashMap<>();
         Dict dict = new Dict();
-        //验证token是否超时
-        if (checkIsNotNull(tokenId)) {
-            resultMap.put("code", LOGIN_TIMEOUT_EXIT.getCode());
-            resultMap.put("msg", LOGIN_TIMEOUT_EXIT.getMsg());
-            return resultMap;
+        PageInfo<Dict> dictPageInfo = super.queryListByPage(dict, BaseUtil.transToInt(hashMap.get("pageNo")), BaseUtil.transToInt(hashMap.get("pageSize")));
+        if (null != dictPageInfo && dictPageInfo.getSize() > 0) {
+            resultMap.put("code", SELECT_DATA_SUCCESS.getCode());
+            resultMap.put("msg", SELECT_DATA_SUCCESS.getMsg());
+            resultMap.put("data", dictPageInfo);
         } else {
-            //token仍然有效，进行分页查询
-            PageInfo<Dict> dictPageInfo = super.queryListByPage(dict, BaseUtil.transToInt(hashMap.get("pageNo")), BaseUtil.transToInt(hashMap.get("pageSize")));
-            if (null != dictPageInfo && dictPageInfo.getSize() > 0) {
-                resultMap.put("code", SELECT_DATA_SUCCESS.getCode());
-                resultMap.put("msg", SELECT_DATA_SUCCESS.getMsg());
-                resultMap.put("data", dictPageInfo);
-            } else {
-                resultMap.put("code", SELECT_DATA_FAILED.getCode());
-                resultMap.put("msg", SELECT_DATA_FAILED.getMsg());
-            }
+            resultMap.put("code", SELECT_DATA_FAILED.getCode());
+            resultMap.put("msg", SELECT_DATA_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -75,31 +66,23 @@ public class DictService extends BaseService<Dict> {
     /**
      * @Description:
      *         通过id批量删除字典
-     * @Param: [redisService, ids, tokenId]
+     * @Param: [ids]
      * @Author: mi
      * @Return: java.util.HashMap<java.lang.String,java.lang.Object>
      * @Date: 2020/5/24 12:37
      **/
-    public HashMap<String,Object> delDictsById(RedisService redisService, List<Long> ids, String tokenId){
-        String token = redisService.get(tokenId);
+    public HashMap<String,Object> delDictsById( List<Long> ids){
         HashMap<String, Object> resultMap = new HashMap<>();
-        //验证token是否超时
-        if (null == token) {
-            resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-            resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
+        //获取参数类型，添加一个where条件
+        Example example = Example.builder(Dict.class).where(Sqls.custom().andIn("id",ids)).build();
+        int i = dictMapper.deleteByExample(example);
+        if (i > 0){
+            resultMap.put("code", DELETE_DATA_SUCCESS.getCode());
+            resultMap.put("msg", DELETE_DATA_SUCCESS.getMsg());
         }
-        else {
-            //获取参数类型，添加一个where条件
-            Example example = Example.builder(Dict.class).where(Sqls.custom().andIn("id",ids)).build();
-            int i = dictMapper.deleteByExample(example);
-            if (i > 0){
-                resultMap.put("code", DELETE_DATA_SUCCESS.getCode());
-                resultMap.put("msg", DELETE_DATA_SUCCESS.getMsg());
-            }
-            else{
-                resultMap.put("code", DELETE_DATA_FAILED.getCode());
-                resultMap.put("msg", DELETE_DATA_FAILED.getMsg());
-            }
+        else{
+            resultMap.put("code", DELETE_DATA_FAILED.getCode());
+            resultMap.put("msg", DELETE_DATA_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -107,34 +90,25 @@ public class DictService extends BaseService<Dict> {
     /**
      * @Description:
      *      修改字典信息
-     * @Param: [dict, redisService, tokenId]
+     * @Param: [dict]
      * @Author: mi
      * @Return: java.util.HashMap<java.lang.String,java.lang.Object>
      * @Date: 2020/5/24 14:21
      **/
-    public HashMap<String,Object> updateDict(Dict dict,RedisService redisService,String tokenId){
-        String token = redisService.get(tokenId);
+    public HashMap<String,Object> updateDict(Dict dict){
         HashMap<String, Object> resultMap = new HashMap<>();
-        //验证token是否超时
-        if (null == token) {
-            //登陆超时
-            resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-            resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
-        }
-        else {
-            if (null != dict){
-                int dictUpdateResult = dictMapper.updateByPrimaryKey(dict);
-                if (dictUpdateResult > 0){
-                    resultMap.put("code", UPDATE_DATA_SUCCESS.getCode());
-                    resultMap.put("msg", UPDATE_DATA_SUCCESS.getMsg());
-                }else{
-                    resultMap.put("code", UPDATE_DATA_FAILED.getCode());
-                    resultMap.put("msg", UPDATE_DATA_FAILED.getMsg());
-                }
-            }else {
-                resultMap.put("code", UPDATE_DATA_NULL.getCode());
-                resultMap.put("msg", UPDATE_DATA_NULL.getMsg());
+        if (null != dict){
+            int dictUpdateResult = dictMapper.updateByPrimaryKey(dict);
+            if (dictUpdateResult > 0){
+                resultMap.put("code", UPDATE_DATA_SUCCESS.getCode());
+                resultMap.put("msg", UPDATE_DATA_SUCCESS.getMsg());
+            }else{
+                resultMap.put("code", UPDATE_DATA_FAILED.getCode());
+                resultMap.put("msg", UPDATE_DATA_FAILED.getMsg());
             }
+        }else {
+            resultMap.put("code", UPDATE_DATA_NULL.getCode());
+            resultMap.put("msg", UPDATE_DATA_NULL.getMsg());
         }
         return resultMap;
     }
@@ -142,28 +116,20 @@ public class DictService extends BaseService<Dict> {
     /**
      * @Description:
      *        新增字典信息
-     * @Param: [dict, redisService, tokenId]
+     * @Param: [dict]
      * @Author: mi
      * @Return: java.util.HashMap<java.lang.String,java.lang.Object>
      * @Date: 2020/5/24 14:31
      **/
-    public HashMap<String,Object> addDict(Dict dict,RedisService redisService,String tokenId){
-        String token = redisService.get(tokenId);
+    public HashMap<String,Object> addDict(Dict dict){
         HashMap<String, Object> resultMap = new HashMap<>();
-        //验证新增字典时token是否超时
-        if (null == token) {
-            //登陆的token超时
-            resultMap.put("code",LOGIN_TIMEOUT_EXIT.getCode());
-            resultMap.put("msg",LOGIN_TIMEOUT_EXIT.getMsg());
-        }else {
-            int addDictResult = dictMapper.insertSelective(dict);
-            if (addDictResult > 0){
-                resultMap.put("code", ADD_DATA_SUCCESS.getCode());
-                resultMap.put("msg", ADD_DATA_SUCCESS.getMsg());
-            }else{
-                resultMap.put("code", ADD_DATA_FAILED.getCode());
-                resultMap.put("msg", ADD_DATA_FAILED.getMsg());
-            }
+        int addDictResult = dictMapper.insertSelective(dict);
+        if (addDictResult > 0){
+            resultMap.put("code", ADD_DATA_SUCCESS.getCode());
+            resultMap.put("msg", ADD_DATA_SUCCESS.getMsg());
+        }else{
+            resultMap.put("code", ADD_DATA_FAILED.getCode());
+            resultMap.put("msg", ADD_DATA_FAILED.getMsg());
         }
         return resultMap;
     }
