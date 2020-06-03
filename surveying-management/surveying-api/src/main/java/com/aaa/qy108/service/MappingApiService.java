@@ -2,11 +2,14 @@ package com.aaa.qy108.service;
 
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.config.FeignMultipartConfig;
+import com.aaa.qy108.model.MappingProject;
 import com.aaa.qy108.model.MappingUnit;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * @Author guohang
@@ -117,9 +120,35 @@ public interface MappingApiService {
             ,@RequestPart("file3") MultipartFile file3,@RequestPart("file4") MultipartFile file4,@RequestParam("unitId") Long unitId);
 
 
+    /**
+    * @Description: 查询项目
+    * @Author: guohang
+    * @Date: 2020/6/3 22:47
+    * @Param: [userId]
+    * @return: java.util.List<com.aaa.qy108.model.MappingProject>
+    */
+    @PostMapping("/project/allPro")
+    List<MappingProject> selectAllPros(@RequestParam("userId") Long userId);
 
+    /**
+    * @Description: 通过id查询项目
+    * @Author: guohang
+    * @Date: 2020/6/3 22:47
+    * @Param: [id]
+    * @return: com.aaa.qy108.model.MappingProject
+    */
+    @GetMapping("/project/selectById")
+    MappingProject selectById(@RequestParam("id") Long id);
 
-
+    /**
+    * @Description: 通过id修改项目
+    * @Author: guohang
+    * @Date: 2020/6/3 22:47
+    * @Param: [manProject]
+    * @return: java.lang.Integer
+    */
+    @PostMapping("/project/updateById")
+    Integer updateById(@RequestBody MappingProject manProject);
 
 
 
