@@ -323,7 +323,7 @@ public interface SystemApiService {
     * @return: com.aaa.qy108.base.ResultData<com.aaa.qy108.model.Menu>
     */
     @PostMapping("/menu/deleteMenuOrButton")
-    ResultData<Menu> deleteMenuOrButton(@RequestBody Long menuId);
+    ResultData<Menu> deleteMenuOrButton(@RequestParam("menuId") Long menuId);
 
 
     /** 
@@ -355,7 +355,7 @@ public interface SystemApiService {
     * @return: com.aaa.qy108.base.ResultData 
     */ 
     @PostMapping("/role/deleteRole")
-    ResultData deleteRole(@RequestBody Long roleId);
+    ResultData deleteRole(@RequestParam("roleId") Long roleId);
 
 
     /** 

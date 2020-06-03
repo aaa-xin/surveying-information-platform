@@ -61,7 +61,7 @@ public class RoleController extends BaseController {
     * @return: com.aaa.qy108.base.ResultData
     */
     @PostMapping("/deleteRole")
-    public ResultData deleteRole(@RequestBody Long roleId){
+    public ResultData deleteRole(@RequestParam("roleId") Long roleId){
         Boolean aBoolean = roleService.deleteRole(roleId);
         if (aBoolean == true){
             return deleteSuccess();

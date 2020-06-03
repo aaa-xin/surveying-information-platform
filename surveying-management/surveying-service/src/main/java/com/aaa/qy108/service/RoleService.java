@@ -91,7 +91,7 @@ public class RoleService extends BaseService<Role> {
             // 接下来要去把role_menu表中对应的数据删掉
             //先去查他有没有权限 有权限就全部删掉  没有就结束
             List<RoleMenu> list = roleMenuMapper.selectByRoleId(roleId);
-            if (list.size() > 0 || null != list){
+            if (list.size() > 0){
                 //说明权限不是是空的  需要删除
                 int i1 = roleMenuMapper.deleteRoleMenu(roleId);
                 if (i1 > 0){
@@ -164,13 +164,10 @@ public class RoleService extends BaseService<Role> {
     * @return: java.lang.Boolean
     */
     public Boolean updateRole(RoleVo roleVo) {
-        Role role = roleMapper.selectByPrimaryKey(roleVo.getRole().getRoleId());
-        String createTime = role.getCreateTime();
         String s = DateUtil.now();
         roleVo.getRole().setModifyTime(s);
-        roleVo.getRole().setCreateTime(createTime);
         //1、去修改role表
-        int i = roleMapper.updateByPrimaryKey(roleVo.getRole());
+        int i = roleMapper.updateByPrimaryKeySelective(roleVo.getRole());
         if (i > 0) {
             //1、说明role表修改成功
             //2、要继续去修改Role的Menu
