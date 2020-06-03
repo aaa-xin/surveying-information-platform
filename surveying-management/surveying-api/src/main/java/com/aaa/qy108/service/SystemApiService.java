@@ -280,6 +280,54 @@ public interface SystemApiService {
      */
     @PostMapping("/projectDetail")
     ResultData projectDetail(@RequestParam("id") String id);
+
+    /**
+    * @Description: 获取全部菜单信息
+    * @Author: guohang
+    * @Date: 2020/6/3 18:31
+    * @Param: []
+    * @return: java.util.List<com.aaa.qy108.model.Menu>
+    */
+    @GetMapping("/menu/getMenus")
+    List<Menu> selectAllMenus();
+
+
+    /**
+    * @Description: 添加按钮或者菜单
+    * @Author: guohang
+    * @Date: 2020/6/3 18:33
+    * @Param: [menu]
+    * @return: com.aaa.qy108.base.ResultData<com.aaa.qy108.model.Menu>
+    */
+    @PostMapping("/menu/insertMenuOrButton")
+    ResultData<Menu> insertMenuOrButton(@RequestBody Menu menu);
+
+
+    /**
+    * @Description: 在菜单管理中修改菜单或者按钮
+    * @Author: guohang
+    * @Date: 2020/6/3 18:32
+    * @Param: [menu]
+    * @return: com.aaa.qy108.base.ResultData<com.aaa.qy108.model.Menu>
+    */
+    @PostMapping("/menu/updateMenuOrButton")
+    ResultData<Menu> updateMenuOrButton(@RequestBody Menu menu);
+
+
+    /**
+    * @Description: 删除按钮或者菜单
+    * @Author: guohang
+    * @Date: 2020/6/3 18:33
+    * @Param: [menuId]
+    * @return: com.aaa.qy108.base.ResultData<com.aaa.qy108.model.Menu>
+    */
+    @PostMapping("/menu/deleteMenuOrButton")
+    ResultData<Menu> deleteMenuOrButton(@RequestBody Long menuId);
+
+
+
+
+
 }
 
 
