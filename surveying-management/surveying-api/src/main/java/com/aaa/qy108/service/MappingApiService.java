@@ -1,19 +1,12 @@
 package com.aaa.qy108.service;
 
-import cn.hutool.core.date.DateUtil;
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.config.FeignMultipartConfig;
 import com.aaa.qy108.model.MappingUnit;
-import com.aaa.qy108.model.Technicist;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Map;
-
-import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
-import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
 
 /**
  * @Author guohang
@@ -115,7 +108,7 @@ public interface MappingApiService {
     /** 
     * @Description: 添加测绘成果及档案管理 
     * @Author: guohang
-    * @Date: 2020/6/3 13:02
+    * @Date: 2020/6/3 18:39
     * @Param: [file1, file2, file3, file4, unitId] 
     * @return: com.aaa.qy108.base.ResultData 
     */ 
@@ -124,6 +117,25 @@ public interface MappingApiService {
             ,@RequestPart("file3") MultipartFile file3,@RequestPart("file4") MultipartFile file4,@RequestParam("unitId") Long unitId);
 
 
+    /**
+    * @Description: 查询项目
+    * @Author: guohang
+    * @Date: 2020/6/3 22:47
+    * @Param: [userId]
+    * @return: java.util.List<com.aaa.qy108.model.MappingProject>
+    */
+    @PostMapping("/project/allPro")
+    List<MappingProject> selectAllPros(@RequestParam("userId") Long userId);
+
+    /**
+    * @Description: 通过id查询项目
+    * @Author: guohang
+    * @Date: 2020/6/3 22:47
+    * @Param: [id]
+    * @return: com.aaa.qy108.model.MappingProject
+    */
+    @GetMapping("/project/selectById")
+    MappingProject selectById(@RequestParam("id") Long id);
     /**
      *
      * @Param: [files, type, name, idType, idNumber, age, sex, workYear, duty, title, school, graduationDate, degree, degreeeducationBackground, major, titleMajor, startTime, titleTime, startContract, endContract, post, mappingYear, specialPost, affirm, user_id]
@@ -173,7 +185,15 @@ public interface MappingApiService {
     @PostMapping("/unit/updatedTechnicistById")
     ResultData updatedTechnicistById(@RequestBody Technicist technicist);
 
-
+    /**
+    * @Description: 通过id修改项目
+    * @Author: guohang
+    * @Date: 2020/6/3 22:47
+    * @Param: [manProject]
+    * @return: java.lang.Integer
+    */
+    @PostMapping("/project/updateById")
+    Integer updateById(@RequestBody MappingProject manProject);
 
 
 

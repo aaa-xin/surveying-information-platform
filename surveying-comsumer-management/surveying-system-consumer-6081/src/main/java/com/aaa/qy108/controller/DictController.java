@@ -48,41 +48,41 @@ public class DictController extends BaseController {
     /**
      * @Description:
      *      新增字典信息
-     * @Param: [dict, tokenId]
+     * @Param: [dict]
      * @Author: mi
      * @Return: com.aaa.qy108.base.ResultData
      * @Date: 2020/5/24 17:53
      **/
     @PostMapping("/addDict")
     @ApiOperation(value = "新增字典信息",notes = "字典管理的新增")
-    public ResultData addDict(@RequestBody Dict dict, @RequestParam("tokenId") String tokenId){
-        return systemApiService.addDict(dict,tokenId);
+    public ResultData addDict(@RequestBody Dict dict){
+        return systemApiService.addDict(dict);
     }
 
     /**
      * @Description:
      *      批量删除字典
-     * @Param: [ids, tokenId]
+     * @Param: [ids]
      * @Author: mi
      * @Return: com.aaa.qy108.base.ResultData
      * @Date: 2020/5/24 17:54
      **/
     @DeleteMapping("/delDictsById")
     @ApiOperation(value = "批量删除字典信息",notes = "字典管理的删除")
-    public ResultData delDictsById(@RequestBody List<Long> ids, @RequestParam("tokenId") String tokenId){
-        return systemApiService.delDictsById(ids,tokenId);
+    public ResultData delDictsById(@RequestBody List<Long> ids){
+        return systemApiService.delDictsById(ids);
     }
 
     /**
      * @Description: 修改字典信息
-     * @Param: [dict, tokenId]
+     * @Param: [dict]
      * @Author: mi
      * @Return: com.aaa.qy108.base.ResultData
      * @Date: 2020/5/24 18:26
      **/
     @PostMapping("/updateDict")
     @ApiOperation(value = "修改字典信息",notes = "字典管理的修改")
-    public ResultData updateDict(@RequestBody Dict dict,@RequestParam("tokenId") String tokenId){
-       return systemApiService.updateDict(dict,tokenId);
+    public ResultData updateDict(@RequestBody Dict dict){
+       return systemApiService.updateDict(dict);
     }
 }

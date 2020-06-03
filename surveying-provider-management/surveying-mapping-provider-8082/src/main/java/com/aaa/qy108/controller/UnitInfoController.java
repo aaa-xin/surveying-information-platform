@@ -12,7 +12,6 @@ import com.aaa.qy108.service.MappingunitSerive;
 import com.aaa.qy108.service.PrincipalService;
 import com.aaa.qy108.service.TechnicistService;
 import com.aaa.qy108.service.UploadService;
-import io.lettuce.core.pubsub.PubSubOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
