@@ -2,6 +2,7 @@ package com.aaa.qy108.service;
 
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.*;
+import com.aaa.qy108.vo.RoleVo;
 import com.aaa.qy108.vo.TokenVo;
 import feign.Response;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -325,7 +326,58 @@ public interface SystemApiService {
     ResultData<Menu> deleteMenuOrButton(@RequestBody Long menuId);
 
 
+    /** 
+    * @Description: 查询所有的角色 
+    * @Author: guohang
+    * @Date: 2020/6/3 18:58
+    * @Param: [] 
+    * @return: com.aaa.qy108.base.ResultData 
+    */ 
+    @GetMapping("/role/allRoles")
+    ResultData selectAllRole();
 
+    /** 
+    * @Description: 简单的分页查询 
+    * @Author: guohang
+    * @Date: 2020/6/3 18:54
+    * @Param: [roleVo] 
+    * @return: com.aaa.qy108.base.ResultData 
+    */ 
+    @PostMapping("/role/pageRoles")
+    ResultData selectAllRoleByPage(@RequestBody RoleVo roleVo);
+
+
+    /** 
+    * @Description: 删除角色 
+    * @Author: guohang
+    * @Date: 2020/6/3 18:54
+    * @Param: [roleId] 
+    * @return: com.aaa.qy108.base.ResultData 
+    */ 
+    @PostMapping("/role/deleteRole")
+    ResultData deleteRole(@RequestBody Long roleId);
+
+
+    /** 
+    * @Description: 新增角色以及批量新增权限 
+    * @Author: guohang
+    * @Date: 2020/6/3 18:54
+    * @Param: [roleVo] 
+    * @return: com.aaa.qy108.base.ResultData 
+    */ 
+    @PostMapping("/role/insertRole")
+    ResultData insertRole(@RequestBody RoleVo roleVo);
+
+
+    /** 
+    * @Description: 修改角色及其权限 
+    * @Author: guohang
+    * @Date: 2020/6/3 18:54
+    * @Param: [roleVo] 
+    * @return: com.aaa.qy108.base.ResultData 
+    */ 
+    @PostMapping("/role/updateRole")
+    ResultData updateRole(@RequestBody RoleVo roleVo);
 
 
 }
