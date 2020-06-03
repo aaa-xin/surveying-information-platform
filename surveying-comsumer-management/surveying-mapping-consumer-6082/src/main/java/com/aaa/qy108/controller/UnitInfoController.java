@@ -80,10 +80,14 @@ public class UnitInfoController {
      * @return: com.aaa.qy108.base.ResultData
      */
     @PostMapping("/addPrincipal")
-    public ResultData addPrincipal(@RequestBody MultipartFile[] files,@RequestParam("type") String type,@RequestParam("name") String name,@RequestParam("idType") String idType,
+    public ResultData addPrincipal(@RequestParam("files") MultipartFile[] files,@RequestParam("type") String type,@RequestParam("name") String name,@RequestParam("idType") String idType,
                                    @RequestParam("idNumber") String idNumber,@RequestParam("age") Integer age,@RequestParam("sex") Integer sex,
                                    @RequestParam("workYear") Integer workYear,@RequestParam("duty") String duty,@RequestParam("title") String title,
                                    @RequestParam("major") String major,@RequestParam("mappingYear") Integer mappingYear,@RequestParam("userId") Long userId){
+        System.out.println("-------》consumer的controller");
+        for (MultipartFile file : files) {
+            System.out.println("-------》"+file.getOriginalFilename());
+        }
         return mappingApiService.addPrincipal(files,type,name,idType,idNumber,age,sex,workYear,duty,title,major,mappingYear,userId);
     }
 

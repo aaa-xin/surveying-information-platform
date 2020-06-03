@@ -56,6 +56,7 @@ public class PrincipalService extends BaseService<Principal> {
         //添加负责人
         int i = principalMapper.insertSelective(principal);
         if (i > 0){
+            Boolean result = false;
             for (MultipartFile file : files) {
                 //添加资源表
                 Resource resource = new Resource();
@@ -65,6 +66,7 @@ public class PrincipalService extends BaseService<Principal> {
                 String filePath = com.aaa.qy108.utils.DateUtil.formatDate(new Date(), "yyyy/MM/dd");
                 //获取原始文件的名称
                 String oldFilename = file.getOriginalFilename();
+                System.out.println(oldFilename);
                 //截取文件后缀
                 String extName = oldFilename.substring(oldFilename.lastIndexOf("."));
                 //生成新的文件名称
@@ -77,13 +79,13 @@ public class PrincipalService extends BaseService<Principal> {
                 int r = resourceMapper.insert(resource);
                 if (r > 0){
                     //添加成功后上传文件
-                    Boolean result = uploadService.uploadFile(file, filePath, newFileName);
-                    if (result){
-                        resultMap.put("code",ADD_DATA_SUCCESS.getCode());
-                        resultMap.put("msg",ADD_DATA_SUCCESS.getMsg());
-                        return resultMap;
-                    }
+                    result = uploadService.uploadFile(file, filePath, newFileName);
                 }
+            }
+            if (result){
+                resultMap.put("code",ADD_DATA_SUCCESS.getCode());
+                resultMap.put("msg",ADD_DATA_SUCCESS.getMsg());
+                return resultMap;
             }
         }
         resultMap.put("code",ADD_DATA_FAILED.getCode());

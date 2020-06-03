@@ -1,8 +1,8 @@
 package com.aaa.qy108.service;
 
 import com.aaa.qy108.base.ResultData;
+import com.aaa.qy108.config.FeignMultipartConfig;
 import com.aaa.qy108.model.MappingUnit;
-import com.aaa.qy108.model.Principal;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @Description 测绘管理中的api接口
  * @Date 2020/5/22 18:26
  */
-@FeignClient(value ="MAPPING-PROVIDER")
+@FeignClient(value ="MAPPING-PROVIDER",configuration = FeignMultipartConfig.class)
 public interface MappingApiService {
 
     /**
@@ -78,7 +78,7 @@ public interface MappingApiService {
      * @return: com.aaa.qy108.base.ResultData
      */
     @PostMapping(value = "/unit/addPrincipal",consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResultData addPrincipal(@RequestBody MultipartFile[] files,@RequestParam("type") String type,@RequestParam("name") String name,@RequestParam("idType") String idType,
+    ResultData addPrincipal(@RequestPart(value = "files") MultipartFile[] files,@RequestParam("type") String type,@RequestParam("name") String name,@RequestParam("idType") String idType,
                             @RequestParam("idNumber") String idNumber,@RequestParam("age") Integer age,@RequestParam("sex") Integer sex,
                             @RequestParam("workYear") Integer workYear,@RequestParam("duty") String duty,@RequestParam("title") String title,
                             @RequestParam("major") String major,@RequestParam("mappingYear") Integer mappingYear,@RequestParam("userId") Long userId);
