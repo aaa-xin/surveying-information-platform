@@ -3,8 +3,10 @@ package com.aaa.qy108.controller;
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.MappingUnit;
 import com.aaa.qy108.model.Principal;
+import com.aaa.qy108.model.Technicist;
 import com.aaa.qy108.service.MappingApiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -128,6 +130,65 @@ public class UnitInfoController {
         return mappingApiService.addRecord(file1,file2,file3,file4,unitId);
     }
 
+
+    /**
+     *
+     * @Param: [files, type, name, idType, idNumber, age, sex, workYear, duty, title, school, graduationDate, degree, degreeeducationBackground, major, titleMajor, startTime, titleTime, startContract, endContract, post, mappingYear, specialPost, affirm, user_id]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 添加技术人员信息
+     * @Author: Liuyibo
+     * @Date: 2020/6/3 21:05
+     */
+    @PostMapping("/addTechnicist")
+    public ResultData addTechnicist(@RequestParam("files") MultipartFile[] files,@RequestParam("majorType") String majorType,@RequestParam("name") String name,@RequestParam("idType") String idType,
+                             @RequestParam("idNumber") String idNumber,@RequestParam("age") Integer age,@RequestParam("sex") Integer sex,
+                             @RequestParam("workYear") Integer workYear,@RequestParam("duty") String duty,@RequestParam("title") String title,
+                             @RequestParam("school") String school,@RequestParam("graduationDate") String graduationDate,@RequestParam("degree") String degree,
+                             @RequestParam("educationBackground") String educationBackground,@RequestParam("major") String major,
+                             @RequestParam("titleMajor") String titleMajor,@RequestParam("startTime") String startTime,@RequestParam("titleTime") String titleTime,
+                             @RequestParam("startContract") String startContract,@RequestParam("endContract") String endContract,@RequestParam("post") String post,
+                             @RequestParam("mappingYear") Integer mappingYear,@RequestParam("specialPost") String specialPost,@RequestParam("affirm") String affirm,
+                             @RequestParam("userId") Long userId){
+        System.out.println("我是添加技术人员信息");
+        return mappingApiService.addTechnicist(files,majorType,name,idType,idNumber,age,sex, workYear,duty,title, school,graduationDate,degree,
+               educationBackground,major, titleMajor,startTime,titleTime, startContract,endContract,post, mappingYear,specialPost,affirm, userId);
+    }
+    /**
+     *
+     * @Param: [id]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 查询单个技术人员信息
+     * @Author: Liuyibo
+     * @Date: 2020/6/3 21:34
+     */
+    @GetMapping("/selectTechnicistById")
+    public ResultData selectTechnicistById(@RequestParam("id") String id){
+        return mappingApiService.selectTechnicistById(id);
+    }
+    /**
+     *
+     * @Param: [id]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 根据id删除技术人员信息
+     * @Author: Liuyibo
+     * @Date: 2020/6/3 21:45
+     */
+    @DeleteMapping("/deleteTechnicistById")
+    public ResultData deleteTechnicistById(@RequestParam("id") String id){
+        return mappingApiService.deleteTechnicistById(id);
+    }
+    /**
+     *
+     * @Param: [technicist]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 修改技术人员信息
+     * @Author: Liuyibo
+     * @Date: 2020/6/3 21:59
+     */
+    @PostMapping("/updatedTechnicistById")
+    public ResultData updatedTechnicistById(@RequestBody Technicist technicist){
+        return mappingApiService.updatedTechnicistById(technicist);
+    }
 
 
 

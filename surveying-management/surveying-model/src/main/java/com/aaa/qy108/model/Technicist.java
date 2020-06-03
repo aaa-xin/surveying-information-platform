@@ -2,6 +2,7 @@ package com.aaa.qy108.model;
 
 import com.aaa.qy108.base.BaseModel;
 import lombok.AllArgsConstructor;
+import lombok.CustomLog;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
