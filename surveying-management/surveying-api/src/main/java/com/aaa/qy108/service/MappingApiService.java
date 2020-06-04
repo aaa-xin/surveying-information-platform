@@ -2,11 +2,15 @@ package com.aaa.qy108.service;
 
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.config.FeignMultipartConfig;
+import com.aaa.qy108.model.MappingProject;
 import com.aaa.qy108.model.MappingUnit;
+import com.aaa.qy108.model.Technicist;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * @Author guohang
