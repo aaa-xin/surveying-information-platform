@@ -380,6 +380,59 @@ public interface SystemApiService {
     ResultData updateRole(@RequestBody RoleVo roleVo);
 
 
+    /**
+     * @Description: 直接使用通用controller查询所有的仪器设备信息
+     * @Param: [map]
+     * @return: com.aaa.qy108.base.ResultData
+     * @Author: Tzg
+     * @Date: 2020/6/4
+     */
+    @PostMapping("/selectEquipment")
+    ResultData selectEquipment(@RequestBody HashMap map);
+
+    /**
+     * @Description: 通过id查询详细信息
+     * @Param: [map]
+     * @return: com.aaa.qy108.base.ResultData
+     * @Author: Tzg
+     * @Date: 2020/6/4
+     */
+    @PostMapping("/selectOneById")
+    ResultData selectOne(@RequestBody HashMap map);
+
+
+    /**
+     * @Description: 根据id删除设备信息
+     * @Param: [id]
+     * @return: com.aaa.qy108.base.ResultData
+     * @Author: Tzg
+     * @Date: 2020/6/4
+     */
+    @PostMapping("/deleteById")
+    ResultData deleteById(@RequestParam("id") long id);
+
+
+
+    /**
+     * @Description: 根据id更新信息
+     * @Param: [equipment]
+     * @return: com.aaa.qy108.base.ResultData
+     * @Author: Tzg
+     * @Date: 2020/6/4
+     */
+    @PostMapping("/updateById")
+    ResultData updateById(@RequestBody Equipment equipment);
+
+
+    /**
+     * @Description: 根据id添加信息
+     * @Param: [equipment]
+     * @return: com.aaa.qy108.base.ResultData
+     * @Author: Tzg
+     * @Date: 2020/6/4
+     */
+    @PostMapping("/addEquipmentInfo")
+    ResultData addEquipmentInfo(@RequestBody Equipment equipment);
 }
 
 
