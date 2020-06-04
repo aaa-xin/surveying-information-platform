@@ -78,7 +78,7 @@ public class MenuController extends BaseController {
     */
     @PostMapping("/deleteMenuOrButton")
     @ApiOperation(value = "删除菜单或按钮", notes = "删除菜单或按钮的功能")
-    public ResultData<Menu> deleteMenuOrButton(@RequestBody Long menuId){
+    public ResultData<Menu> deleteMenuOrButton(@RequestParam("menuId") Long menuId){
         return systemApiService.deleteMenuOrButton(menuId);
     }
 

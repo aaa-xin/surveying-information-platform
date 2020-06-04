@@ -77,4 +77,13 @@
   <select id="projectDetail" resultType="HashMap" parameterType="String">
       select * from t_mapping_project where id = #{id}
   </select>
+
+  <select id="selectAllPros" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select a.id,a.project_type,a.project_name,a.project_leader,a.start_date,a.end_date,
+    a.acceptance_department,a.project_amount,a.schedule,a.user_id  from t_mapping_project a
+    where a.user_id=#{userId};
+  </select>
+
+
+
 </mapper>

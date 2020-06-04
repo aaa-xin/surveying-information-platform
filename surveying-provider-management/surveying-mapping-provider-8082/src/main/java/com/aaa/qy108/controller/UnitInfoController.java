@@ -12,11 +12,14 @@ import com.aaa.qy108.service.MappingunitSerive;
 import com.aaa.qy108.service.PrincipalService;
 import com.aaa.qy108.service.TechnicistService;
 import com.aaa.qy108.service.UploadService;
-import io.lettuce.core.pubsub.PubSubOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+
 import static com.aaa.qy108.status.SelectStatus.*;
 
 
@@ -136,8 +139,89 @@ public class UnitInfoController extends CommonController<MappingUnit> {
         }
 
     }
-
-
+    /**
+     *
+     * @Param: [files, type, name, idType, idNumber, age, sex, workYear, duty, title, school, graduationDate, degree, degreeeducationBackground, major, titleMajor, startTime, titleTime, startContract, endContract, post, mappingYear, specialPost, affirm, user_id]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 添加技术人员信息
+     * @Author: Liuyibo
+     * @Date: 2020/6/3 21:05
+     */
+    @PostMapping(value = "addTechnicist",consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
+    ResultData addTechnicist(@RequestParam("files") MultipartFile[] files,@RequestParam("majorType") String majorType,@RequestParam("name") String name,@RequestParam("idType") String idType,
+                             @RequestParam("idNumber") String idNumber,@RequestParam("age") Integer age,@RequestParam("sex") Integer sex,
+                             @RequestParam("workYear") Integer workYear,@RequestParam("duty") String duty,@RequestParam("title") String title,
+                             @RequestParam("school") String school,@RequestParam("graduationDate") String graduationDate,@RequestParam("degree") String degree,
+                             @RequestParam("educationBackground") String educationBackground,@RequestParam("major") String major,
+                             @RequestParam("titleMajor") String titleMajor,@RequestParam("startTime") String startTime,@RequestParam("titleTime") String titleTime,
+                             @RequestParam("startContract") String startContract,@RequestParam("endContract") String endContract,@RequestParam("post") String post,
+                             @RequestParam("mappingYear") Integer mappingYear,@RequestParam("specialPost") String specialPost,@RequestParam("affirm") String affirm,
+                             @RequestParam("userId") Long userId){
+        Technicist technicist = new Technicist();
+        technicist.setMajorType(majorType).setName(name).setIdType(idType).setIdNumber(idNumber).setAge(age).setSex(sex).setWorkYear(workYear).setDuty(duty).setTitle(title)
+                  .setSchool(school).setGraduationDate(graduationDate).setDegree(degree).setEducationBackground(educationBackground).setMajor(major).setTitleMajor(titleMajor)
+                  .setStartTime(startTime).setTitleTime(titleTime).setStartContract(startContract).setEndContract(endContract).setPost(post).setMappingYear(mappingYear)
+                  .setSpecialPost(specialPost).setAffirm(affirm).setUserId(userId);
+        Map<String, Object> addTechnicistMapper = technicistService.addTechnicist(technicist, files, uploadService);
+        if (ADD_DATA_SUCCESS.getCode().equals(addTechnicistMapper.get("code"))){
+            return super.addSuccess();
+        }else {
+            return super.addFailed();
+        }
+    }
+    /**
+     *
+     * @Param: [id]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 查询单个技术人员信息
+     * @Author: Liuyibo
+     * @Date: 2020/6/3 21:34
+     */
+    @GetMapping("/selectTechnicistById")
+    ResultData selectTechnicistById(@RequestParam("id") String id){
+        Map<String,Object> resultMap = technicistService.selectTechnicistById(id);
+        if (SELECT_DATA_SUCCESS.getCode().equals(resultMap.get("code"))){
+            return super.selectSuccess(resultMap.get("data"));
+        }else{
+            return super.selectFailed();
+        }
+    }
+    /**
+     *
+     * @Param: [id]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 根据id删除技术人员信息
+     * @Author: Liuyibo
+     * @Date: 2020/6/3 21:45
+     */
+    @DeleteMapping("/deleteTechnicistById")
+    ResultData deleteTechnicistById(@RequestParam("id") String id){
+        int i = technicistService.deleteTechnicistById(id);
+        if (i > 0){
+            return super.deleteSuccess();
+        }
+        return super.deleteFailed();
+    }
+    /**
+     *
+     * @Param: [technicist]
+     * @Return: com.aaa.qy108.base.ResultData
+     * 修改技术人员信息
+     * @Author: Liuyibo
+     * @Date: 2020/6/3 21:59
+     */
+    @PostMapping("/updatedTechnicistById")
+    ResultData updatedTechnicistById(@RequestBody Technicist technicist){
+        //获取修改时间，并且放入到对象中
+        technicist.setModifyTime(DateUtil.now());
+        //修改技术人员信息
+        int res = technicistService.updateTechnicistById(technicist);
+        if(res > 0){
+            return super.updateSuccess();
+        }else{
+            return super.updateFailed();
+        }
+    }
     /** 
     * @Description: 添加单位负责人 
     * @Author: guohang

@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Accessors(chain = true)
+@Table(name = "t_menu")
 public class Menu implements Serializable {
     /**
      * 菜单/按钮ID

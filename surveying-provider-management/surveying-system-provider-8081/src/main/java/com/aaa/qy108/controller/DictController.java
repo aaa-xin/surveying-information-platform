@@ -4,7 +4,6 @@ import com.aaa.qy108.base.BaseService;
 import com.aaa.qy108.base.CommonController;
 import com.aaa.qy108.base.ResultData;
 import com.aaa.qy108.model.Dict;
-import com.aaa.qy108.redis.RedisService;
 import com.aaa.qy108.service.DictService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import java.util.List;
 
 import static com.aaa.qy108.status.AddStatus.ADD_DATA_SUCCESS;
 import static com.aaa.qy108.status.DeleteStatus.DELETE_DATA_SUCCESS;
-import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
 import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
 import static com.aaa.qy108.status.UpdateStatus.UPDATE_DATA_SUCCESS;
 
@@ -34,9 +32,6 @@ public class DictController extends CommonController<Dict> {
     @Autowired
     private DictService dictService;
 
-    @Autowired
-    private RedisService redisService;
-
     /**
      * @Description:
      *      分页查询字典信息
@@ -49,10 +44,8 @@ public class DictController extends CommonController<Dict> {
     public ResultData selectAllDictByPage(@RequestBody HashMap hashMap) throws Exception {
         System.out.println("-----------------这里是查询方法---------------");
         System.out.println(hashMap);
-        HashMap<String,Object> AllDict = dictService.selectAllDictByPage(redisService,hashMap);
-        if(LOGIN_TIMEOUT_EXIT.getCode().equals(AllDict.get("code"))){
-            return super.loginTimeoutExit();
-        }else if (SELECT_DATA_SUCCESS.getCode().equals(AllDict.get("code"))){
+        HashMap<String,Object> AllDict = dictService.selectAllDictByPage(hashMap);
+        if (SELECT_DATA_SUCCESS.getCode().equals(AllDict.get("code"))){
             return super.selectSuccess(AllDict.get("data"));
         }else{
             return super.selectFailed();
@@ -62,21 +55,16 @@ public class DictController extends CommonController<Dict> {
     /**
      * @Description:
      *      新增字典信息
-     * @Param: [dict, tokenId]
+     * @Param: [dict]
      * @Author: mi
      * @Return: com.aaa.qy108.base.ResultData
      * @Date: 2020/5/24 17:53
      **/
     @PostMapping("/addDict")
-    public ResultData addDict(@RequestBody Dict dict,@RequestParam("tokenId") String tokenId){
+    public ResultData addDict(@RequestBody Dict dict){
         System.out.println("-----------------这里是新增方法---------------");
-        System.out.println("实体类"+dict);
-        System.out.println("tokenId的值"+tokenId);
-        HashMap<String, Object> addDictResult = dictService.addDict(dict, redisService, tokenId);
-        if (LOGIN_TIMEOUT_EXIT.getCode().equals(addDictResult.get("code"))) {
-            //登陆超时
-            return  super.loginTimeoutExit();
-        }else if (ADD_DATA_SUCCESS.getCode().equals(addDictResult.get("code"))){
+        HashMap<String, Object> addDictResult = dictService.addDict(dict);
+        if (ADD_DATA_SUCCESS.getCode().equals(addDictResult.get("code"))){
             //新增成功
             return super.addSuccess();
         }else {
@@ -88,25 +76,25 @@ public class DictController extends CommonController<Dict> {
     /**
      * @Description:
      *      批量删除字典
-     * @Param: [ids, tokenId]
+     * @Param: [ids]
      * @Author: mi
      * @Return: com.aaa.qy108.base.ResultData
      * @Date: 2020/5/24 17:54
      **/
     @DeleteMapping("/delDictsById")
-    public ResultData delDictsById(@RequestBody List<Long> ids,@RequestParam("tokenId") String tokenId){
+    public ResultData delDictsById(@RequestBody List<Long> ids)
+    {
         System.out.println("-----------------这里是删除方法---------------");
-        System.out.println("tokenId的值"+tokenId);
         System.out.println("id"+ids);
-        HashMap<String, Object> delDictResult = dictService.delDictsById(redisService, ids, tokenId);
+        HashMap<String, Object> delDictResult = dictService.delDictsById(ids);
         Object code = delDictResult.get("code");
-        if (LOGIN_TIMEOUT_EXIT.getCode().equals(code)) {
-            //登陆超时
-            return super.loginTimeoutExit();
-        }else if (DELETE_DATA_SUCCESS.getCode().equals(code)){
+        if (DELETE_DATA_SUCCESS.getCode().equals(code))
+        {
             //删除成功
             return super.deleteSuccess();
-        }else{
+        }
+        else
+        {
             return super.deleteFailed();
         }
 
@@ -115,22 +103,17 @@ public class DictController extends CommonController<Dict> {
     /**
      * @Description:
      *         修改字典信息
-     * @Param: [dict, tokenID]
+     * @Param: [dict]
      * @Author: mi
      * @Return: com.aaa.qy108.base.ResultData
      * @Date: 2020/5/24 17:56
      **/
     @PostMapping("/updateDict")
-    public ResultData updateDict(@RequestBody Dict dict,@RequestParam("tokenId") String tokenId){
+    public ResultData updateDict(@RequestBody Dict dict){
         System.out.println("-----------------这里是修改方法---------------");
-        System.out.println("tokenId的值"+tokenId);
-        System.out.println("dict的实体"+dict);
-        HashMap<String, Object> updateDictResult = dictService.updateDict(dict, redisService, tokenId);
+        HashMap<String, Object> updateDictResult = dictService.updateDict(dict);
         Object code = updateDictResult.get("code");
-        if (LOGIN_TIMEOUT_EXIT.getCode().equals(code)) {
-            //登陆超时
-            return super.loginTimeoutExit();
-        }else if (UPDATE_DATA_SUCCESS.getCode().equals(code)){
+        if (UPDATE_DATA_SUCCESS.getCode().equals(code)){
             //修改成功
             return super.updateSuccess();
         }else{

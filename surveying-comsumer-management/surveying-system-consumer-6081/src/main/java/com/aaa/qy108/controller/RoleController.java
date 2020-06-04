@@ -58,7 +58,7 @@ public class RoleController extends BaseController {
     */
     @PostMapping("/deleteRole")
     @ApiOperation(value = "删除角色", notes = "删除角色的功能")
-    public ResultData deleteRole(@RequestBody Long roleId){
+    public ResultData deleteRole(@RequestParam("roleId") Long roleId){
         return SystemApiService.deleteRole(roleId);
     }
 

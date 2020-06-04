@@ -190,33 +190,33 @@ public interface SystemApiService {
 
     /**
      * @Description: 新增字典信息
-     * @Param: [dict, tokenId]
+     * @Param: [dict]
      * @Author: mi
      * @Return: com.aaa.qy108.base.ResultData
      * @Date: 2020/5/24 18:12
      **/
     @PostMapping("/dict/addDict")
-    ResultData addDict(@RequestBody Dict dict, @RequestParam("tokenId") String tokenId);
+    ResultData addDict(@RequestBody Dict dict);
 
     /**
      * @Description: 批量删除字典信息
-     * @Param: [ids, tokenId]
+     * @Param: [ids]
      * @Author: mi
      * @Return: com.aaa.qy108.base.ResultData
      * @Date: 2020/5/24 18:12
      **/
     @DeleteMapping("/dict/delDictsById")
-    ResultData delDictsById(@RequestBody List<Long> ids,@RequestParam("tokenId") String tokenId);
+    ResultData delDictsById(@RequestBody List<Long> ids);
 
     /**
      * @Description: 修改字典信息
-     * @Param: [dict, tokenId]
+     * @Param: [dict]
      * @Author: mi
      * @Return: com.aaa.qy108.base.ResultData
      * @Date: 2020/5/24 18:12
      **/
     @PostMapping("/dict/updateDict")
-    ResultData updateDict(@RequestBody Dict dict,@RequestParam("tokenId") String tokenId);
+    ResultData updateDict(@RequestBody Dict dict);
 
     /**
     * @Description: 获取redis的token值
@@ -323,7 +323,7 @@ public interface SystemApiService {
     * @return: com.aaa.qy108.base.ResultData<com.aaa.qy108.model.Menu>
     */
     @PostMapping("/menu/deleteMenuOrButton")
-    ResultData<Menu> deleteMenuOrButton(@RequestBody Long menuId);
+    ResultData<Menu> deleteMenuOrButton(@RequestParam("menuId") Long menuId);
 
 
     /** 
@@ -355,7 +355,7 @@ public interface SystemApiService {
     * @return: com.aaa.qy108.base.ResultData 
     */ 
     @PostMapping("/role/deleteRole")
-    ResultData deleteRole(@RequestBody Long roleId);
+    ResultData deleteRole(@RequestParam("roleId") Long roleId);
 
 
     /** 

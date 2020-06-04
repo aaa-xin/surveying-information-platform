@@ -77,7 +77,7 @@ public class MenuController extends BaseController {
     * @return: com.aaa.qy108.base.ResultData<com.aaa.qy108.model.Menu> 
     */ 
     @PostMapping("/deleteMenuOrButton")
-    public ResultData<Menu> deleteMenuOrButton(@RequestBody Long menuId){
+    public ResultData<Menu> deleteMenuOrButton(@RequestParam("menuId") Long menuId){
         Boolean aBoolean = menuService.deleteMenuOrButton(menuId);
         if (aBoolean == true){
             return super.deleteSuccess();
