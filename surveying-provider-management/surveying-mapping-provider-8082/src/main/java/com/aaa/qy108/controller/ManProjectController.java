@@ -1,7 +1,6 @@
 package com.aaa.qy108.controller;
 
 import com.aaa.qy108.model.MappingProject;
-import com.aaa.qy108.service.MappingProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

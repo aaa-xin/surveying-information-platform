@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static com.aaa.qy108.status.LoginStatus.LOGIN_TIMEOUT_EXIT;
 import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_BY_ID_SUCCESS;
 import static com.aaa.qy108.status.SelectStatus.SELECT_DATA_SUCCESS;
 

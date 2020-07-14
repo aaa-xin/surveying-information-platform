@@ -74,7 +74,7 @@ public class DictService extends BaseService<Dict> {
     public HashMap<String,Object> delDictsById( List<Long> ids){
         HashMap<String, Object> resultMap = new HashMap<>();
         //获取参数类型，添加一个where条件
-        Example example = Example.builder(Dict.class).where(Sqls.custom().andIn("id",ids)).build();
+        Example example = Example.builder(Dict.class).where(Sqls.custom().andIn("dictId",ids)).build();
         int i = dictMapper.deleteByExample(example);
         if (i > 0){
             resultMap.put("code", DELETE_DATA_SUCCESS.getCode());

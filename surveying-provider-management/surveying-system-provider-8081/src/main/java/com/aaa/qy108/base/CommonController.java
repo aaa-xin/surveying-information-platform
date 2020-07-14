@@ -1,5 +1,6 @@
 package com.aaa.qy108.base;
 
+import com.aaa.qy108.utils.BaseUtil;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.context.request.RequestAttributes;
@@ -99,8 +100,8 @@ public abstract class CommonController<T> extends BaseController {
     * @return: com.aaa.qy108.base.ResultData
     */
     public ResultData selectAllByPage(@RequestBody Map map){
-        Integer pageNo = (Integer) map.get("pageNo");
-        Integer pageSize = (Integer) map.get("pageSize");
+        Integer pageNo = BaseUtil.transToInt(map.get("pageNo"));
+        Integer pageSize = BaseUtil.transToInt(map.get("pageSize"));
         Object t = map.get("t");
         try {
             PageInfo<T> tPageInfo = getBaseService().queryListByPage((T) t, pageNo, pageSize);
